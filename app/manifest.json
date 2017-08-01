@@ -1,0 +1,20 @@
+{
+	"manifest_version": 2,
+
+  	"name": "Momentum Dash",
+	"description": "A momentum dash clone",
+	"version": "1.0",
+
+  	"browser_action": {
+  		"default_icon": ""
+	  },
+	"permissions": [
+		"tabs",
+		"activeTab"
+	],
+	"background": {
+		"scripts": [
+			"background.js"
+		]
+	}
+}
