@@ -1,9 +1,24 @@
 "use strict";
 
 let time = {
+    firstCall: true,
     setTime: function() {
         this.refreshTime();
-        $("#main-time").html("<p>" + this.hours + ":" + this.minutes + "<p>");
+        fadeInOnOpen.call(this);
+        
+        function drawTime() {
+            $("#main-time").html("<p>" + this.hours + ":" + this.minutes + "<p>");
+        }
+        function fadeInOnOpen() {
+            if (this.firstCall) {
+                $("#main-time").fadeOut(0);
+                drawTime.call(this);
+                $("#main-time").fadeIn(1500);
+                this.firstCall = false;
+            } else {
+                drawTime.call(this);
+            }
+        }
     },
     refreshTime: function() {
         this.hours = new Date().getHours();
@@ -47,3 +62,4 @@ $("document").ready(function() {
     time.setTime();
     time.updateTime();
 });
+//use fade in animation for time
