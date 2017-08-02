@@ -1,3 +1,26 @@
 body {
     font-family: "Lato";
 }
+
+#container { /*Flexbox*/
+    height: 97vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+#top {
+    display: flex;
+    justify-content: space-between;
+}
+#main {
+    align-self: center;
+    text-align: center;
+}
+#bottom {
+    display: flex;
+    justify-content: space-between
+}
+
+#main-time {
+    font-size: 12vh;
+}

@@ -25,7 +25,8 @@
 	],
 	"background": {
 		"scripts": [
-			"background.js"
+			"background.js",
+			"external/jquery-3.2.1.js"
 		]
 	}
 }
