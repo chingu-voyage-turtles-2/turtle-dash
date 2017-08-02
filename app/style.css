@@ -20,3 +20,7 @@ body {
     display: flex;
     justify-content: space-between
 }
+
+#main-time {
+    font-size: 12vh;
+}
