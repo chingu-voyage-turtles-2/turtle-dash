@@ -8,17 +8,28 @@ let time = {
         fadeInOnOpen.call(this);
         
         function drawTime() {
-            $("#main-time-draw").html("<p>" + this.hours + ":" + this.minutes + "<p>");
+            $("#main-time-draw").html(
+                "<p>" + this.hours + ":" + this.minutes + "<p>"
+            );
         }
         function fadeInOnOpen() {
             if (this.firstCall) {
-                $("#main-time-draw").fadeOut(0);
+                fadeOut("main-time-draw");
+                fadeOut("main-greeting");
                 drawTime.call(this);
-                $("#main-time-draw").fadeIn(1500);
+                user.drawGreeting();
+                fadeIn("main-time-draw", 1500);
+                fadeIn("main-greeting", 1800);
                 this.firstCall = false;
             } else {
                 drawTime.call(this);
             }
+        }
+        function fadeOut(name) {
+            $("#" + name).fadeOut(0);
+        }
+        function fadeIn(name, timeToOpaque) {
+            $("#" + name).fadeIn(timeToOpaque);
         }
     },
     refreshTime: function() {
@@ -26,6 +37,7 @@ let time = {
         this.minutes = new Date().getMinutes();
         this.seconds = new Date().getSeconds();
 
+        this.setTimeOfDay();
         setTwelveHourFormat.call(this);
         addMissingZero.call(this, this.hours);
         addMissingZero.call(this, this.minutes);
@@ -62,9 +74,41 @@ let time = {
             $(".main-time-twelvehours").html("");
             time.twelveHourFormatToggled = false;
         } else {
-            $(".main-time-twelvehours").html("<p>" + time.twelveHourFormat + "</p>");
+            $(".main-time-twelvehours").html(
+                "<p>" + time.twelveHourFormat + "</p>"
+            );
             time.twelveHourFormatToggled = true;
         }
+    },
+    setTimeOfDay: function() {
+        switch(this.hours) {
+            case(4): case(5): case(6): case(7): case(8): case(9): case(10):
+                this.timeOfDay = "Morning"; //4 - 10
+                break;
+            case(11): case(12): case(13):
+                this.timeOfDay = "Noon"; //11 - 13
+                break;
+            case(14): case(15): case(16): case(17):
+                this.timeOfDay = "Afternoon"; //14 - 17
+                break;
+            case(18): case(19): case(20): case(21): case(22):
+                this.timeOfDay = "Evening"; //18 - 22
+                break;
+            case(23): case(24): case(1): case(2): case(3):
+                this.timeOfDay = "Night"; //23 - 3
+                break;
+            default: //To avoid defaulting to undefined
+                this.timeOfDay = "Day";
+        }
+    }
+}
+
+let user = {
+    name: "",
+    drawGreeting: function() {
+        $("#main-greeting").html(
+            "<p>Good " + time.timeOfDay + ", " + this.name + "!</p>"
+        );
     }
 }
 
