@@ -106,12 +106,39 @@ let time = {
 let user = {
     name: "",
     drawGreeting: function() {
-        $("#main-greeting").html(
-            "<p>Good " + time.timeOfDay + ", " + this.name + "!</p>"
-        );
+        let greetings = {
+            phrasesArray: [],
+            phrases: {
+                standard: {
+                    phrase: "Good " + time.timeOfDay + ", " + user.name + "!",
+                    chance: 70
+                }, variation1: {
+                    phrase: "Welcome back, " + user.name + "!",
+                    chance: 15
+                }, variation2: {
+                    phrase: "Good to see you this " + time.timeOfDay + "!",
+                    chance: 10
+                }, variation3: {
+                    phrase: "How's it going " + user.name + "?",
+                    chance: 5
+                }
+            },
+            randomPhrase: function() {
+                //Bulding a array out of the phrases keys and picking a random one
+                for (let i in greetings.phrases) {
+                    for (let c = 0; c < greetings.phrases[i].chance; c++) {
+                        greetings.phrasesArray.push(i);
+                    }
+                }
+                let index = greetings.phrasesArray[
+                    Math.round(Math.random() * (greetings.phrasesArray.length - 1))
+                ];
+                return greetings.phrases[index].phrase
+            }
+        }
+        $("#main-greeting").html(greetings.randomPhrase);
     }
 }
-
 $("document").ready(function() {
     time.setTime();
     time.updateTime();
