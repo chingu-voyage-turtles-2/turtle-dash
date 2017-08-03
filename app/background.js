@@ -1,3 +1,5 @@
+"use strict;"
+
 chrome.browserAction.onClicked.addListener(openNewTab);
 chrome.tabs.onCreated.addListener(openApp);
 
@@ -20,6 +22,7 @@ function openApp() {
 		let url = tabData[0].url;
 		if (url === "chrome://newtab/") {
 			chrome.tabs.update(updateProperties)
+			window.history.replaceState({} , "", " ");
 		}
 	}
 	chrome.tabs.query(tabProperties, function(data){
