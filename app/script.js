@@ -2,18 +2,19 @@
 
 let time = {
     firstCall: true,
+    twelveHourFormatToggled: false,
     setTime: function() {
         this.refreshTime();
         fadeInOnOpen.call(this);
         
         function drawTime() {
-            $("#main-time").html("<p>" + this.hours + ":" + this.minutes + "<p>");
+            $("#main-time-draw").html("<p>" + this.hours + ":" + this.minutes + "<p>");
         }
         function fadeInOnOpen() {
             if (this.firstCall) {
-                $("#main-time").fadeOut(0);
+                $("#main-time-draw").fadeOut(0);
                 drawTime.call(this);
-                $("#main-time").fadeIn(1500);
+                $("#main-time-draw").fadeIn(1500);
                 this.firstCall = false;
             } else {
                 drawTime.call(this);
@@ -55,11 +56,24 @@ let time = {
             time.setTime()
             time.updateTime();
         }, (60 - this.seconds) * 1000 + 1) //+1 to secure catching the updated time
+    },
+    toogleTwelveHourDisplay: function() {
+        if (time.twelveHourFormatToggled) {
+            $(".main-time-twelvehours").html("");
+            time.twelveHourFormatToggled = false;
+        } else {
+            $(".main-time-twelvehours").html("<p>" + time.twelveHourFormat + "</p>");
+            time.twelveHourFormatToggled = true;
+        }
     }
 }
 
 $("document").ready(function() {
     time.setTime();
     time.updateTime();
+
+    addEventListener("dblclick", 
+    function toogleTwelveHourDisplay() { // Calling it directly doesn't work,
+        time.toogleTwelveHourDisplay();  // seems to need that anonymous function
+    });
 });
-//use fade in animation for time
