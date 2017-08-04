@@ -1,53 +1,46 @@
 "use strict";
 
 let time = {
-    firstCall: true,
-    twelveHourFormatToggled: false,
+    firstTimeDraw: true,
+    AMPMToggled: false,
     setTime: function() {
-        this.refreshTime();
-        fadeInOnOpen.call(this);
-        
-        function drawTime() {
+        this.hours = new Date().getHours();
+        this.minutes = new Date().getMinutes();
+        this.seconds = new Date().getSeconds();
+
+        this.setTimeOfDay(); //Morning, etc.
+        setAMPM.call(this);
+        addMissingZero.call(this, this.hours);
+        addMissingZero.call(this, this.minutes);
+
+        if (this.firstTimeDraw) {
+            fadeOut("main-time-draw");
+            fadeOut("main-greeting");
             $("#main-time-draw").html(
-                "<p>" + this.hours + ":" + this.minutes + "<p>"
+                "<p>" + time.hours + ":" + time.minutes + "<p>"
+            );
+            user.drawGreeting();
+            fadeIn("main-time-draw", 1500);
+            fadeIn("main-greeting", 1800);
+            this.firstTimeDraw = false;
+        } else {
+            $("#main-time-draw").html(
+                "<p>" + time.hours + ":" + time.minutes + "<p>"
             );
         }
-        function fadeInOnOpen() {
-            if (this.firstCall) {
-                fadeOut("main-time-draw");
-                fadeOut("main-greeting");
-                drawTime.call(this);
-                user.drawGreeting();
-                fadeIn("main-time-draw", 1500);
-                fadeIn("main-greeting", 1800);
-                this.firstCall = false;
-            } else {
-                drawTime.call(this);
-            }
-        }
+
         function fadeOut(name) {
             $("#" + name).fadeOut(0);
         }
         function fadeIn(name, timeToOpaque) {
             $("#" + name).fadeIn(timeToOpaque);
         }
-    },
-    refreshTime: function() {
-        this.hours = new Date().getHours();
-        this.minutes = new Date().getMinutes();
-        this.seconds = new Date().getSeconds();
-
-        this.setTimeOfDay();
-        setTwelveHourFormat.call(this);
-        addMissingZero.call(this, this.hours);
-        addMissingZero.call(this, this.minutes);
-
-        function setTwelveHourFormat() {
+        function setAMPM() {
             if (this.hours >= 12) {
                 this.hours -= 12;
-                this.twelveHourFormat = "PM";
+                this.AMPM = "PM";
             } else {
-                this.twelveHourFormat = "AM";
+                this.AMPM = "AM";
             }
         }
         function addMissingZero(unit) {
@@ -65,20 +58,9 @@ let time = {
     },
     updateTime: function() {
         setTimeout(function updateTimeTimeout() {
-            time.setTime()
+            time.setTime();
             time.updateTime();
         }, (60 - this.seconds) * 1000 + 1) //+1 to secure catching the updated time
-    },
-    toogleTwelveHourDisplay: function() {
-        if (time.twelveHourFormatToggled) {
-            $(".main-time-twelvehours").html("");
-            time.twelveHourFormatToggled = false;
-        } else {
-            $(".main-time-twelvehours").html(
-                "<p>" + time.twelveHourFormat + "</p>"
-            );
-            time.twelveHourFormatToggled = true;
-        }
     },
     setTimeOfDay: function() {
         switch(this.hours) {
@@ -104,7 +86,7 @@ let time = {
 }
 
 let user = {
-    name: "",
+    name: "User",
     drawGreeting: function() {
         let greetings = {
             phrasesArray: [],
@@ -122,29 +104,37 @@ let user = {
                     phrase: "How's it going " + user.name + "?",
                     chance: 5
                 }
-            },
-            randomPhrase: function() {
-                //Bulding a array out of the phrases keys and picking a random one
-                for (let i in greetings.phrases) {
-                    for (let c = 0; c < greetings.phrases[i].chance; c++) {
-                        greetings.phrasesArray.push(i);
-                    }
-                }
-                let index = greetings.phrasesArray[
-                    Math.round(Math.random() * (greetings.phrasesArray.length - 1))
-                ];
-                return greetings.phrases[index].phrase
             }
         }
-        $("#main-greeting").html(greetings.randomPhrase);
+        $("#main-greeting").html(returnRandomPhrase);
+
+        function returnRandomPhrase() {
+            //Bulding a array out of the phrases keys and picking a random one
+            for (let i in greetings.phrases) {
+                for (let c = 0; c < greetings.phrases[i].chance; c++) {
+                    greetings.phrasesArray.push(i);
+                }
+            }
+            let index = greetings.phrasesArray[
+                Math.round(Math.random() * (greetings.phrasesArray.length - 1))
+            ];
+            return greetings.phrases[index].phrase
+        }
     }
 }
 $("document").ready(function() {
     time.setTime();
     time.updateTime();
 
-    addEventListener("dblclick", 
-    function toogleTwelveHourDisplay() { // Calling it directly doesn't work,
-        time.toogleTwelveHourDisplay();  // seems to need that anonymous function
+    addEventListener("dblclick", function toogleTwelveHourDisplay() {
+        if (time.AMPMToggled) { //Clear
+            $(".main-time-twelvehours").html("");
+            time.AMPMToggled = false;
+        } else { //Draw
+            $(".main-time-twelvehours").html(
+                "<p>" + time.AMPM + "</p>"
+            );
+            time.AMPMToggled = true;
+        }
     });
 });
