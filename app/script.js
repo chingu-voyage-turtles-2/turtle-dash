@@ -126,7 +126,7 @@ $("document").ready(function() {
     time.setTime();
     time.updateTime();
 
-    addEventListener("dblclick", function toogleTwelveHourDisplay() {
+    document.getElementById("main-time-draw").addEventListener("dblclick", function toogleTwelveHourDisplay() {
         if (time.AMPMToggled) { //Clear
             $(".main-time-twelvehours").html("");
             time.AMPMToggled = false;
