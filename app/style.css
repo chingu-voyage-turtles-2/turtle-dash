@@ -1,3 +1,52 @@
 body {
     font-family: "Lato";
 }
+
+#container { /*Flexbox*/
+    height: 97vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+#top {
+    display: flex;
+    justify-content: space-between;
+}
+#main {
+    align-self: center;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#bottom {
+    display: flex;
+    justify-content: space-between
+}
+
+#main-time {
+    display: inline-flex;
+    align-items: baseline;
+    float: left;
+    /* Makes time unselectable */
+    -webkit-touch-callout: none; 
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    margin-bottom: -20vh; /* There would be a lot of space between without it */
+}
+#main-time-draw {
+    font-size: 18vh;  
+}
+.main-time-twelvehours {
+    font-size: 3vh;
+}
+#main-time-twelvehours-hidden {
+    visibility: hidden;
+}
+#main-greeting {
+    font-size: 6vh;
+    padding-top: -10vh;
+}  
