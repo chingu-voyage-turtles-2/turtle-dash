@@ -15,6 +15,9 @@ body {
 #main {
     align-self: center;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 #bottom {
     display: flex;
@@ -32,9 +35,10 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    margin-bottom: -20vh; /* There would be a lot of space between without it */
 }
 #main-time-draw {
-    font-size: 12vh;  
+    font-size: 18vh;  
 }
 .main-time-twelvehours {
     font-size: 3vh;
@@ -42,3 +46,7 @@ body {
 #main-time-twelvehours-hidden {
     visibility: hidden;
 }
+#main-greeting {
+    font-size: 6vh;
+    padding-top: -10vh;
+}  
