@@ -122,9 +122,24 @@ let user = {
         }
     }
 }
+
+let backgroundImage = {
+    url : "https://cors-anywhere.herokuapp.com/" + "https://api.unsplash.com//photos/random?client_id=3e66d58c720b2e9697e94445cb461e9032b946068102f18f4f3203783b412e70",
+    getImage: function(){
+        $.getJSON(this.url,function(json){
+        var imageUrl = json.urls.raw;
+        console.log(imageUrl);
+        $("#container").css('background-image', 'url(' + imageUrl + ')');
+        })
+}
+
+    }
+
 $("document").ready(function() {
+    backgroundImage.getImage();
     time.setTime();
     time.updateTime();
+    
 
     addEventListener("dblclick", function toogleTwelveHourDisplay() {
         if (time.AMPMToggled) { //Clear
