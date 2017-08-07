@@ -124,16 +124,13 @@ let user = {
 }
 
 let backgroundImage = {
-    url : "https://cors-anywhere.herokuapp.com/" 
-          + "https://api.unsplash.com//photos/random?client_id=3e66d58c720b2e9697e94445cb461e9032b946068102f18f4f3203783b412e70&collections=438041&orientation=landscape",
+    url : "https://cors-anywhere.herokuapp.com/" + "https://api.unsplash.com//photos/random?client_id=3e66d58c720b2e9697e94445cb461e9032b946068102f18f4f3203783b412e70&collections=438041&orientation=landscape",
     getImage: function(){
         $.getJSON(this.url,function(json){
-            var imageUrl = json.urls.full;
-            console.log(imageUrl);
-            console.log(json.user.location);
+            let imageUrl = json.urls.full;
             $("body").css('background-image', 'url(' + imageUrl + ')');
-            $("#bottom-location").text(json.user.location);
-            $("#bottom-photo-owner").text(json.user.name);
+            $("#bottom-settings-location").text(json.user.location);
+            $("#bottom-settings-photo-owner").text(json.user.name);
         });
 
 
@@ -145,7 +142,6 @@ $("document").ready(function() {
     time.setTime();
     time.updateTime();
     
-
     document.getElementById("main-time-draw").addEventListener("dblclick", function toogleTwelveHourDisplay() {
         if (time.AMPMToggled) { //Clear
             $(".main-time-twelvehours").html("");
