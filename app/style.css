@@ -1,12 +1,15 @@
 body {
     font-family: "Lato";
-}
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+ }
 
 #container { /*Flexbox*/
     height: 97vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
 }
 #top {
     display: flex;
