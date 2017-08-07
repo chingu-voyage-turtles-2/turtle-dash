@@ -124,14 +124,20 @@ let user = {
 }
 
 let backgroundImage = {
-    url : "https://cors-anywhere.herokuapp.com/" + "https://api.unsplash.com//photos/random?client_id=3e66d58c720b2e9697e94445cb461e9032b946068102f18f4f3203783b412e70",
+    url : "https://cors-anywhere.herokuapp.com/" 
+          + "https://api.unsplash.com//photos/random?client_id=3e66d58c720b2e9697e94445cb461e9032b946068102f18f4f3203783b412e70&collections=438041&orientation=landscape",
     getImage: function(){
         $.getJSON(this.url,function(json){
-            let imageUrl = json.urls.raw;
+            var imageUrl = json.urls.full;
             console.log(imageUrl);
+            console.log(json.user.location);
             $("body").css('background-image', 'url(' + imageUrl + ')');
+            $("#bottom-location").text(json.user.location);
+            $("#bottom-photo-owner").text(json.user.name);
         });
-    }
+
+
+}
 }
 
 $("document").ready(function() {
