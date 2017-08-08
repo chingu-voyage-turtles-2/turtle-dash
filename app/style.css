@@ -1,5 +1,6 @@
 body {
     font-family: "Lato";
+    color: #fff;
     background-size: 100% 100%;
     background-repeat: no-repeat;
  }
@@ -9,7 +10,6 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
 }
 #top {
     display: flex;
