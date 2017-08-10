@@ -61,3 +61,8 @@ body {
 #bottom-settings-owner{
     display: none;
 }
+#top-logo-spin {
+    margin: 10px 0 0 10px;
+    width: 32px;
+    height: 32px;
+}
