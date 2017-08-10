@@ -53,3 +53,11 @@ body {
     font-size: 6vh;
     padding-top: -10vh;
 }  
+
+#bottom-settings-location:hover ~ #bottom-settings-photo-owner{
+    display: block;
+}
+
+#bottom-settings-photo-owner{
+    display: none;
+}
