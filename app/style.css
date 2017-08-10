@@ -38,7 +38,9 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    margin-bottom: -20vh; /* There would be a lot of space between without it */
+    /* Center time horizontally */
+    margin-top: -20vh; 
+    margin-bottom: -20vh;
 }
 #main-time-draw {
     font-size: 18vh;  
