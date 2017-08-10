@@ -1,8 +1,9 @@
 body {
     font-family: "Lato";
     color: #fff;
-    background-size: 100% 100%;
+    background-size: cover;
     background-repeat: no-repeat;
+    background-position: center center;
  }
 
 #container { /*Flexbox*/
@@ -38,7 +39,9 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    margin-bottom: -20vh; /* There would be a lot of space between without it */
+    /* Center time horizontally */
+    margin-top: -20vh; 
+    margin-bottom: -20vh;
 }
 #main-time-draw {
     font-size: 18vh;  
@@ -58,4 +61,9 @@ body {
 }
 #bottom-settings-owner{
     display: none;
+}
+#top-logo-spin {
+    margin: 10px 0 0 10px;
+    width: 32px;
+    height: 32px;
 }
