@@ -1,7 +1,7 @@
 body {
     font-family: "Lato";
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat;    
+    background-size: 100% 100% ;
  }
 
 #container { /*Flexbox*/
@@ -53,3 +53,11 @@ body {
     font-size: 6vh;
     padding-top: -10vh;
 }  
+
+#bottom-settings-location:hover ~ #bottom-settings-photo-owner{
+    display: block;
+}
+
+#bottom-settings-photo-owner{
+    display: none;
+}
