@@ -1,7 +1,8 @@
 body {
     font-family: "Lato";
-    background-repeat: no-repeat;    
-    background-size: 100% 100% ;
+    color: #fff;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
  }
 
 #container { /*Flexbox*/
@@ -9,7 +10,6 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
 }
 #top {
     display: flex;
