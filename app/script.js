@@ -135,10 +135,29 @@ var backgroundImage = {
 	}
 }
 
+let quote = {
+    url: "https://cors-anywhere.herokuapp.com/" + "https://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json",
+    author: "", quote: "",
+    generateQuote: function() {
+        $.getJSON(this.url, function(json){
+            this.quote = json.quoteText;
+            this.author = json.quoteAuthor;
+            
+            if (this.quote.length > 140) { // Limiting the length of the quote
+                console.log("Loading another quote");
+                this.generateQuote();
+            } else {
+                console.log(this.quote);
+            }
+        });
+    }
+}
+
 $("document").ready(function() {
     backgroundImage.getImage();
     time.setTime();
     time.updateTime();
+    quote.generateQuote();
     
     document.getElementById("main-time-draw").addEventListener("dblclick", function toogleTwelveHourDisplay() {
         if (time.AMPMToggled) { //Clear
