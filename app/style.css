@@ -88,9 +88,17 @@ body {
 }
 #bottom-quote {
     width: 50vw;
-    min-height: 44px;
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+    align-self: center;
 }
 #bottom-quote-draw {
     font-size: 22px;
     text-align: center;
+    position: absolute;
+    bottom: -50px;
+    left: 0;
+    right: 0;
+    transition: 1.5s;
 }
