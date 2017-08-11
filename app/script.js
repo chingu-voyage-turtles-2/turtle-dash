@@ -139,17 +139,19 @@ let quote = {
     url: "https://cors-anywhere.herokuapp.com/" + "https://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json",
     author: "", quote: "",
     generateQuote: function() {
-        $.getJSON(this.url, function(json){
-            this.quote = json.quoteText;
-            this.author = json.quoteAuthor;
-            
-            if (this.quote.length > 140) { // Limiting the length of the quote
-                console.log("Loading another quote");
-                this.generateQuote();
-            } else {
-                console.log(this.quote);
-            }
-        });
+        (function requestQuote() {
+            $.getJSON(this.url, function(json){
+                this.quote = json.quoteText;
+                this.author = json.quoteAuthor;
+                
+                if (this.quote.length > 140) { // Limiting the length of the quote
+                    console.log("Loading another quote", this.quote.length);
+                    quote.generateQuote();
+                } else {
+                    console.log(this.quote, this.quote.length);
+                }
+            });
+        }).call(this);
     }
 }
 
