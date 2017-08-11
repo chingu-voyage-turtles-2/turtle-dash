@@ -145,10 +145,9 @@ let quote = {
                 this.author = json.quoteAuthor;
                 
                 if (this.quote.length > 140) { // Limiting the length of the quote
-                    console.log("Loading another quote", this.quote.length);
                     quote.generateQuote();
                 } else {
-                    console.log(this.quote, this.quote.length);
+                    $("#bottom-quote-draw").html("<p>" + this.quote +"</p>")
                 }
             });
         }).call(this);
