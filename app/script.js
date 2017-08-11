@@ -128,7 +128,7 @@ var backgroundImage = {
     getImage: function(){
         $.getJSON(this.url,function(json){
             let imageUrl = json.urls.full;
-            $("body").css('background-image', 'url(' + imageUrl + ')');
+            $("body").css("background-image", "url(" + imageUrl + ")");
             $("#bottom-settings-location").text(json.user.location);
             $("#bottom-settings-owner").text(json.user.name);
         });
