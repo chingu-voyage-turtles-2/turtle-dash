@@ -6,7 +6,8 @@ body {
     background-position: center center;
  }
 
-#container { /*Flexbox*/
+ /* Flexbox */
+#container { 
     height: 97vh;
     display: flex;
     flex-direction: column;
@@ -28,6 +29,17 @@ body {
     justify-content: space-between;
 }
 
+/* Top */
+#top-logo-spin {
+    margin: 10px 0 0 10px;
+    width: 32px;
+    height: 32px;
+}
+
+/* Main */
+.outlined {
+    text-shadow: 0px 0px 3px black;
+}
 #main-time {
     display: inline-flex;
     align-items: baseline;
@@ -55,16 +67,9 @@ body {
 #main-greeting {
     font-size: 6vh;
     padding-top: -10vh;
-}  
-#bottom-settings-location:hover ~ #bottom-settings-owner{
-    display: block;
 }
-#bottom-settings-owner{
-    display: none;
-}
-.outlined {
-    text-shadow: 0px 0px 3px black;
-}
+
+/* Bottom */
 #bottom {
     min-height: 100px;
 }
@@ -72,14 +77,20 @@ body {
     width: 40px;
     align-self: flex-end;
 }
+#bottom-settings-location:hover ~ #bottom-settings-owner{
+    display: block;
+}
+#bottom-settings-owner{
+    display: none;
+}
 #bottom-todo {
     width: 40px;
-}
-#bottom-quote-draw {
-    font-size: 22px;
-    text-align: center;
 }
 #bottom-quote {
     width: 50vw;
     min-height: 44px;
+}
+#bottom-quote-draw {
+    font-size: 22px;
+    text-align: center;
 }
