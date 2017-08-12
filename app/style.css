@@ -34,6 +34,7 @@ body {
     margin: 10px 0 0 10px;
     width: 32px;
     height: 32px;
+    border-radius: 50%;
 }
 
 /* Main */
