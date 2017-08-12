@@ -147,7 +147,10 @@ let quote = {
                 if (this.quote.length > 140) { // Limiting the length of the quote
                     quote.generateQuote();
                 } else {
-                    $("#bottom-quote-draw").html("<p>" + this.quote +"</p>");
+                    $("#bottom-quote-draw").html(`
+                        <p id="bottom-quote-draw-quote">${this.quote}</p>
+                        <span id="bottom-quote-draw-author">${"- " + this.author}</span>
+                        `);
                     $("#bottom-quote-draw").css("bottom", "70px");
                 }
             }).fail(function requestQuoteFailed() {

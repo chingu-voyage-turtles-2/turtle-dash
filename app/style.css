@@ -102,3 +102,14 @@ body {
     right: 0;
     transition: 1.5s;
 }
+#bottom-quote-draw-author {
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: .5s;
+}
+#bottom-quote-draw-quote:hover ~ #bottom-quote-draw-author {
+    opacity: 1;
+}
+#bottom-quote-draw-author:hover {
+    opacity: 1;
+}
