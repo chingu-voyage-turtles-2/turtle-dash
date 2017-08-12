@@ -85,6 +85,14 @@ body {
 }
 #bottom-todo {
     width: 15vw;
+    align-self: flex-end;
+    text-align: right;
+}
+#bottom-todo-icon {
+    margin: 0 10px 0 0;
+    height: 32px;
+    width: 32px;
+    cursor: hand;
 }
 #bottom-quote {
     width: 50vw;
