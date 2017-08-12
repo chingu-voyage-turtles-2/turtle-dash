@@ -142,7 +142,11 @@ let quote = {
         (function requestQuote() {
             $.getJSON(this.url, function(json){
                 this.quote = json.quoteText;
-                this.author = json.quoteAuthor;
+                if (json.quoteAuthor.length === 0) {
+                    this.author = "Unknown";
+                } else {
+                    this.author = json.quoteAuthor;
+                }
                 
                 if (this.quote.length > 140) { // Limiting the length of the quote
                     quote.generateQuote();
