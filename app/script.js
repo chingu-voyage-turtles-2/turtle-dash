@@ -158,7 +158,9 @@ let quote = {
 }
 
 $("document").ready(function() {
-    backgroundImage.getImage();
+    //backgroundImage.getImage();
+    let imageUrl = "https://images.unsplash.com/photo-1439930545933-289862b93eb6?ixlib=rb-0.3.5&q=85&fm=jpg&crop=entropy&cs=srgb&s=2486911b85b04f01509d406baa8f9f21"//json.urls.full;
+    $("body").css("background-image", "url(" + imageUrl + ")");
     time.setTime();
     time.updateTime();
     quote.generateQuote();
