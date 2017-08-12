@@ -150,6 +150,8 @@ let quote = {
                     $("#bottom-quote-draw").html("<p>" + this.quote +"</p>");
                     $("#bottom-quote-draw").css("bottom", "70px");
                 }
+            }).fail(function requestQuoteFailed() {
+                quote.generateQuote();
             });
         }).call(this);
     }
