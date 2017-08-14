@@ -1,6 +1,6 @@
 "use strict";
 
-let time = {
+var time = {
     firstTimeDraw: true,
     AMPMToggled: false,
     setTime: function() {
@@ -85,7 +85,7 @@ let time = {
     }
 }
 
-let user = {
+var user = {
     name: "User",
     drawGreeting: function() {
         let greetings = {
@@ -122,10 +122,54 @@ let user = {
         }
     }
 }
+
+var backgroundImage = {
+    url : "https://cors-anywhere.herokuapp.com/" + "https://api.unsplash.com//photos/random?client_id=3e66d58c720b2e9697e94445cb461e9032b946068102f18f4f3203783b412e70&collections=140375&orientation=landscape",
+    getImage: function(){
+        $.getJSON(this.url,function(json){
+            let imageUrl = json.urls.full;
+            $("body").css("background-image", "url(" + imageUrl + ")");
+            $("#bottom-settings-location").text(json.user.location);
+            $("#bottom-settings-owner").text(json.user.name);
+        });
+	}
+}
+
+let quote = {
+    url: "https://cors-anywhere.herokuapp.com/" + "https://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json",
+    author: "", quote: "",
+    generateQuote: function() {
+        (function requestQuote() {
+            $.getJSON(this.url, function(json){
+                this.quote = json.quoteText;
+                if (json.quoteAuthor.length === 0) {
+                    this.author = "Unknown";
+                } else {
+                    this.author = json.quoteAuthor;
+                }
+                
+                if (this.quote.length > 140) { // Limiting the length of the quote
+                    quote.generateQuote();
+                } else {
+                    $("#bottom-quote-draw").html(`
+                        <p id="bottom-quote-draw-quote">${this.quote}</p>
+                        <span id="bottom-quote-draw-author">${"- " + this.author}</span>
+                        `);
+                    $("#bottom-quote-draw").css("bottom", "70px");
+                }
+            }).fail(function requestQuoteFailed() {
+                quote.generateQuote();
+            });
+        }).call(this);
+    }
+}
+
 $("document").ready(function() {
+    backgroundImage.getImage();
     time.setTime();
     time.updateTime();
-
+    quote.generateQuote();
+    
     document.getElementById("main-time-draw").addEventListener("dblclick", function toogleTwelveHourDisplay() {
         if (time.AMPMToggled) { //Clear
             $(".main-time-twelvehours").html("");

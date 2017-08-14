@@ -1,8 +1,13 @@
 body {
     font-family: "Lato";
-}
+    color: #fff;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+ }
 
-#container { /*Flexbox*/
+ /* Flexbox */
+#container { 
     height: 97vh;
     display: flex;
     flex-direction: column;
@@ -21,9 +26,21 @@ body {
 }
 #bottom {
     display: flex;
-    justify-content: space-between
+    justify-content: space-between;
 }
 
+/* Top */
+#top-logo-spin {
+    margin: 10px 0 0 10px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+/* Main */
+.outlined {
+    text-shadow: 0px 0px 3px black;
+}
 #main-time {
     display: inline-flex;
     align-items: baseline;
@@ -35,7 +52,9 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    margin-bottom: -20vh; /* There would be a lot of space between without it */
+    /* Center time horizontally */
+    margin-top: -20vh - 75px; 
+    margin-bottom: -20vh;
 }
 #main-time-draw {
     font-size: 18vh;  
@@ -49,4 +68,60 @@ body {
 #main-greeting {
     font-size: 6vh;
     padding-top: -10vh;
-}  
+}
+
+/* Bottom */
+#bottom {
+    min-height: 100px;
+}
+#bottom-settings {
+    width: 15vw;
+    align-self: flex-end;
+}
+#bottom-settings-location:hover ~ #bottom-settings-owner{
+    display: block;
+}
+#bottom-settings-owner{
+    display: none;
+}
+#bottom-todo {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    width: 15vw;
+}
+#bottom-todo-icon {
+    margin: 0 10px 0 0;
+    height: 32px;
+    width: 32px;
+    cursor: hand;
+    order: 2;
+}
+#bottom-quote {
+    width: 50vw;
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+    align-self: center;
+}
+#bottom-quote-draw {
+    font-size: 22px;
+    text-align: center;
+    position: absolute;
+    bottom: -50px;
+    left: 0;
+    right: 0;
+    transition: 1.5s;
+}
+#bottom-quote-draw-author {
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: .5s;
+}
+#bottom-quote-draw-quote:hover ~ #bottom-quote-draw-author {
+    opacity: 1;
+}
+#bottom-quote-draw-author:hover {
+    opacity: 1;
+}
