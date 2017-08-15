@@ -86,17 +86,18 @@ var time = {
 }
 
 let user = {
-    name: localStorage.getItem('username'),
+    name: localStorage.getItem("username"),
     drawGreeting: function() {
-                if (user.name == null) {
-                    user.name = "User"
-                    console.log(user.name);
-                    $("#user-name").html(
-                        "<form id='form'><input type='text' name='username' id='username' placeholder='Enter Username'></form>"
-                    );
-                } else {
-                    $("#user-name").html("");
-                }
+        if (user.name == null) {
+            user.name = "User"
+            $("#main-username").html(`
+                <form id="main-username-form">
+                    <input type="text" name="username" id="main-username-input" placeholder="Enter Username">
+                </form>`
+            );
+        } else {
+            $("#main-username").html("");
+        }
         let greetings = {
             phrasesArray: [],
             phrases: {
@@ -129,27 +130,24 @@ let user = {
             ];
             return greetings.phrases[index].phrase
         }
-
     },
-        getName: function(){
-        $("form").submit(function (e) {
-                e.preventDefault();
-                $.ajax({
-                    type: 'POST',
-                    data: $('#username').val(),
-                    context: $("#main-greeting"),
-                    success: function () {
-                        localStorage.clear();
-                        if (!localStorage.getItem('username')) {
-                            localStorage.setItem('username', $('#username').val());
-                            user.name = localStorage.getItem('username');
-//                            console.log(user.name);
-                        };
-                        user.drawGreeting();
-                    }
-                })
-
+    getName: function() {
+        $("form").submit(function(e) {
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                data: $("#main-username-input").val(),
+                context: $("#main-greeting"),
+                success: function () {
+                    localStorage.clear();
+                    if (!localStorage.getItem("username")) {
+                        localStorage.setItem("username", $("#main-username-input").val());
+                        user.name = localStorage.getItem("username");
+                    };
+                    user.drawGreeting();
+                }
             });
+        });
     }
 }
 
