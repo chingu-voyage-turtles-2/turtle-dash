@@ -52,7 +52,7 @@ var time = {
                     case(this.minutes):
                         this.minutes = "0" + unit;
                 }
-                
+
             }
         }
     },
@@ -85,9 +85,18 @@ var time = {
     }
 }
 
-var user = {
-    name: "User",
+let user = {
+    name: localStorage.getItem('username'),
     drawGreeting: function() {
+                if (user.name == null) {
+                    user.name = "User"
+                    console.log(user.name);
+                    $("#user-name").html(
+                        "<form id='form'><input type='text' name='username' id='username' placeholder='Enter Username'></form>"
+                    );
+                } else {
+                    $("#user-name").html("");
+                }
         let greetings = {
             phrasesArray: [],
             phrases: {
@@ -120,6 +129,27 @@ var user = {
             ];
             return greetings.phrases[index].phrase
         }
+
+    },
+        getName: function(){
+        $("form").submit(function (e) {
+                e.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    data: $('#username').val(),
+                    context: $("#main-greeting"),
+                    success: function () {
+                        localStorage.clear();
+                        if (!localStorage.getItem('username')) {
+                            localStorage.setItem('username', $('#username').val());
+                            user.name = localStorage.getItem('username');
+//                            console.log(user.name);
+                        };
+                        user.drawGreeting();
+                    }
+                })
+
+            });
     }
 }
 
@@ -132,7 +162,7 @@ var backgroundImage = {
             $("#bottom-settings-location").text(json.user.location);
             $("#bottom-settings-owner").text(json.user.name);
         });
-	}
+    }
 }
 
 let quote = {
@@ -147,7 +177,7 @@ let quote = {
                 } else {
                     this.author = json.quoteAuthor;
                 }
-                
+
                 if (this.quote.length > 140) { // Limiting the length of the quote
                     quote.generateQuote();
                 } else {
@@ -168,8 +198,9 @@ $("document").ready(function() {
     backgroundImage.getImage();
     time.setTime();
     time.updateTime();
+    user.getName();
     quote.generateQuote();
-    
+
     document.getElementById("main-time-draw").addEventListener("dblclick", function toogleTwelveHourDisplay() {
         if (time.AMPMToggled) { //Clear
             $(".main-time-twelvehours").html("");
