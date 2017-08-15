@@ -29,6 +29,15 @@ var time = {
             );
         }
 
+        // Update background image every day
+        this.date = new Date().getDate();
+        if (this.date != localStorage.getItem("imageDate")) {
+            backgroundImage.updateImage = true;
+            localStorage.setItem("imageDate", this.date);
+        } else {
+            backgroundImage.updateImage = false;
+        }
+        
         function fadeOut(name) {
             $("#" + name).fadeOut(0);
         }
@@ -153,13 +162,31 @@ let user = {
 
 var backgroundImage = {
     url : "https://cors-anywhere.herokuapp.com/" + "https://api.unsplash.com//photos/random?client_id=3e66d58c720b2e9697e94445cb461e9032b946068102f18f4f3203783b412e70&collections=140375&orientation=landscape",
-    getImage: function(){
-        $.getJSON(this.url,function(json){
-            let imageUrl = json.urls.full;
-            $("body").css("background-image", "url(" + imageUrl + ")");
+    setImage: function(json) {
+        if (json === null) {
+            $("body").css("background-image", "url(" + localStorage.getItem("imageUrl") + ")");
+            $("#bottom-settings-location").text( localStorage.getItem("imageLocation") );
+            $("#bottom-settings-owner").text( localStorage.getItem("imageUser") );
+        } else {
+            $("body").css("background-image", "url(" + json.urls.full + ")");
             $("#bottom-settings-location").text(json.user.location);
             $("#bottom-settings-owner").text(json.user.name);
+        }
+    },
+    getImage: function(){
+        $.getJSON(this.url,function(json){
+            localStorage.setItem("imageUrl", json.urls.full);
+            localStorage.setItem("imageLocation", json.user.location);
+            localStorage.setItem("imageUser", json.user.name);
+            backgroundImage.setImage(json);
         });
+    },
+    setupImage: function() {
+        if (this.updateImage) {
+            this.getImage();
+        } else {
+            this.setImage(null);
+        }
     }
 }
 
@@ -193,9 +220,9 @@ let quote = {
 }
 
 $("document").ready(function() {
-    backgroundImage.getImage();
     time.setTime();
     time.updateTime();
+    backgroundImage.setupImage();
     user.getName();
     quote.generateQuote();
 
