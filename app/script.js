@@ -91,11 +91,14 @@ let user = {
                 if (user.name == null) {
                     user.name = "User"
                     console.log(user.name);
-                    $("#user-name").html(
-                        "<form id='form'><input type='text' name='username' id='username' placeholder='Enter Username'></form>"
+                    $("#main-username").html(`
+                        <form id='main-username-form'>
+                            <input type='text' name='username' id='main-username-input' placeholder='Enter Username'>
+                        </form>
+                        `
                     );
                 } else {
-                    $("#user-name").html("");
+                    $("#main-username").html("");
                 }
         let greetings = {
             phrasesArray: [],
@@ -136,12 +139,12 @@ let user = {
                 e.preventDefault();
                 $.ajax({
                     type: 'POST',
-                    data: $('#username').val(),
+                    data: $('#main-username-input').val(),
                     context: $("#main-greeting"),
                     success: function () {
                         localStorage.clear();
                         if (!localStorage.getItem('username')) {
-                            localStorage.setItem('username', $('#username').val());
+                            localStorage.setItem('username', $('#main-username-input').val());
                             user.name = localStorage.getItem('username');
 //                            console.log(user.name);
                         };

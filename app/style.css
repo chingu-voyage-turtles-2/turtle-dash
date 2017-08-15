@@ -69,6 +69,58 @@ body {
     font-size: 6vh;
     padding-top: -10vh;
 }
+#main-username {
+    width: 100%;
+    padding: 10px;
+}
+
+input[type=text] {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    border-radius: 0;
+    outline: none;
+    height: 2.1rem;
+    width: 100%;
+    font-family: "Lato";
+    color: #fff;
+    text-align: center;
+    text-shadow: 0px 0px 3px black;
+    font-size: 1rem;
+    box-shadow: none;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    transition: all .3s;
+}
+
+input[type=text]:focus:not([readonly]) {
+    border-bottom: 1px solid #4285F4;
+    box-shadow: 0 1px 0 0 #4285F4;
+}
+
+input[type=text]:focus:not([readonly])+label {
+    color: #4285F4;
+}
+
+#main-username-input::-webkit-input-placeholder {
+  color: #fff;
+  opacity: 1;
+}
+
+#main-username-input::-moz-placeholder {
+  color: #fff;
+  opacity: 1;
+}
+
+#main-username-input:-ms-input-placeholder {
+  color: #fff;
+  opacity: 1;
+}
+#main-username-input::placeholder {
+  color: #fff;
+  opacity: 1;
+}
 
 /* Bottom */
 #bottom {
@@ -124,58 +176,4 @@ body {
 }
 #bottom-quote-draw-author:hover {
     opacity: 1;
-}
-
-/*user-name input*/
-#user-name {
-    width: 100%;
-    padding: 10px;
-}
-
-input[type=text] {
-    background-color: transparent;
-    border: none;
-    border-bottom: 1px solid #ccc;
-    border-radius: 0;
-    outline: none;
-    height: 2.1rem;
-    width: 100%;
-    font-family: "Lato";
-    color: #fff;
-    text-align: center;
-    text-shadow: 0px 0px 3px black;
-    font-size: 1rem;
-    box-shadow: none;
-    -webkit-box-sizing: content-box;
-    -moz-box-sizing: content-box;
-    box-sizing: content-box;
-    transition: all .3s;
-}
-
-input[type=text]:focus:not([readonly]) {
-    border-bottom: 1px solid #4285F4;
-    box-shadow: 0 1px 0 0 #4285F4;
-}
-
-input[type=text]:focus:not([readonly])+label {
-    color: #4285F4;
-}
-
-#username::-webkit-input-placeholder {
-  color: #fff;
-  opacity: 1;
-}
-
-#username::-moz-placeholder {
-  color: #fff;
-  opacity: 1;
-}
-
-#username:-ms-input-placeholder {
-  color: #fff;
-  opacity: 1;
-}
-#username::placeholder {
-  color: #fff;
-  opacity: 1;
 }
