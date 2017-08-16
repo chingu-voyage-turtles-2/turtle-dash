@@ -151,7 +151,7 @@ let user = {
     getName: function() {
         $("form").submit(function(e) {
             e.preventDefault();
-            localStorage.clear();
+            localStorage.removeItem("username");
                     if (!localStorage.getItem("username")) {
                         localStorage.setItem("username", $("#main-username-input").val());
                         user.name = localStorage.getItem("username");
@@ -163,7 +163,7 @@ let user = {
         $("#editname").keypress(function (e) {
             if (e.which === 13) {
                 e.preventDefault();
-                localStorage.clear();
+                localStorage.removeItem("username");
                     if (!localStorage.getItem("username")) {
                         localStorage.setItem("username", $("#editname").text());
                         user.name = localStorage.getItem("username");
