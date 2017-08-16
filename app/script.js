@@ -176,14 +176,22 @@ var backgroundImage = {
             $("#bottom-settings-owner").text( localStorage.getItem("imageUser") );
         } else {
             $("body").css("background-image", "url(" + json.urls.full + ")");
-            $("#bottom-settings-location").text(json.user.location);
+            if (json.location != undefined) {
+                $("#bottom-settings-location").text(json.location.name + ", " + json.location.country);
+            } else {
+                $("#bottom-settings-location").text("Unknown");
+            }
             $("#bottom-settings-owner").text(json.user.name);
         }
     },
     getImage: function(){
         $.getJSON(this.url,function(json){
             localStorage.setItem("imageUrl", json.urls.full);
-            localStorage.setItem("imageLocation", json.user.location);
+            if (json.location != undefined) {
+                localStorage.setItem("imageLocation", json.location.name + ", " + json.location.country);
+            } else {
+                localStorage.setItem("imageLocation", "Unknown");
+            }
             localStorage.setItem("imageUser", json.user.name);
             backgroundImage.setImage(json);
         });
