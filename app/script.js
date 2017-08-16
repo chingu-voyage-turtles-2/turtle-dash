@@ -38,6 +38,14 @@ var time = {
             backgroundImage.updateImage = false;
         }
 
+        // Update quote every hour
+        if (this.hours != localStorage.getItem("quoteHour")) {
+            quote.updateQuote = true;
+            localStorage.setItem("quoteHour", this.hours);
+        } else {
+            quote.updateQuote = false;
+        }
+
         function fadeOut(name) {
             $("#" + name).fadeOut(0);
         }
@@ -155,21 +163,43 @@ let user = {
 
 var backgroundImage = {
     url : "https://cors-anywhere.herokuapp.com/" + "https://api.unsplash.com//photos/random?client_id=3e66d58c720b2e9697e94445cb461e9032b946068102f18f4f3203783b412e70&collections=140375&orientation=landscape",
-    setImage: function(json) {
+    setImage: function(json = null) {
         if (json === null) {
-            $("body").css("background-image", "url(" + localStorage.getItem("imageUrl") + ")");
-            $("#bottom-settings-location").text( localStorage.getItem("imageLocation") );
-            $("#bottom-settings-owner").text( localStorage.getItem("imageUser") );
+            setImageCssLocationOwner(
+                localStorage.getItem("imageUrl"),
+                localStorage.getItem("imageLocation"),
+                localStorage.getItem("imageUser")
+            );
         } else {
-            $("body").css("background-image", "url(" + json.urls.full + ")");
-            $("#bottom-settings-location").text(json.user.location);
-            $("#bottom-settings-owner").text(json.user.name);
+            if (json.location == undefined) {
+                setImageCssLocationOwner(
+                    json.urls.full,
+                    "Unknown",
+                    json.user.name
+                );
+            } else {
+                setImageCssLocationOwner(
+                    json.urls.full, 
+                    json.location.name + ", " + json.location.country, 
+                    json.user.name
+                );
+            }
+        }
+
+        function setImageCssLocationOwner(url, location, owner) {
+            $("body").css("background-image", "url(" + url + ")");
+            $("#bottom-settings-location").text(location);
+            $("#bottom-settings-owner").text(owner);
         }
     },
     getImage: function(){
         $.getJSON(this.url,function(json){
+            if (json.location == undefined) {
+                localStorage.setItem("imageLocation", "Unknown");
+            } else {
+                localStorage.setItem("imageLocation", json.location.name + ", " + json.location.country);
+            }
             localStorage.setItem("imageUrl", json.urls.full);
-            localStorage.setItem("imageLocation", json.user.location);
             localStorage.setItem("imageUser", json.user.name);
             backgroundImage.setImage(json);
         });
@@ -186,29 +216,59 @@ var backgroundImage = {
 let quote = {
     url: "https://cors-anywhere.herokuapp.com/" + "https://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json",
     author: "", quote: "",
-    generateQuote: function() {
+    setQuote: function(json) {
+        if (json === null) {
+            drawQuote(
+                localStorage.getItem("quote"),
+                localStorage.getItem("quoteAuthor")
+            );
+        } else {
+            if (json.quoteAuthor.length === 0) {
+                drawQuote(
+                    json.quoteText, 
+                    "Unknown"
+                );
+            } else {
+                drawQuote(
+                    json.quoteText,
+                    json.quoteAuthor
+                );
+            }
+        }
+
+        function drawQuote(quote, author) {
+            $("#bottom-quote-draw").html(`
+                <p id="bottom-quote-draw-quote">${quote}</p>
+                <span id="bottom-quote-draw-author">${"- " + author}</span>`
+            );
+            $("#bottom-quote-draw").css("bottom", "70px");
+        }
+    },
+    getQuote: function() {
         (function requestQuote() {
             $.getJSON(this.url, function(json){
-                this.quote = json.quoteText;
-                if (json.quoteAuthor.length === 0) {
-                    this.author = "Unknown";
+                if (json.quoteText > 140) { // Limiting the length of the quote
+                    quote.getQuote();
                 } else {
-                    this.author = json.quoteAuthor;
-                }
-
-                if (this.quote.length > 140) { // Limiting the length of the quote
-                    quote.generateQuote();
-                } else {
-                    $("#bottom-quote-draw").html(`
-                        <p id="bottom-quote-draw-quote">${this.quote}</p>
-                        <span id="bottom-quote-draw-author">${"- " + this.author}</span>
-                        `);
-                    $("#bottom-quote-draw").css("bottom", "70px");
+                    localStorage.setItem("quote", json.quoteText);
+                    if (json.quoteAuthor.length === 0) {
+                        localStorage.setItem("quoteAuthor", "Unknown");
+                    } else {
+                        localStorage.setItem("quoteAuthor", json.quoteAuthor);
+                    }
+                    quote.setQuote(json);
                 }
             }).fail(function requestQuoteFailed() {
-                quote.generateQuote();
+                quote.getQuote();
             });
         }).call(this);
+    },
+    setupQuote() {
+        if (quote.updateQuote) {
+            this.getQuote();
+        } else {
+            this.setQuote(null);
+        }
     }
 }
 
@@ -217,7 +277,7 @@ $("document").ready(function() {
     time.updateTime();
     backgroundImage.setupImage();
     user.getName();
-    quote.generateQuote();
+    quote.setupQuote();
 
     document.getElementById("main-time-draw").addEventListener("dblclick", function toogleTwelveHourDisplay() {
         if (time.AMPMToggled) { //Clear
