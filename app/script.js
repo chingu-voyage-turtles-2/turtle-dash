@@ -169,29 +169,43 @@ let user = {
 
 var backgroundImage = {
     url : "https://cors-anywhere.herokuapp.com/" + "https://api.unsplash.com//photos/random?client_id=3e66d58c720b2e9697e94445cb461e9032b946068102f18f4f3203783b412e70&collections=140375&orientation=landscape",
-    setImage: function(json) {
+    setImage: function(json = null) {
         if (json === null) {
-            $("body").css("background-image", "url(" + localStorage.getItem("imageUrl") + ")");
-            $("#bottom-settings-location").text( localStorage.getItem("imageLocation") );
-            $("#bottom-settings-owner").text( localStorage.getItem("imageUser") );
+            setImageCssLocationOwner(
+                localStorage.getItem("imageUrl"),
+                localStorage.getItem("imageLocation"),
+                localStorage.getItem("imageUser")
+            );
         } else {
-            $("body").css("background-image", "url(" + json.urls.full + ")");
-            if (json.location != undefined) {
-                $("#bottom-settings-location").text(json.location.name + ", " + json.location.country);
+            if (json.location == undefined) {
+                setImageCssLocationOwner(
+                    json.urls.full,
+                    "Unknown",
+                    json.user.name
+                );
             } else {
-                $("#bottom-settings-location").text("Unknown");
+                setImageCssLocationOwner(
+                    json.urls.full, 
+                    json.location.name + ", " + json.location.country, 
+                    json.user.name
+                );
             }
-            $("#bottom-settings-owner").text(json.user.name);
+        }
+
+        function setImageCssLocationOwner(url, location, owner) {
+            $("body").css("background-image", "url(" + url + ")");
+            $("#bottom-settings-location").text(location);
+            $("#bottom-settings-owner").text(owner);
         }
     },
     getImage: function(){
         $.getJSON(this.url,function(json){
-            localStorage.setItem("imageUrl", json.urls.full);
-            if (json.location != undefined) {
-                localStorage.setItem("imageLocation", json.location.name + ", " + json.location.country);
-            } else {
+            if (json.location == undefined) {
                 localStorage.setItem("imageLocation", "Unknown");
+            } else {
+                localStorage.setItem("imageLocation", json.location.name + ", " + json.location.country);
             }
+            localStorage.setItem("imageUrl", json.urls.full);
             localStorage.setItem("imageUser", json.user.name);
             backgroundImage.setImage(json);
         });
@@ -210,20 +224,28 @@ let quote = {
     author: "", quote: "",
     setQuote: function(json) {
         if (json === null) {
-            $("#bottom-quote-draw").html(`
-                <p id="bottom-quote-draw-quote">${localStorage.getItem("quote")}</p>
-                <span id="bottom-quote-draw-author">${"- " + localStorage.getItem("quoteAuthor")}</span>`
+            drawQuote(
+                localStorage.getItem("quote"),
+                localStorage.getItem("quoteAuthor")
             );
-            $("#bottom-quote-draw").css("bottom", "70px");
         } else {
             if (json.quoteAuthor.length === 0) {
-                this.author = "Unknown";
+                drawQuote(
+                    json.quoteText, 
+                    "Unknown"
+                );
             } else {
-                this.author = json.quoteAuthor;
+                drawQuote(
+                    json.quoteText,
+                    json.quoteAuthor
+                );
             }
+        }
+
+        function drawQuote(quote, author) {
             $("#bottom-quote-draw").html(`
-                <p id="bottom-quote-draw-quote">${json.quoteText}</p>
-                <span id="bottom-quote-draw-author">${"- " + this.author}</span>`
+                <p id="bottom-quote-draw-quote">${quote}</p>
+                <span id="bottom-quote-draw-author">${"- " + author}</span>`
             );
             $("#bottom-quote-draw").css("bottom", "70px");
         }
