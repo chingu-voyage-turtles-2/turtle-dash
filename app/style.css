@@ -18,6 +18,7 @@ body {
     justify-content: space-between;
 }
 #main {
+    height: inherit;
     align-self: center;
     text-align: center;
     display: flex;
@@ -89,7 +90,7 @@ input[type=text] {
     color: #fff;
     text-align: center;
     text-shadow: 0px 0px 3px black;
-    font-size: 1rem;
+    font-size: 2rem;
     box-shadow: none;
     -webkit-box-sizing: content-box;
     -moz-box-sizing: content-box;
@@ -183,4 +184,13 @@ input[type=text]:focus:not([readonly])+label {
 }
 #bottom-quote-draw-author:hover {
     opacity: 1;
+}
+
+#main-focus {
+    font-size: 4.1vh;
+    padding: 2vh;
+}
+#main-username-focus{
+    font-size: 1.5rem;
+    width: 50%;
 }

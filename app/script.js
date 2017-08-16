@@ -20,6 +20,7 @@ var time = {
                 "<p>" + time.hours + ":" + time.minutes + "<p>"
             );
             user.drawGreeting();
+            focus.drawFocus();
             fadeIn("main-time-draw", 1500);
             fadeIn("main-greeting", 1800);
             this.firstTimeDraw = false;
@@ -149,7 +150,7 @@ let user = {
         }
     },
     getName: function() {
-        $("form").submit(function(e) {
+        $("form#main-username-form").submit(function(e) {
             e.preventDefault();
             localStorage.removeItem("username");
                     if (!localStorage.getItem("username")) {
@@ -157,6 +158,7 @@ let user = {
                         user.name = localStorage.getItem("username");
                     };
                     user.drawGreeting();
+                    focus.drawFocus();
         });
     },
     editName: function() {
@@ -169,6 +171,7 @@ let user = {
                         user.name = localStorage.getItem("username");
                     };
                     user.drawGreeting();
+                    focus.drawFocus();
             }
         });
     }
@@ -285,12 +288,50 @@ let quote = {
     }
 }
 
+let focus = {
+    task: localStorage.getItem("main-focus"),
+    drawFocus: function () {
+        if (localStorage.getItem("username") !== null) {
+            if (focus.task == null) {
+                focus.task = "";
+                $("#main-focus").html(`
+                <form id="main-username-task">
+                    <label>What is your main focus for this `+ time.timeOfDay +`?</label>
+                    <input type="text" name="focus" id="main-username-focus" placeholder="eg: cooking">
+                </form>`);
+            }else{
+                fadeOut("main-focus");
+                $("#main-focus").html(`<input type="checkbox" value="> `+focus.task+`">`+focus.task);
+                fadeIn("main-focus", 1800);
+            }
+            function fadeOut(name) {
+            $("#" + name).fadeOut(0);
+        }
+        function fadeIn(name, timeToOpaque) {
+            $("#" + name).fadeIn(timeToOpaque);
+        }
+        }
+    },
+    getTask: function () {
+        $("form#main-username-task").submit(function (e) {
+            e.preventDefault();
+            localStorage.removeItem("main-focus");
+            if (!localStorage.getItem("main-focus")) {
+                localStorage.setItem("main-focus", $("#main-username-focus").val());
+                focus.task = localStorage.getItem("main-focus");
+            };
+            focus.drawFocus();
+        });
+    }
+}
+
 $("document").ready(function() {
     time.setTime();
     time.updateTime();
     backgroundImage.setupImage();
     user.getName();
     user.editName();
+    focus.getTask();
     quote.setupQuote();
 
     document.getElementById("main-time-draw").addEventListener("dblclick", function toogleTwelveHourDisplay() {
