@@ -119,16 +119,16 @@ let user = {
             phrasesArray: [],
             phrases: {
                 standard: {
-                    phrase: "Good " + time.timeOfDay + ", " + user.name + "!",
+                    phrase: "Good " + time.timeOfDay + ", <span id='editname' contenteditable>" + user.name + "</span>!",
                     chance: 70
                 }, variation1: {
-                    phrase: "Welcome back, " + user.name + "!",
+                    phrase: "Welcome back, <span id='editname' contenteditable>" + user.name + "</span>!",
                     chance: 15
                 }, variation2: {
                     phrase: "Good to see you this " + time.timeOfDay + "!",
                     chance: 10
                 }, variation3: {
-                    phrase: "How's it going " + user.name + "?",
+                    phrase: "How's it going <span id='editname' contenteditable>" + user.name + "</span>?",
                     chance: 5
                 }
             }
@@ -151,12 +151,25 @@ let user = {
     getName: function() {
         $("form").submit(function(e) {
             e.preventDefault();
-            localStorage.clear();
+            localStorage.removeItem("username");
                     if (!localStorage.getItem("username")) {
                         localStorage.setItem("username", $("#main-username-input").val());
                         user.name = localStorage.getItem("username");
                     };
                     user.drawGreeting();
+        });
+    },
+    editName: function() {
+        $("#editname").keypress(function (e) {
+            if (e.which === 13) {
+                e.preventDefault();
+                localStorage.removeItem("username");
+                    if (!localStorage.getItem("username")) {
+                        localStorage.setItem("username", $("#editname").text());
+                        user.name = localStorage.getItem("username");
+                    };
+                    user.drawGreeting();
+            }
         });
     }
 }
@@ -179,8 +192,8 @@ var backgroundImage = {
                 );
             } else {
                 setImageCssLocationOwner(
-                    json.urls.full, 
-                    json.location.name + ", " + json.location.country, 
+                    json.urls.full,
+                    json.location.name + ", " + json.location.country,
                     json.user.name
                 );
             }
@@ -225,7 +238,7 @@ let quote = {
         } else {
             if (json.quoteAuthor.length === 0) {
                 drawQuote(
-                    json.quoteText, 
+                    json.quoteText,
                     "Unknown"
                 );
             } else {
@@ -277,6 +290,7 @@ $("document").ready(function() {
     time.updateTime();
     backgroundImage.setupImage();
     user.getName();
+    user.editName();
     quote.setupQuote();
 
     document.getElementById("main-time-draw").addEventListener("dblclick", function toogleTwelveHourDisplay() {

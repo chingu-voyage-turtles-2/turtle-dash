@@ -4,8 +4,8 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
+    caret-color: #4285F4;
  }
-
  /* Flexbox */
 #container {
     height: 97vh;
