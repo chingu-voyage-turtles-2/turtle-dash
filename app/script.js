@@ -37,6 +37,13 @@ var time = {
         } else {
             backgroundImage.updateImage = false;
         }
+        // Update quote every hour
+        if (this.hours != localStorage.getItem("quoteHour")) {
+            quote.updateQuote = true;
+            localStorage.setItem("quoteHour", this.hours);
+        } else {
+            quote.updateQuote = false;
+        }
         
         function fadeOut(name) {
             $("#" + name).fadeOut(0);
@@ -193,29 +200,51 @@ var backgroundImage = {
 let quote = {
     url: "https://cors-anywhere.herokuapp.com/" + "https://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json",
     author: "", quote: "",
-    generateQuote: function() {
+    setQuote: function(json) {
+        if (json === null) {
+            $("#bottom-quote-draw").html(`
+                <p id="bottom-quote-draw-quote">${localStorage.getItem("quote")}</p>
+                <span id="bottom-quote-draw-author">${"- " + localStorage.getItem("quoteAuthor")}</span>`
+            );
+            $("#bottom-quote-draw").css("bottom", "70px");
+        } else {
+            if (json.quoteAuthor.length === 0) {
+                this.author = "Unknown";
+            } else {
+                this.author = json.quoteAuthor;
+            }
+            $("#bottom-quote-draw").html(`
+                <p id="bottom-quote-draw-quote">${json.quoteText}</p>
+                <span id="bottom-quote-draw-author">${"- " + this.author}</span>`
+            );
+            $("#bottom-quote-draw").css("bottom", "70px");
+        }
+    },
+    getQuote: function() {
         (function requestQuote() {
             $.getJSON(this.url, function(json){
-                this.quote = json.quoteText;
-                if (json.quoteAuthor.length === 0) {
-                    this.author = "Unknown";
+                if (json.quoteText > 140) { // Limiting the length of the quote
+                    quote.getQuote();
                 } else {
-                    this.author = json.quoteAuthor;
-                }
-
-                if (this.quote.length > 140) { // Limiting the length of the quote
-                    quote.generateQuote();
-                } else {
-                    $("#bottom-quote-draw").html(`
-                        <p id="bottom-quote-draw-quote">${this.quote}</p>
-                        <span id="bottom-quote-draw-author">${"- " + this.author}</span>
-                        `);
-                    $("#bottom-quote-draw").css("bottom", "70px");
+                    localStorage.setItem("quote", json.quoteText);
+                    if (json.quoteAuthor.length === 0) {
+                        localStorage.setItem("quoteAuthor", "Unknown");
+                    } else {
+                        localStorage.setItem("quoteAuthor", json.quoteAuthor);
+                    }
+                    quote.setQuote(json);
                 }
             }).fail(function requestQuoteFailed() {
-                quote.generateQuote();
+                quote.getQuote();
             });
         }).call(this);
+    },
+    setupQuote() {
+        if (quote.updateQuote) {
+            this.getQuote();
+        } else {
+            this.setQuote(null);
+        }
     }
 }
 
@@ -224,7 +253,7 @@ $("document").ready(function() {
     time.updateTime();
     backgroundImage.setupImage();
     user.getName();
-    quote.generateQuote();
+    quote.setupQuote();
 
     document.getElementById("main-time-draw").addEventListener("dblclick", function toogleTwelveHourDisplay() {
         if (time.AMPMToggled) { //Clear
