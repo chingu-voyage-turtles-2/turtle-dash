@@ -37,6 +37,7 @@ var time = {
         } else {
             backgroundImage.updateImage = false;
         }
+
         // Update quote every hour
         if (this.hours != localStorage.getItem("quoteHour")) {
             quote.updateQuote = true;
@@ -44,7 +45,7 @@ var time = {
         } else {
             quote.updateQuote = false;
         }
-        
+
         function fadeOut(name) {
             $("#" + name).fadeOut(0);
         }
@@ -150,19 +151,12 @@ let user = {
     getName: function() {
         $("form").submit(function(e) {
             e.preventDefault();
-            $.ajax({
-                type: "POST",
-                data: $("#main-username-input").val(),
-                context: $("#main-greeting"),
-                success: function () {
-                    localStorage.clear();
+            localStorage.clear();
                     if (!localStorage.getItem("username")) {
                         localStorage.setItem("username", $("#main-username-input").val());
                         user.name = localStorage.getItem("username");
                     };
                     user.drawGreeting();
-                }
-            });
         });
     }
 }
