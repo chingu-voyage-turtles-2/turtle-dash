@@ -78,6 +78,8 @@ var time = {
         setTimeout(function updateTimeTimeout() {
             time.setTime();
             time.updateTime();
+            focus.getTask();
+    focus.editTask();
         }, (60 - this.seconds) * 1000 + 1) //+1 to secure catching the updated time
     },
     setTimeOfDay: function() {
@@ -171,7 +173,6 @@ let user = {
                         user.name = localStorage.getItem("username");
                     };
                     user.drawGreeting();
-                    focus.drawFocus();
             }
         });
     }
@@ -296,20 +297,22 @@ let focus = {
                 focus.task = "";
                 $("#main-focus").html(`
                 <form id="main-username-task">
-                    <label>What is your main focus for this `+ time.timeOfDay +`?</label>
+                    <label>What is your main focus for this ` + time.timeOfDay + `?</label>
                     <input type="text" name="focus" id="main-username-focus" placeholder="eg: cooking">
                 </form>`);
-            }else{
+            } else {
                 fadeOut("main-focus");
-                $("#main-focus").html(`<input type="checkbox" value="> `+focus.task+`">`+focus.task);
-                fadeIn("main-focus", 1800);
+                $("#main-focus").html(`<input type="checkbox" value="> ` + focus.task + `"> <span id='editfocus' contenteditable>` + focus.task + `</span>`);
+                fadeIn("main-focus", 1000);
             }
+
             function fadeOut(name) {
-            $("#" + name).fadeOut(0);
-        }
-        function fadeIn(name, timeToOpaque) {
-            $("#" + name).fadeIn(timeToOpaque);
-        }
+                $("#" + name).fadeOut(0);
+            }
+
+            function fadeIn(name, timeToOpaque) {
+                $("#" + name).fadeIn(timeToOpaque);
+            }
         }
     },
     getTask: function () {
@@ -322,6 +325,19 @@ let focus = {
             };
             focus.drawFocus();
         });
+    },
+    editTask: function() {
+        $("#editfocus").keypress(function (e) {
+            if (e.which === 13) {
+                e.preventDefault();
+            localStorage.removeItem("main-focus");
+            if (!localStorage.getItem("main-focus")) {
+                localStorage.setItem("main-focus", $("#editfocus").text());
+                focus.task = localStorage.getItem("main-focus");
+            };
+            focus.drawFocus();
+            }
+        });
     }
 }
 
@@ -332,6 +348,7 @@ $("document").ready(function() {
     user.getName();
     user.editName();
     focus.getTask();
+    focus.editTask();
     quote.setupQuote();
 
     document.getElementById("main-time-draw").addEventListener("dblclick", function toogleTwelveHourDisplay() {
@@ -346,3 +363,4 @@ $("document").ready(function() {
         }
     });
 });
+
