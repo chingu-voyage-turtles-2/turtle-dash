@@ -76,7 +76,6 @@ body {
     width: 100%;
     padding: 10px;
 }
-
 input[type=text] {
     background-color: transparent;
     border: none;
@@ -96,26 +95,21 @@ input[type=text] {
     box-sizing: content-box;
     transition: all .3s;
 }
-
 input[type=text]:focus:not([readonly]) {
     border-bottom: 1px solid #4285F4;
     box-shadow: 0 1px 0 0 #4285F4;
 }
-
 input[type=text]:focus:not([readonly])+label {
     color: #4285F4;
 }
-
 #main-username-input::-webkit-input-placeholder {
   color: #fff;
   opacity: 1;
 }
-
 #main-username-input::-moz-placeholder {
   color: #fff;
   opacity: 1;
 }
-
 #main-username-input:-ms-input-placeholder {
   color: #fff;
   opacity: 1;
@@ -134,17 +128,17 @@ input[type=text]:focus:not([readonly])+label {
     align-self: flex-end;
     transition: all 2s ease;
 }
-#bottom-settings:hover{
+#bottom-settings:hover {
     transform:translate(0,-0.5em);
 }
 @keyframes fadeIn {
     0% {opacity: 0;}
     100% {opacity: 1;}
 }
-#bottom-settings-location{
+#bottom-settings-location {
     display:inline-block;
 }
-#bottom-settings-location:hover ~ #bottom-settings-owner{
+#bottom-settings-location:hover ~ #bottom-settings-owner {
     display: block;
     animation-name: fadeIn;
     animation-duration: 3s;
