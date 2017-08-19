@@ -132,12 +132,30 @@ input[type=text]:focus:not([readonly])+label {
 #bottom-settings {
     width: 15vw;
     align-self: flex-end;
+    transition: all 2s ease;
+}
+#bottom-settings:hover{
+    transform:translate(0,-0.5em);
+}
+@keyframes fadeIn {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+#bottom-settings-location{
+    display:inline-block;
 }
 #bottom-settings-location:hover ~ #bottom-settings-owner{
     display: block;
+    animation-name: fadeIn;
+    animation-duration: 3s;
 }
-#bottom-settings-owner{
+#bottom-settings-owner {
     display: none;
+}
+#bottom-settings-owner:hover {
+    display: block;
+    animation-name: fadeIn;
+    animation-duration: 3s;
 }
 #bottom-todo {
     display: flex;
