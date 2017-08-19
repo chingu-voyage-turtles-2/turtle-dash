@@ -206,7 +206,7 @@ var backgroundImage = {
         function setImageCssLocationOwner(url, location, owner) {
             $("body").css("background-image", "url(" + url + ")");
             $("#bottom-settings-location").text(location);
-            $("#bottom-settings-owner").text(owner);
+            $("#bottom-settings-owner").text("By: " + owner);
         }
     },
     getImage: function(){
