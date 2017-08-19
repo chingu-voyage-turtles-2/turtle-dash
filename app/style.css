@@ -32,9 +32,10 @@ body {
 /* Top */
 #top-logo-spin {
     margin: 10px 0 0 10px;
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
+    padding: 4px 4px 4px 4px;
 }
 #top-logo-spin:hover {
     background-color: rgba(255,255,255,0.3);
