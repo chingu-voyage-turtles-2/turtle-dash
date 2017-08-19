@@ -127,9 +127,13 @@ input[type=text]:focus:not([readonly])+label {
 #bottom-settings {
     width: 15vw;
     align-self: flex-end;
-    transition: all 2s ease;
+    display: flex;
 }
-#bottom-settings:hover {
+#bottom-settings-info {
+    transition: all 2s ease;
+    margin-top: 10px;
+}
+#bottom-settings-info:hover {
     transform:translate(0,-0.5em);
 }
 @keyframes fadeIn {
@@ -161,8 +165,9 @@ input[type=text]:focus:not([readonly])+label {
 }
 #bottom-todo-icon {
     margin: 0 10px 0 0;
-    height: 32px;
-    width: 32px;
+    height: 24px;
+    width: 24px;
+    padding: 8px 8px 8px 8px;
     cursor: hand;
     order: 2;
 }
@@ -196,4 +201,15 @@ input[type=text]:focus:not([readonly])+label {
 }
 #bottom-quote-draw-author:hover {
     opacity: 1;
+}
+#bottom-settings-icon {
+    height: 24px;
+    width: 24px;
+    padding: 8px 8px 8px 8px;
+    cursor: hand;
+    margin: 0 3px 0 10px;
+}
+#bottom-settings-icon:hover {
+    background-color: rgba(255,255,255,0.3);
+    border-radius: 50%;
 }
