@@ -285,6 +285,32 @@ let quote = {
     }
 }
 
+var todo = {
+    dropupActive: false,
+    activateDropup: function() {
+        document.getElementById("bottom-todo-icon").addEventListener("click", 
+        function triggerDropup() {
+            if (!todo.dropupActive) {
+                $("#bottom-todo-dropup").removeClass("hideTodoDropup");
+                $("#bottom-todo-dropup").addClass("unhideTodoDropup");
+                $("#bottom-todo-arrow").css("display", "block");
+
+                $("#bottom-todo-dropup").html(""); // Content here
+
+                todo.dropupActive = true;
+            } else {
+                $("#bottom-todo-dropup").removeClass("unhideTodoDropup");
+                $("#bottom-todo-dropup").addClass("hideTodoDropup");
+                $("#bottom-todo-arrow").css("display", "none");
+
+                $("#bottom-todo-dropup").html("");
+
+                todo.dropupActive = false;
+            }
+        });
+    }
+}
+
 $("document").ready(function() {
     time.setTime();
     time.updateTime();
@@ -292,6 +318,7 @@ $("document").ready(function() {
     user.getName();
     user.editName();
     quote.setupQuote();
+    todo.activateDropup()
 
     document.getElementById("main-time-draw").addEventListener("dblclick", 
     function toogleTwelveHourDisplay() {
@@ -314,8 +341,8 @@ $("document").ready(function() {
         hide("bottom-quote");
 
         function hide(id) {
-            $("#" + id).addClass("hide");
-            $("#" + id).removeClass("unhide");
+            $("#" + id).addClass("hideDivs");
+            $("#" + id).removeClass("unhideDivs");
             if (id === "bottom-quote") {
                 $("#" + id).css("transition-delay", "5s");
                 ("#" + id).css("transition-duration", "0.75s");
@@ -330,8 +357,8 @@ $("document").ready(function() {
         unhide("bottom-quote");
 
         function unhide(id) {
-            $("#" + id).addClass("unhide");
-            $("#" + id).removeClass("hide");
+            $("#" + id).addClass("unhideDivs");
+            $("#" + id).removeClass("hideDivs");
             if (id === "bottom-quote") {
                 $("#" + id).css("visibility", "visible");
                 $("#" + id).css("transition-delay", "0.25s");
