@@ -52,12 +52,6 @@ body {
     display: inline-flex;
     align-items: baseline;
     float: left;
-    /* Makes time unselectable */
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
     /* Center time horizontally */
     margin-top: -20vh - 75px;
@@ -249,4 +243,24 @@ input[type=text]:focus:not([readonly])+label {
     height: 8px;
     width: 14px;
     display: none;
+}
+.todos {
+    padding: 0 0 0 10px;
+    margin-bottom: -5px;
+}
+#bottom-todo-dropup-todo {
+    height: inherit;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+#bottom-todo-dropup-todo-input {
+    position: absolute;
+    bottom: 75;
+    width: 230px;
+    height: 18px;
+    margin: 0 0 0 10px;
+    order: 999;
+    font-size: inherit;
+    text-align: inherit;
 }

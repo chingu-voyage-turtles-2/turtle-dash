@@ -149,26 +149,26 @@ let user = {
         }
     },
     getName: function() {
-        $("form").submit(function(e) {
+        $("#main-username-form").submit(function(e) {
             e.preventDefault();
             localStorage.removeItem("username");
-                    if (!localStorage.getItem("username")) {
-                        localStorage.setItem("username", $("#main-username-input").val());
-                        user.name = localStorage.getItem("username");
-                    };
-                    user.drawGreeting();
+            if (!localStorage.getItem("username")) {
+                localStorage.setItem("username", $("#main-username-input").val());
+                user.name = localStorage.getItem("username");
+            };
+            user.drawGreeting();
         });
     },
     editName: function() {
-        $("#editname").keypress(function (e) {
+        $("#editname").keypress(function(e) {
             if (e.which === 13) {
                 e.preventDefault();
                 localStorage.removeItem("username");
-                    if (!localStorage.getItem("username")) {
-                        localStorage.setItem("username", $("#editname").text());
-                        user.name = localStorage.getItem("username");
-                    };
-                    user.drawGreeting();
+                if (!localStorage.getItem("username")) {
+                    localStorage.setItem("username", $("#editname").text());
+                    user.name = localStorage.getItem("username");
+                };
+                user.drawGreeting();
             }
         });
     }
@@ -287,27 +287,57 @@ let quote = {
 
 var todo = {
     dropupActive: false,
-    activateDropup: function() {
+    dropupListener: function() {
         document.getElementById("bottom-todo-icon").addEventListener("click", 
         function triggerDropup() {
             if (!todo.dropupActive) {
-                $("#bottom-todo-dropup").removeClass("hideTodoDropup");
-                $("#bottom-todo-dropup").addClass("unhideTodoDropup");
-                $("#bottom-todo-arrow").css("display", "block");
+                chrome.storage.local.get("todos", function(todos) {
+                    todo.drawDropup(todos.todos);
 
-                $("#bottom-todo-dropup").html(""); // Content here
-
-                todo.dropupActive = true;
+                });
             } else {
                 $("#bottom-todo-dropup").removeClass("unhideTodoDropup");
                 $("#bottom-todo-dropup").addClass("hideTodoDropup");
                 $("#bottom-todo-arrow").css("display", "none");
 
-                $("#bottom-todo-dropup").html("");
+                $("#bottom-todo-dropup-todo").html("");
 
                 todo.dropupActive = false;
             }
         });
+    },
+    drawDropup: function(todos) {
+        let dropupId = "bottom-todo-dropup";
+        
+        $("#" + dropupId).removeClass("hideTodoDropup");
+        $("#" + dropupId).addClass("unhideTodoDropup");
+        $("#bottom-todo-arrow").css("display", "block");
+
+        for (let i = 0; i < todos.length; i++) {
+            $("#bottom-todo-dropup-todo").append(`
+                <p id="${dropupId}-todo-${i}" class="todos">
+                    Hello World ${todos[i]}
+                </p>
+            `);
+        }
+        $("#bottom-todo-dropup-todo").append(`
+            <form id="${dropupId}-todo-from">
+                <input type="text" name="todo" id="${dropupId}-todo-input" placeholder="Enter Todo" action="">
+            </form>
+        `);
+
+        todo.dropupActive = true;
+    },
+    newTodo: function() {
+        $("#bottom-todo-dropup-todo-form").submit(
+        function newTodoSubmitted(e) {
+            e.preventDefault();
+            console.log($("#bottom-todo-dropup-todo-input").val())
+            todo.drawDropup();
+            return false;
+        });
+
+        //chrome.storage.local.set({ todos: ["todo1", "todo2" , "todo3"]});
     }
 }
 
@@ -318,7 +348,8 @@ $("document").ready(function() {
     user.getName();
     user.editName();
     quote.setupQuote();
-    todo.activateDropup()
+    todo.dropupListener();
+    todo.newTodo();
 
     document.getElementById("main-time-draw").addEventListener("dblclick", 
     function toogleTwelveHourDisplay() {
