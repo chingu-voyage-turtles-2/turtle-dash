@@ -304,4 +304,40 @@ $("document").ready(function() {
             time.AMPMToggled = true;
         }
     });
+
+    $("#bottom-settings-info").hover(
+    function hideOtherDivs() {
+        hide("top");
+        hide("main");
+        hide("bottom-todo");
+        hide("bottom-quote");
+
+        function hide(id) {
+            $("#" + id).addClass("hide");
+            $("#" + id).removeClass("unhide");
+            if (id === "bottom-quote") {
+                $("#" + id).css("transition-delay", "3s");
+                ("#" + id).css("transition-duration", "0.75s");
+                ("#" + id).css("transition-property", "all");
+                ("#" + id).css("transition-timing-function", "linear");
+            }
+        }
+    }, function unhideOtherDivs() {
+        unhide("top");
+        unhide("main");
+        unhide("bottom-todo");
+        unhide("bottom-quote");
+
+        function unhide(id) {
+            $("#" + id).addClass("unhide");
+            $("#" + id).removeClass("hide");
+            if (id === "bottom-quote") {
+                $("#" + id).css("visibility", "visible");
+                $("#" + id).css("transition-delay", "0.25s");
+                ("#" + id).css("transition-duration", "0.75s");
+                ("#" + id).css("transition-property", "all");
+                ("#" + id).css("transition-timing-function", "linear");
+            }
+        }
+    });
 });

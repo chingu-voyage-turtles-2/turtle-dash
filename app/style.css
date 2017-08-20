@@ -6,6 +6,7 @@ body {
     background-position: center center;
     caret-color: #4285F4;
  }
+
  /* Flexbox */
 #container {
     height: 97vh;
@@ -29,6 +30,26 @@ body {
     justify-content: space-between;
 }
 
+/* Classes */
+.outlined {
+    text-shadow: 0px 0px 3px black;
+}
+.hide {
+    visibility: hidden;
+    opacity: 0;
+    transition-delay: 5s;
+    transition-duration: 0.75s;
+    transition-property: all;
+    transition-timing-function: linear;
+}
+.unhide {
+    visibility: visible;
+    transition-delay: 0.25s;
+    transition-duration: 0.75s;
+    transition-property: all;
+    transition-timing-function: linear;
+}
+
 /* Top */
 #top-logo-spin {
     margin: 10px 0 0 10px;
@@ -42,9 +63,6 @@ body {
 }
 
 /* Main */
-.outlined {
-    text-shadow: 0px 0px 3px black;
-}
 #main-time {
     display: inline-flex;
     align-items: baseline;
@@ -177,7 +195,7 @@ input[type=text]:focus:not([readonly])+label {
 }
 #bottom-quote {
     width: 50vw;
-    height: 200px;
+    height: 250px;
     position: relative;
     overflow: hidden;
     align-self: center;
