@@ -107,14 +107,13 @@ var time = {
 
 let user = {
     name: localStorage.getItem("username"),
-    drawGreeting: function() {
+    drawGreeting: function () {
         if (user.name == null) {
             user.name = "User"
             $("#main-username").html(`
                 <form id="main-username-form">
                     <input type="text" name="username" id="main-username-input" placeholder="Enter Username">
-                </form>`
-            );
+                </form>`);
         } else {
             $("#main-username").html("");
         }
@@ -124,13 +123,16 @@ let user = {
                 standard: {
                     phrase: "Good " + time.timeOfDay + ", <span id='editname' contenteditable>" + user.name + "</span>!",
                     chance: 70
-                }, variation1: {
+                },
+                variation1: {
                     phrase: "Welcome back, <span id='editname' contenteditable>" + user.name + "</span>!",
                     chance: 15
-                }, variation2: {
+                },
+                variation2: {
                     phrase: "Good to see you this " + time.timeOfDay + "!",
                     chance: 10
-                }, variation3: {
+                },
+                variation3: {
                     phrase: "How's it going <span id='editname' contenteditable>" + user.name + "</span>?",
                     chance: 5
                 }
@@ -147,35 +149,39 @@ let user = {
             }
             let index = greetings.phrasesArray[
                 Math.round(Math.random() * (greetings.phrasesArray.length - 1))
-            ];
+                ];
             return greetings.phrases[index].phrase
-        }
+        };
+
+        user.getName();
+        user.editName();
+
     },
-    getName: function() {
-        $("form#main-username-form").submit(function(e) {
-            e.preventDefault();
-            localStorage.removeItem("username");
-                    if (!localStorage.getItem("username")) {
-                        localStorage.setItem("username", $("#main-username-input").val());
-                        user.name = localStorage.getItem("username");
-                    };
-                    user.drawGreeting();
-                    focus.drawFocus();
-        });
-    },
-    editName: function() {
-        $("#editname").keypress(function (e) {
-            if (e.which === 13) {
+    getName: function () {
+            $("#main-username-form").on('submit', function (e) {
                 e.preventDefault();
                 localStorage.removeItem("username");
+                if (!localStorage.getItem("username")) {
+                    localStorage.setItem("username", $("#main-username-input").val());
+                    user.name = localStorage.getItem("username");
+                };
+                user.drawGreeting();
+                focus.drawFocus();
+            });
+        },
+        editName: function () {
+            $("#editname").keypress(function (e) {
+                if (e.which === 13) {
+                    e.preventDefault();
+                    localStorage.removeItem("username");
                     if (!localStorage.getItem("username")) {
                         localStorage.setItem("username", $("#editname").text());
                         user.name = localStorage.getItem("username");
                     };
                     user.drawGreeting();
-            }
-        });
-    }
+                }
+            });
+        }
 }
 
 var backgroundImage = {
@@ -294,48 +300,38 @@ let focus = {
     drawFocus: function () {
         if (localStorage.getItem("username") !== null) {
             if (focus.task == null) {
-                focus.task = "";
                 $("#main-focus").html(`
-                <form id="main-username-task">
-                    <label>What is your main focus for this ` + time.timeOfDay + `?</label>
-                    <input type="text" name="focus" id="main-username-focus" placeholder="eg: cooking">
+                <form id="main-focus-form">
+                    <label>What is your main focus (for) today?</label>
+                    <input type="text" name="focus" id="main-focus-value" placeholder="eg: cooking">
                 </form>`);
             } else {
-                fadeOut("main-focus");
-                $("#main-focus").html(`<input type="checkbox" value="> ` + focus.task + `"> <span id='editfocus' contenteditable>` + focus.task + `</span>`);
-                fadeIn("main-focus", 1000);
+                $("#main-focus").html(`<input type="checkbox" value=" ` + focus.task + `"> <span id='editfocus' contenteditable>` + focus.task + `</span>`);
             }
-
-            function fadeOut(name) {
-                $("#" + name).fadeOut(0);
-            }
-
-            function fadeIn(name, timeToOpaque) {
-                $("#" + name).fadeIn(timeToOpaque);
-            }
-        }
+        };
+        focus.getTask();
+        focus.editTask();
     },
     getTask: function () {
-        $("form#main-username-task").submit(function (e) {
+        $("#main-focus-form").on("submit", function (e) {
             e.preventDefault();
-            localStorage.removeItem("main-focus");
-            if (!localStorage.getItem("main-focus")) {
-                localStorage.setItem("main-focus", $("#main-username-focus").val());
-                focus.task = localStorage.getItem("main-focus");
-            };
-            focus.drawFocus();
+                    localStorage.removeItem("main-focus");
+                    if (!localStorage.getItem("main-focus")) {
+                        localStorage.setItem("main-focus", $("#main-focus-value").val());
+                        focus.task = localStorage.getItem("main-focus");
+                    };
+                    focus.drawFocus();
         });
     },
-    editTask: function() {
+    editTask: function () {
         $("#editfocus").keypress(function (e) {
             if (e.which === 13) {
-                e.preventDefault();
-            localStorage.removeItem("main-focus");
-            if (!localStorage.getItem("main-focus")) {
-                localStorage.setItem("main-focus", $("#editfocus").text());
-                focus.task = localStorage.getItem("main-focus");
-            };
-            focus.drawFocus();
+                localStorage.removeItem("main-focus");
+                if (!localStorage.getItem("main-focus")) {
+                    localStorage.setItem("main-focus", $("#editfocus").text());
+                    focus.task = localStorage.getItem("main-focus");
+                };
+                focus.drawFocus();
             }
         });
     }
@@ -345,10 +341,6 @@ $("document").ready(function() {
     time.setTime();
     time.updateTime();
     backgroundImage.setupImage();
-    user.getName();
-    user.editName();
-    focus.getTask();
-    focus.editTask();
     quote.setupQuote();
 
     document.getElementById("main-time-draw").addEventListener("dblclick", function toogleTwelveHourDisplay() {
