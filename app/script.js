@@ -293,7 +293,8 @@ $("document").ready(function() {
     user.editName();
     quote.setupQuote();
 
-    document.getElementById("main-time-draw").addEventListener("dblclick", function toogleTwelveHourDisplay() {
+    document.getElementById("main-time-draw").addEventListener("dblclick", 
+    function toogleTwelveHourDisplay() {
         if (time.AMPMToggled) { //Clear
             $(".main-time-twelvehours").html("");
             time.AMPMToggled = false;
@@ -316,7 +317,7 @@ $("document").ready(function() {
             $("#" + id).addClass("hide");
             $("#" + id).removeClass("unhide");
             if (id === "bottom-quote") {
-                $("#" + id).css("transition-delay", "3s");
+                $("#" + id).css("transition-delay", "5s");
                 ("#" + id).css("transition-duration", "0.75s");
                 ("#" + id).css("transition-property", "all");
                 ("#" + id).css("transition-timing-function", "linear");
