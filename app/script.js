@@ -285,6 +285,17 @@ let quote = {
     }
 }
 
+var searchButton = document.getElementById("top-search-icon");
+var searchBox = document.getElementById("top-search-box");
+
+searchButton.addEventListener("click", function() {
+    if (searchBox.style.display == "block") {
+        searchBox.style.display = "none";
+    } else {
+        searchBox.style.display = "block";
+    }
+})
+
 $("document").ready(function() {
     time.setTime();
     time.updateTime();

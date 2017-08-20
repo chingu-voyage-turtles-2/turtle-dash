@@ -53,6 +53,15 @@ body {
     background-color: rgba(255,255,255,0.3);
     border-radius: 50%;
 }
+#top-search-box {
+    display: none;
+    margin-top: 10px;
+    order: 3;
+}
+#top-search-input {
+    font-size: 12px;
+    box-sizing: border-box;
+}
 
 /* Main */
 .outlined {
