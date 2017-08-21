@@ -6,6 +6,7 @@ body {
     background-position: center center;
     caret-color: #4285F4;
  }
+
  /* Flexbox */
 #container {
     height: 97vh;
@@ -27,6 +28,11 @@ body {
 #bottom {
     display: flex;
     justify-content: space-between;
+}
+
+/* Global Classes */
+.outlined {
+    text-shadow: 0px 0px 3px black;
 }
 
 /* Top */
@@ -64,19 +70,10 @@ body {
 }
 
 /* Main */
-.outlined {
-    text-shadow: 0px 0px 3px black;
-}
 #main-time {
     display: inline-flex;
     align-items: baseline;
     float: left;
-    /* Makes time unselectable */
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
     /* Center time horizontally */
     margin-top: -20vh - 75px;
@@ -179,6 +176,7 @@ input[type=text]:focus:not([readonly])+label {
     animation-duration: 3s;
 }
 #bottom-todo {
+    height: 40vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -199,7 +197,7 @@ input[type=text]:focus:not([readonly])+label {
 }
 #bottom-quote {
     width: 50vw;
-    height: 200px;
+    height: 250px;
     position: relative;
     overflow: hidden;
     align-self: center;
@@ -234,4 +232,63 @@ input[type=text]:focus:not([readonly])+label {
 #bottom-settings-icon:hover {
     background-color: rgba(255,255,255,0.3);
     border-radius: 50%;
+}
+.hideDivs {
+    visibility: hidden;
+    opacity: 0;
+    transition-delay: 3.5s;
+    transition-duration: 0.75s;
+    transition-property: all;
+    transition-timing-function: linear;
+}
+.unhideDivs {
+    visibility: visible;
+    transition-delay: 0.25s;
+    transition-duration: 0.75s;
+    transition-property: all;
+    transition-timing-function: linear;
+}
+.unhideTodoDropup {
+    display: block;
+    height: 194px;
+    width: 250px;
+    background-color: rgba(0, 0, 9, 0.88);
+    border-radius: 2%;
+    margin: 0 10px 0 0;
+    z-index: 1;
+}
+.hideTodoDropup {
+    display: none;
+}
+#bottom-todo-arrow {
+    margin: 0 23px 3px 0;
+    height: 8px;
+    width: 14px;
+    display: none;
+}
+.todo-wrappers {
+    margin: 5px 0 0 8px;
+}
+.todo-checkboxes {
+    display: inline;
+}
+.todos {
+    font-size: 12;
+    display: inline;
+}
+#bottom-todo-dropup-todo {
+    height: inherit;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+#bottom-todo-dropup-todo-input {
+    position: absolute;
+    bottom: 75;
+    width: 230px;
+    height: 18px;
+    margin: 0 0 0 10px;
+    order: 999;
+    font-size: inherit;
+    text-align: inherit;
 }
