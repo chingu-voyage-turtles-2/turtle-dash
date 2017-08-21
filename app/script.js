@@ -291,9 +291,8 @@ var todo = {
         document.getElementById("bottom-todo-icon").addEventListener("click", 
         function triggerDropup() {
             if (!todo.dropupActive) {
-                chrome.storage.local.get("todos", function(todos) {
-                    todo.drawDropup(todos.todos);
-
+                chrome.storage.local.get("todos", function(storage) {
+                    todo.drawDropup(storage.todos);
                 });
             } else {
                 $("#bottom-todo-dropup").removeClass("unhideTodoDropup");
@@ -312,6 +311,11 @@ var todo = {
         $("#" + dropupId).removeClass("hideTodoDropup");
         $("#" + dropupId).addClass("unhideTodoDropup");
         $("#bottom-todo-arrow").css("display", "block");
+        if (todos.length > 27) {
+            // Activate scrollbar
+        } else {
+            $("#" + dropupId).css("height", (40 + todos.length * 22) + "px");
+        }
 
         for (let i = 0; i < todos.length; i++) {
             $("#bottom-todo-dropup-todo").append(`
@@ -327,6 +331,8 @@ var todo = {
         `);
 
         todo.dropupActive = true;
+
+        todo.newTodo();
     },
     newTodo: function() {
         $("#bottom-todo-dropup-todo-form").submit(
@@ -349,7 +355,6 @@ $("document").ready(function() {
     user.editName();
     quote.setupQuote();
     todo.dropupListener();
-    todo.newTodo();
 
     document.getElementById("main-time-draw").addEventListener("dblclick", 
     function toogleTwelveHourDisplay() {
