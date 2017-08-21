@@ -288,7 +288,7 @@ let quote = {
 var todo = {
     dropupActive: false,
     dropupListener: function() {
-        document.getElementById("bottom-todo-icon").addEventListener("click", 
+        document.getElementById("bottom-todo-icon").addEventListener("click",
         function triggerDropup() {
             if (!todo.dropupActive) {
                 chrome.storage.local.get("todos", function(storage) {
@@ -307,7 +307,7 @@ var todo = {
     },
     drawDropup: function(todos) {
         let dropupId = "bottom-todo-dropup";
-        
+
         $("#" + dropupId).removeClass("hideTodoDropup");
         $("#" + dropupId).addClass("unhideTodoDropup");
         $("#bottom-todo-arrow").css("display", "block");
@@ -325,22 +325,19 @@ var todo = {
             `);
         }
         $("#bottom-todo-dropup-todo").append(`
-            <form id="${dropupId}-todo-from">
-                <input type="text" name="todo" id="${dropupId}-todo-input" placeholder="Enter Todo" action="">
+            <form id="${dropupId}-todo-form">
+                <input type="text" name="todo" id="${dropupId}-todo-input" placeholder="Enter Todo">
             </form>
         `);
 
         todo.dropupActive = true;
-
         todo.newTodo();
     },
-    newTodo: function() {
-        $("#bottom-todo-dropup-todo-form").submit(
-        function newTodoSubmitted(e) {
+    newTodo: function(todos) {
+        $("#bottom-todo-dropup-todo-form").submit(function(e) {
             e.preventDefault();
-            console.log($("#bottom-todo-dropup-todo-input").val())
-            todo.drawDropup();
-            return false;
+//            todos.push($("#bottom-todo-dropup-todo-input").val());
+            console.log($("#bottom-todo-dropup-todo-input").val());
         });
 
         //chrome.storage.local.set({ todos: ["todo1", "todo2" , "todo3"]});
@@ -356,7 +353,7 @@ $("document").ready(function() {
     quote.setupQuote();
     todo.dropupListener();
 
-    document.getElementById("main-time-draw").addEventListener("dblclick", 
+    document.getElementById("main-time-draw").addEventListener("dblclick",
     function toogleTwelveHourDisplay() {
         if (time.AMPMToggled) { //Clear
             $(".main-time-twelvehours").html("");
