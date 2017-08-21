@@ -7,12 +7,10 @@ var time = {
         this.hours = new Date().getHours();
         this.minutes = new Date().getMinutes();
         this.seconds = new Date().getSeconds();
-
         this.setTimeOfDay(); //Morning, etc.
         setAMPM.call(this);
         addMissingZero.call(this, this.hours);
         addMissingZero.call(this, this.minutes);
-
         if (this.firstTimeDraw) {
             fadeOut("main-time-draw");
             fadeOut("main-greeting");
@@ -29,7 +27,6 @@ var time = {
                 "<p>" + time.hours + ":" + time.minutes + "<p>"
             );
         }
-
         // Update background image every day
         this.date = new Date().getDate();
         if (this.date != localStorage.getItem("imageDate")) {
@@ -38,7 +35,6 @@ var time = {
         } else {
             backgroundImage.updateImage = false;
         }
-
         // Update quote every hour
         if (this.hours != localStorage.getItem("quoteHour")) {
             quote.updateQuote = true;
@@ -46,7 +42,6 @@ var time = {
         } else {
             quote.updateQuote = false;
         }
-
         function fadeOut(name) {
             $("#" + name).fadeOut(0);
         }
@@ -70,7 +65,6 @@ var time = {
                     case(this.minutes):
                         this.minutes = "0" + unit;
                 }
-
             }
         }
     },
@@ -137,7 +131,6 @@ let user = {
             }
         }
         $("#main-greeting").html(returnRandomPhrase);
-
         function returnRandomPhrase() {
             //Bulding a array out of the phrases keys and picking a random one
             for (let i in greetings.phrases) {
@@ -150,12 +143,10 @@ let user = {
                 ];
             return greetings.phrases[index].phrase
         };
-
         user.getName();
         user.editName();
-
     },
-    getName: function () {
+    getName: function() {
             $("#main-username-form").on('submit', function (e) {
                 e.preventDefault();
                 localStorage.removeItem("username");
@@ -167,7 +158,7 @@ let user = {
                 focus.drawFocus();
             });
         },
-        editName: function () {
+        editName: function() {
             $("#editname").keypress(function (e) {
                 if (e.which === 13) {
                     e.preventDefault();
@@ -206,7 +197,6 @@ var backgroundImage = {
                 );
             }
         }
-
         function setImageCssLocationOwner(url, location, owner) {
             $("body").css("background-image", "url(" + url + ")");
             $("#bottom-settings-location").text(location);
@@ -256,7 +246,6 @@ let quote = {
                 );
             }
         }
-
         function drawQuote(quote, author) {
             $("#bottom-quote-draw").html(`
                 <p id="bottom-quote-draw-quote">${quote}</p>
@@ -296,7 +285,7 @@ let quote = {
 let focus = {
     taskChecked: localStorage.getItem("main-focus-check"),
     task: localStorage.getItem("main-focus"),
-    drawFocus: function () {
+    drawFocus: function() {
         if (localStorage.getItem("username") !== null) {
             if (focus.task == null || focus.task =='') {
                 $("#main-focus").html(`
@@ -305,23 +294,21 @@ let focus = {
                     <input type="text" name="focus" id="main-focus-value" placeholder="eg: cooking">
                 </form>`);
             } else {
-                $("#main-focus").html(`<input type="checkbox" id='my-focus' value=" ` + focus.task + `"><label id='focusCheck'></label><span id='editfocus' contenteditable >` + focus.task + `</span><span id='main-focus-delete'><img id="main-focus-icon" src="img/delete-icon.png"/></span>`);
+                $("#main-focus").html(`<input type="checkbox" id='my-focus' value=" ` + focus.task + `">
+                <label id='focusCheck'></label>
+                <span id='editfocus' contenteditable >` + focus.task + `</span><span id='main-focus-delete'><img id="main-focus-icon" src="img/delete-icon.png"/></span>`);
             }
             focus.ifChecked();
         };
         focus.getTask();
         focus.editTask();
         focus.deleteTask();
-
         $('#focusCheck').click( function(e){
             focus.taskChecked = !focus.taskChecked;
              localStorage.setItem("main-focus-check", focus.taskChecked);
              focus.drawFocus();
-
         });
-
     },
-
     ifChecked: function() {
         let check = localStorage.getItem("main-focus-check");
         if (check == 'true') {
@@ -381,4 +368,3 @@ $("document").ready(function() {
         }
     });
 });
-
