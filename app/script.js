@@ -340,13 +340,115 @@ let focus = {
     }
 }
 
+var todo = {
+    dropupActive: false,
+    dropupListener: function() {
+        document.getElementById("bottom-todo-icon").addEventListener("click",
+        function triggerDropup() {
+            if (!todo.dropupActive) {
+                chrome.storage.local.get(function(storage) {
+                    todo.drawDropup(storage);
+                });
+            } else {
+                $("#bottom-todo-dropup").removeClass("unhideTodoDropup");
+                $("#bottom-todo-dropup").addClass("hideTodoDropup");
+                $("#bottom-todo-arrow").css("display", "none");
+
+                $("#bottom-todo-dropup-todo").html("");
+
+                todo.dropupActive = false;
+            }
+        });
+    },
+    drawDropup: function(storage) {
+        let dropupId = "bottom-todo-dropup",
+            todos = storage.todos;
+        $("#bottom-todo-dropup-todo").html("");
+        
+        $("#" + dropupId).removeClass("hideTodoDropup");
+        $("#" + dropupId).addClass("unhideTodoDropup");
+        $("#bottom-todo-arrow").css("display", "block");
+        if (todos.length > 27) {
+            // Activate scrollbar
+        } else if (todos.length < 7) { // Min height
+            $("#" + dropupId).css("height", (40 + 7 * 22) + "px");
+        } else { // Dynamic Height
+            $("#" + dropupId).css("height", (40 + todos.length * 22) + "px");
+        }
+
+        for (let i = 0; i < todos.length; i++) {
+            if (storage.checked[i]) {
+                writeTodo("<s>" + todos[i] + "</s>", i, storage);
+            } else {
+                writeTodo(todos[i], i);
+            }
+            (function addCheckboxListener(i) {
+                $("#" + dropupId + "-checkbox-" + i + "[type=checkbox]").on("click", function() {
+                    if ($("#" + dropupId + "-checkbox-" + i + ":checked").length === 1) {
+                        chrome.storage.local.get(function(storage) {
+                            storage.checked[i] = true;
+                            chrome.storage.local.set(storage);
+                            todo.drawDropup(storage, i);
+                        });
+                    } else {
+                        chrome.storage.local.get(function(storage) {
+                            storage.checked[i] = false;
+                            chrome.storage.local.set(storage);
+                            todo.drawDropup(storage, i);
+                        });
+                    }
+                });
+            })(i);
+        }
+        $("#bottom-todo-dropup-todo").append(`
+            <form id="${dropupId}-todo-form">
+                <input type="text" name="todo" id="${dropupId}-todo-input" placeholder="Enter Todo">
+            </form>
+        `);
+
+        todo.dropupActive = true;
+        todo.addTodoListener();
+
+        function writeTodo(content, i) {
+            let checked = "";
+            if (arguments.length === 3) {
+                if (arguments[2].checked[i]) {
+                    checked = "checked";
+                }
+            }
+            $("#bottom-todo-dropup-todo").append(`
+                <div class="todo-wrappers">
+                    <input id="${dropupId}-checkbox-${i}" type="checkbox" class="todo-checkboxes" ${checked}>
+                    <p id="${dropupId}-todo-${i}" class="todos">
+                        ${content}
+                    </p>
+                </div>
+            `);
+        }
+    },
+    addTodoListener: function() {
+        $("#bottom-todo-dropup-todo-form").submit(function(e) {
+            e.preventDefault();
+            chrome.storage.local.get(function(storage) {
+                storage.todos.push($("#bottom-todo-dropup-todo-input").val());
+                storage.checked.push(false);
+                todo.drawDropup(storage);
+                chrome.storage.local.set(storage); 
+            });
+        });
+    }
+}
+//chrome.storage.local.set({ todos: ["Test Todo 1", "Test Todo 2" , "Test Todo 3"], checked: [false, false, false]}); // Reset storage
+
 $("document").ready(function() {
     time.setTime();
     time.updateTime();
     backgroundImage.setupImage();
     quote.setupQuote();
+    todo.dropupListener();
 
-    document.getElementById("main-time-draw").addEventListener("dblclick", function toogleTwelveHourDisplay() {
+    document.getElementById("main-time-draw").addEventListener("dblclick",
+    function toogleTwelveHourDisplay() {
         if (time.AMPMToggled) { //Clear
             $(".main-time-twelvehours").html("");
             time.AMPMToggled = false;
@@ -355,6 +457,42 @@ $("document").ready(function() {
                 "<p>" + time.AMPM + "</p>"
             );
             time.AMPMToggled = true;
+        }
+    });
+
+    $("#bottom-settings-info").hover(
+    function hideOtherDivs() {
+        hide("top");
+        hide("main");
+        hide("bottom-todo");
+        hide("bottom-quote");
+
+        function hide(id) {
+            $("#" + id).addClass("hideDivs");
+            $("#" + id).removeClass("unhideDivs");
+            if (id === "bottom-quote") {
+                $("#" + id).css("transition-delay", "3.5s");
+                $("#" + id).css("transition-duration", "0.75s");
+                $("#" + id).css("transition-property", "all");
+                $("#" + id).css("transition-timing-function", "linear");
+            }
+        }
+    }, function unhideOtherDivs() {
+        unhide("top");
+        unhide("main");
+        unhide("bottom-todo");
+        unhide("bottom-quote");
+
+        function unhide(id) {
+            $("#" + id).addClass("unhideDivs");
+            $("#" + id).removeClass("hideDivs");
+            if (id === "bottom-quote") {
+                $("#" + id).css("visibility", "visible");
+                $("#" + id).css("transition-delay", "0.25s");
+                $("#" + id).css("transition-duration", "0.75s");
+                $("#" + id).css("transition-property", "all");
+                $("#" + id).css("transition-timing-function", "linear");
+            }
         }
     });
 });
