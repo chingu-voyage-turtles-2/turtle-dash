@@ -382,10 +382,10 @@ $("document").ready(function() {
             $("#" + id).addClass("hideDivs");
             $("#" + id).removeClass("unhideDivs");
             if (id === "bottom-quote") {
-                $("#" + id).css("transition-delay", "5s");
-                ("#" + id).css("transition-duration", "0.75s");
-                ("#" + id).css("transition-property", "all");
-                ("#" + id).css("transition-timing-function", "linear");
+                $("#" + id).css("transition-delay", "3.5s");
+                $("#" + id).css("transition-duration", "0.75s");
+                $("#" + id).css("transition-property", "all");
+                $("#" + id).css("transition-timing-function", "linear");
             }
         }
     }, function unhideOtherDivs() {
@@ -400,9 +400,9 @@ $("document").ready(function() {
             if (id === "bottom-quote") {
                 $("#" + id).css("visibility", "visible");
                 $("#" + id).css("transition-delay", "0.25s");
-                ("#" + id).css("transition-duration", "0.75s");
-                ("#" + id).css("transition-property", "all");
-                ("#" + id).css("transition-timing-function", "linear");
+                $("#" + id).css("transition-duration", "0.75s");
+                $("#" + id).css("transition-property", "all");
+                $("#" + id).css("transition-timing-function", "linear");
             }
         }
     });

@@ -214,7 +214,7 @@ input[type=text]:focus:not([readonly])+label {
 .hideDivs {
     visibility: hidden;
     opacity: 0;
-    transition-delay: 5s;
+    transition-delay: 3.5s;
     transition-duration: 0.75s;
     transition-property: all;
     transition-timing-function: linear;
