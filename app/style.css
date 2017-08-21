@@ -244,10 +244,15 @@ input[type=text]:focus:not([readonly])+label {
     width: 14px;
     display: none;
 }
+.todo-wrappers {
+    margin: 5px 0 0 8px;
+}
+.todo-checkboxes {
+    display: inline;
+}
 .todos {
-    padding: 0 0 0 10px;
-    margin-bottom: -5px;
     font-size: 12;
+    display: inline;
 }
 #bottom-todo-dropup-todo {
     height: inherit;

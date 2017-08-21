@@ -291,8 +291,8 @@ var todo = {
         document.getElementById("bottom-todo-icon").addEventListener("click",
         function triggerDropup() {
             if (!todo.dropupActive) {
-                chrome.storage.local.get("todos", function(storage) {
-                    todo.drawDropup(storage.todos);
+                chrome.storage.local.get(function(storage) {
+                    todo.drawDropup(storage);
                 });
             } else {
                 $("#bottom-todo-dropup").removeClass("unhideTodoDropup");
@@ -305,10 +305,11 @@ var todo = {
             }
         });
     },
-    drawDropup: function(todos) {
-        let dropupId = "bottom-todo-dropup";
+    drawDropup: function(storage) {
+        let dropupId = "bottom-todo-dropup",
+            todos = storage.todos;
         $("#bottom-todo-dropup-todo").html("");
-
+        
         $("#" + dropupId).removeClass("hideTodoDropup");
         $("#" + dropupId).addClass("unhideTodoDropup");
         $("#bottom-todo-arrow").css("display", "block");
@@ -321,11 +322,28 @@ var todo = {
         }
 
         for (let i = 0; i < todos.length; i++) {
-            $("#bottom-todo-dropup-todo").append(`
-                <p id="${dropupId}-todo-${i}" class="todos">
-                    ${todos[i]}
-                </p>
-            `);
+            if (storage.checked[i]) {
+                writeTodo("<s>" + todos[i] + "</s>", i, storage);
+            } else {
+                writeTodo(todos[i], i);
+            }
+            (function addCheckboxListener(i) {
+                $("#" + dropupId + "-checkbox-" + i + "[type=checkbox]").on("click", function() {
+                    if ($("#" + dropupId + "-checkbox-" + i + ":checked").length === 1) {
+                        chrome.storage.local.get(function(storage) {
+                            storage.checked[i] = true;
+                            chrome.storage.local.set(storage);
+                            todo.drawDropup(storage, i);
+                        });
+                    } else {
+                        chrome.storage.local.get(function(storage) {
+                            storage.checked[i] = false;
+                            chrome.storage.local.set(storage);
+                            todo.drawDropup(storage, i);
+                        });
+                    }
+                });
+            })(i);
         }
         $("#bottom-todo-dropup-todo").append(`
             <form id="${dropupId}-todo-form">
@@ -335,19 +353,37 @@ var todo = {
 
         todo.dropupActive = true;
         todo.addTodoListener();
+
+        function writeTodo(content, i) {
+            let checked = "";
+            if (arguments.length === 3) {
+                if (arguments[2].checked[i]) {
+                    checked = "checked";
+                }
+            }
+            $("#bottom-todo-dropup-todo").append(`
+                <div class="todo-wrappers">
+                    <input id="${dropupId}-checkbox-${i}" type="checkbox" class="todo-checkboxes" ${checked}>
+                    <p id="${dropupId}-todo-${i}" class="todos">
+                        ${content}
+                    </p>
+                </div>
+            `);
+        }
     },
     addTodoListener: function() {
         $("#bottom-todo-dropup-todo-form").submit(function(e) {
             e.preventDefault();
-            chrome.storage.local.get("todos", function(storage) {
+            chrome.storage.local.get(function(storage) {
                 storage.todos.push($("#bottom-todo-dropup-todo-input").val());
-                todo.drawDropup(storage.todos);
+                storage.checked.push(false);
+                todo.drawDropup(storage);
                 chrome.storage.local.set(storage); 
             });
         });
     }
 }
-//chrome.storage.local.set({ todos: ["Test Todo 1", "Test Todo 2" , "Test Todo 3"]}); // Reset storage
+//chrome.storage.local.set({ todos: ["Test Todo 1", "Test Todo 2" , "Test Todo 3"], checked: [false, false, false]}); // Reset storage
 
 $("document").ready(function() {
     time.setTime();
