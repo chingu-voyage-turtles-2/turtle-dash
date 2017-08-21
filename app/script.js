@@ -296,21 +296,51 @@ let quote = {
 }
 
 let focus = {
+    taskChecked: localStorage.getItem("main-focus-check"),
     task: localStorage.getItem("main-focus"),
     drawFocus: function () {
         if (localStorage.getItem("username") !== null) {
-            if (focus.task == null) {
+            if (focus.task == null || focus.task =='') {
                 $("#main-focus").html(`
                 <form id="main-focus-form">
                     <label>What is your main focus (for) today?</label>
                     <input type="text" name="focus" id="main-focus-value" placeholder="eg: cooking">
                 </form>`);
             } else {
-                $("#main-focus").html(`<input type="checkbox" value=" ` + focus.task + `"> <span id='editfocus' contenteditable>` + focus.task + `</span>`);
+                $("#main-focus").html(`<input type="checkbox" id='my-focus' value=" ` + focus.task + `"><label id='focusCheck'></label><span id='editfocus' contenteditable >` + focus.task + `</span><span id='main-focus-delete'><img id="main-focus-icon" src="img/delete-icon.png"/></span>`);
             }
+            focus.ifChecked();
         };
         focus.getTask();
         focus.editTask();
+        focus.deleteTask();
+
+        $('#focusCheck').click( function(e){
+            focus.taskChecked = !focus.taskChecked;
+             localStorage.setItem("main-focus-check", focus.taskChecked);
+             focus.drawFocus();
+
+        });
+
+    },
+
+    ifChecked: function() {
+        let check = localStorage.getItem("main-focus-check");
+        //console.log(check);
+        if (check == 'true') {
+            $('#my-focus').prop('checked', true);
+        } else {
+            $('#my-focus').prop('checked', false);
+        }
+    },
+    deleteTask: function(){
+       $('#main-focus-delete').click( function(e){
+            //console.log('delete');
+            localStorage.removeItem("main-focus");
+            localStorage.setItem("main-focus-check", 'false');
+            focus.task = '';
+            focus.drawFocus();
+        });
     },
     getTask: function () {
         $("#main-focus-form").on("submit", function (e) {
