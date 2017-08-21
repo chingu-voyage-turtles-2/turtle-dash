@@ -7,12 +7,10 @@ var time = {
         this.hours = new Date().getHours();
         this.minutes = new Date().getMinutes();
         this.seconds = new Date().getSeconds();
-
         this.setTimeOfDay(); //Morning, etc.
         setAMPM.call(this);
         addMissingZero.call(this, this.hours);
         addMissingZero.call(this, this.minutes);
-
         if (this.firstTimeDraw) {
             fadeOut("main-time-draw");
             fadeOut("main-greeting");
@@ -20,6 +18,7 @@ var time = {
                 "<p>" + time.hours + ":" + time.minutes + "<p>"
             );
             user.drawGreeting();
+            focus.drawFocus();
             fadeIn("main-time-draw", 1500);
             fadeIn("main-greeting", 1800);
             this.firstTimeDraw = false;
@@ -28,7 +27,6 @@ var time = {
                 "<p>" + time.hours + ":" + time.minutes + "<p>"
             );
         }
-
         // Update background image every day
         this.date = new Date().getDate();
         if (this.date != localStorage.getItem("imageDate")) {
@@ -37,7 +35,6 @@ var time = {
         } else {
             backgroundImage.updateImage = false;
         }
-
         // Update quote every hour
         if (this.hours != localStorage.getItem("quoteHour")) {
             quote.updateQuote = true;
@@ -45,7 +42,6 @@ var time = {
         } else {
             quote.updateQuote = false;
         }
-
         function fadeOut(name) {
             $("#" + name).fadeOut(0);
         }
@@ -69,7 +65,6 @@ var time = {
                     case(this.minutes):
                         this.minutes = "0" + unit;
                 }
-
             }
         }
     },
@@ -110,8 +105,7 @@ let user = {
             $("#main-username").html(`
                 <form id="main-username-form">
                     <input type="text" name="username" id="main-username-input" placeholder="Enter Username">
-                </form>`
-            );
+                </form>`);
         } else {
             $("#main-username").html("");
         }
@@ -121,20 +115,22 @@ let user = {
                 standard: {
                     phrase: "Good " + time.timeOfDay + ", <span id='editname' contenteditable>" + user.name + "</span>!",
                     chance: 70
-                }, variation1: {
+                },
+                variation1: {
                     phrase: "Welcome back, <span id='editname' contenteditable>" + user.name + "</span>!",
                     chance: 15
-                }, variation2: {
+                },
+                variation2: {
                     phrase: "Good to see you this " + time.timeOfDay + "!",
                     chance: 10
-                }, variation3: {
+                },
+                variation3: {
                     phrase: "How's it going <span id='editname' contenteditable>" + user.name + "</span>?",
                     chance: 5
                 }
             }
         }
         $("#main-greeting").html(returnRandomPhrase);
-
         function returnRandomPhrase() {
             //Bulding a array out of the phrases keys and picking a random one
             for (let i in greetings.phrases) {
@@ -144,12 +140,14 @@ let user = {
             }
             let index = greetings.phrasesArray[
                 Math.round(Math.random() * (greetings.phrasesArray.length - 1))
-            ];
+                ];
             return greetings.phrases[index].phrase
-        }
+        };
+        user.getName();
+        user.editName();
     },
     getName: function() {
-        $("#main-username-form").submit(function(e) {
+        $("#main-username-form").on('submit', function(e) {
             e.preventDefault();
             localStorage.removeItem("username");
             if (!localStorage.getItem("username")) {
@@ -157,6 +155,7 @@ let user = {
                 user.name = localStorage.getItem("username");
             };
             user.drawGreeting();
+            focus.drawFocus();
         });
     },
     editName: function() {
@@ -175,7 +174,7 @@ let user = {
 }
 
 var backgroundImage = {
-    url : "https://cors-anywhere.herokuapp.com/" + "https://api.unsplash.com//photos/random?client_id=3e66d58c720b2e9697e94445cb461e9032b946068102f18f4f3203783b412e70&collections=140375&orientation=landscape",
+    url: "https://cors-anywhere.herokuapp.com/" + "https://api.unsplash.com//photos/random?client_id=3e66d58c720b2e9697e94445cb461e9032b946068102f18f4f3203783b412e70&collections=140375&orientation=landscape",
     setImage: function(json = null) {
         if (json === null) {
             setImageCssLocationOwner(
@@ -198,15 +197,14 @@ var backgroundImage = {
                 );
             }
         }
-
         function setImageCssLocationOwner(url, location, owner) {
             $("body").css("background-image", "url(" + url + ")");
             $("#bottom-settings-location").text(location);
             $("#bottom-settings-owner").text("By: " + owner);
         }
     },
-    getImage: function(){
-        $.getJSON(this.url,function(json){
+    getImage: function() {
+        $.getJSON(this.url, function(json) {
             if (json.location == undefined) {
                 localStorage.setItem("imageLocation", "Unknown");
             } else {
@@ -228,7 +226,8 @@ var backgroundImage = {
 
 let quote = {
     url: "https://cors-anywhere.herokuapp.com/" + "https://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json",
-    author: "", quote: "",
+    author: "",
+    quote: "",
     setQuote: function(json) {
         if (json === null) {
             drawQuote(
@@ -248,18 +247,16 @@ let quote = {
                 );
             }
         }
-
         function drawQuote(quote, author) {
             $("#bottom-quote-draw").html(`
                 <p id="bottom-quote-draw-quote">${quote}</p>
-                <span id="bottom-quote-draw-author">${"- " + author}</span>`
-            );
+                <span id="bottom-quote-draw-author">${"- " + author}</span>`);
             $("#bottom-quote-draw").css("bottom", "70px");
         }
     },
     getQuote: function() {
         (function requestQuote() {
-            $.getJSON(this.url, function(json){
+            $.getJSON(this.url, function(json) {
                 if (json.quoteText > 140) { // Limiting the length of the quote
                     quote.getQuote();
                 } else {
@@ -282,6 +279,64 @@ let quote = {
         } else {
             this.setQuote(null);
         }
+    }
+}
+
+let focus = {
+    taskChecked: localStorage.getItem("main-focus-check"),
+    task: localStorage.getItem("main-focus"),
+    drawFocus: function() {
+        if (localStorage.getItem("username") !== null) {
+            if (focus.task == null || focus.task == '') {
+                $("#main-focus").html(`
+                <form id="main-focus-form">
+                    <label>What is your main focus today?</label>
+                    <input type="text" name="focus" id="main-focus-value" placeholder="eg: cooking">
+                </form>`);
+            } else {
+                $("#main-focus").html(`<input type="checkbox" id='my-focus' value=" ` + focus.task + `">
+                <label id='focusCheck'></label>
+                <span id='editfocus' contenteditable >` + focus.task + `</span><span id='main-focus-delete'><img id="main-focus-icon" src="img/delete-icon.png"/></span>`);
+            };
+            if (localStorage.getItem("main-focus-check") == 'true') {
+                $('#my-focus').prop('checked', true);
+            } else {
+                $('#my-focus').prop('checked', false);
+            };
+        };
+        $('#focusCheck').click(function(e) {
+            focus.taskChecked = !focus.taskChecked;
+            localStorage.setItem("main-focus-check", focus.taskChecked);
+            focus.drawFocus();
+        });
+
+        $('#main-focus-delete').click(function(e) {
+            localStorage.removeItem("main-focus");
+            localStorage.setItem("main-focus-check", 'false');
+            focus.task = '';
+            focus.drawFocus();
+        });
+
+        $("#main-focus-form").on("submit", function(e) {
+            e.preventDefault();
+            localStorage.removeItem("main-focus");
+            if (!localStorage.getItem("main-focus")) {
+                localStorage.setItem("main-focus", $("#main-focus-value").val());
+                focus.task = localStorage.getItem("main-focus");
+            };
+            focus.drawFocus();
+        });
+
+        $("#editfocus").keypress(function(e) {
+            if (e.which === 13) {
+                localStorage.removeItem("main-focus");
+                if (!localStorage.getItem("main-focus")) {
+                    localStorage.setItem("main-focus", $("#editfocus").text());
+                    focus.task = localStorage.getItem("main-focus");
+                };
+                focus.drawFocus();
+            }
+        });
     }
 }
 
@@ -400,8 +455,6 @@ $("document").ready(function() {
     time.setTime();
     time.updateTime();
     backgroundImage.setupImage();
-    user.getName();
-    user.editName();
     quote.setupQuote();
     todo.dropupListener();
 
