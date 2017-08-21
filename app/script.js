@@ -78,8 +78,6 @@ var time = {
         setTimeout(function updateTimeTimeout() {
             time.setTime();
             time.updateTime();
-            focus.getTask();
-    focus.editTask();
         }, (60 - this.seconds) * 1000 + 1) //+1 to secure catching the updated time
     },
     setTimeOfDay: function() {
@@ -326,7 +324,6 @@ let focus = {
 
     ifChecked: function() {
         let check = localStorage.getItem("main-focus-check");
-        //console.log(check);
         if (check == 'true') {
             $('#my-focus').prop('checked', true);
         } else {
@@ -335,7 +332,6 @@ let focus = {
     },
     deleteTask: function(){
        $('#main-focus-delete').click( function(e){
-            //console.log('delete');
             localStorage.removeItem("main-focus");
             localStorage.setItem("main-focus-check", 'false');
             focus.task = '';
@@ -343,7 +339,7 @@ let focus = {
         });
     },
     getTask: function () {
-        $("#main-focus-form").on("submit", function (e) {
+        $("#main-focus-form").on("submit", function(e) {
             e.preventDefault();
                     localStorage.removeItem("main-focus");
                     if (!localStorage.getItem("main-focus")) {
@@ -354,7 +350,7 @@ let focus = {
         });
     },
     editTask: function () {
-        $("#editfocus").keypress(function (e) {
+        $("#editfocus").keypress(function(e) {
             if (e.which === 13) {
                 localStorage.removeItem("main-focus");
                 if (!localStorage.getItem("main-focus")) {

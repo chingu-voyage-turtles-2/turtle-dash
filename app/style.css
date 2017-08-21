@@ -222,7 +222,7 @@ input[type=text]:focus:not([readonly])+label {
     background-color: rgba(255,255,255,0.3);
     border-radius: 50%;
 }
-input[type="checkbox"] {
+input#my-focus {
     position: absolute;
     left: -9999px;
     visibility: hidden;
@@ -230,7 +230,7 @@ input[type="checkbox"] {
 label {
     cursor: pointer;
 }
-input[type="checkbox"]+label:before {
+input#my-focus+label:before {
     border: 1px solid #fff;
     content: "\00a0";
     display: inline-block;
@@ -241,13 +241,13 @@ input[type="checkbox"]+label:before {
     padding: 0;
     vertical-align: baseline;
 }
-input[type="checkbox"]:checked+label:before {
+input#my-focus:checked+label:before {
     background: #fff;
     color: #333;
     content: "\2713";
     text-align: center;
 }
-input[type="checkbox"]:checked+label:after {
+input#my-focus:checked+label:after {
     font-weight: bold;
 }
 #bottom-settings-icon {
