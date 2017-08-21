@@ -99,7 +99,7 @@ var time = {
 
 let user = {
     name: localStorage.getItem("username"),
-    drawGreeting: function () {
+    drawGreeting: function() {
         if (user.name == null) {
             user.name = "User"
             $("#main-username").html(`
@@ -147,34 +147,34 @@ let user = {
         user.editName();
     },
     getName: function() {
-            $("#main-username-form").on('submit', function (e) {
+        $("#main-username-form").on('submit', function(e) {
+            e.preventDefault();
+            localStorage.removeItem("username");
+            if (!localStorage.getItem("username")) {
+                localStorage.setItem("username", $("#main-username-input").val());
+                user.name = localStorage.getItem("username");
+            };
+            user.drawGreeting();
+            focus.drawFocus();
+        });
+    },
+    editName: function() {
+        $("#editname").keypress(function(e) {
+            if (e.which === 13) {
                 e.preventDefault();
                 localStorage.removeItem("username");
                 if (!localStorage.getItem("username")) {
-                    localStorage.setItem("username", $("#main-username-input").val());
+                    localStorage.setItem("username", $("#editname").text());
                     user.name = localStorage.getItem("username");
                 };
                 user.drawGreeting();
-                focus.drawFocus();
-            });
-        },
-        editName: function() {
-            $("#editname").keypress(function (e) {
-                if (e.which === 13) {
-                    e.preventDefault();
-                    localStorage.removeItem("username");
-                    if (!localStorage.getItem("username")) {
-                        localStorage.setItem("username", $("#editname").text());
-                        user.name = localStorage.getItem("username");
-                    };
-                    user.drawGreeting();
-                }
-            });
-        }
+            }
+        });
+    }
 }
 
 var backgroundImage = {
-    url : "https://cors-anywhere.herokuapp.com/" + "https://api.unsplash.com//photos/random?client_id=3e66d58c720b2e9697e94445cb461e9032b946068102f18f4f3203783b412e70&collections=140375&orientation=landscape",
+    url: "https://cors-anywhere.herokuapp.com/" + "https://api.unsplash.com//photos/random?client_id=3e66d58c720b2e9697e94445cb461e9032b946068102f18f4f3203783b412e70&collections=140375&orientation=landscape",
     setImage: function(json = null) {
         if (json === null) {
             setImageCssLocationOwner(
@@ -203,8 +203,8 @@ var backgroundImage = {
             $("#bottom-settings-owner").text("By: " + owner);
         }
     },
-    getImage: function(){
-        $.getJSON(this.url,function(json){
+    getImage: function() {
+        $.getJSON(this.url, function(json) {
             if (json.location == undefined) {
                 localStorage.setItem("imageLocation", "Unknown");
             } else {
@@ -226,7 +226,8 @@ var backgroundImage = {
 
 let quote = {
     url: "https://cors-anywhere.herokuapp.com/" + "https://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json",
-    author: "", quote: "",
+    author: "",
+    quote: "",
     setQuote: function(json) {
         if (json === null) {
             drawQuote(
@@ -249,14 +250,13 @@ let quote = {
         function drawQuote(quote, author) {
             $("#bottom-quote-draw").html(`
                 <p id="bottom-quote-draw-quote">${quote}</p>
-                <span id="bottom-quote-draw-author">${"- " + author}</span>`
-            );
+                <span id="bottom-quote-draw-author">${"- " + author}</span>`);
             $("#bottom-quote-draw").css("bottom", "70px");
         }
     },
     getQuote: function() {
         (function requestQuote() {
-            $.getJSON(this.url, function(json){
+            $.getJSON(this.url, function(json) {
                 if (json.quoteText > 140) { // Limiting the length of the quote
                     quote.getQuote();
                 } else {
@@ -287,56 +287,46 @@ let focus = {
     task: localStorage.getItem("main-focus"),
     drawFocus: function() {
         if (localStorage.getItem("username") !== null) {
-            if (focus.task == null || focus.task =='') {
+            if (focus.task == null || focus.task == '') {
                 $("#main-focus").html(`
                 <form id="main-focus-form">
-                    <label>What is your main focus (for) today?</label>
+                    <label>What is your main focus today?</label>
                     <input type="text" name="focus" id="main-focus-value" placeholder="eg: cooking">
                 </form>`);
             } else {
                 $("#main-focus").html(`<input type="checkbox" id='my-focus' value=" ` + focus.task + `">
                 <label id='focusCheck'></label>
                 <span id='editfocus' contenteditable >` + focus.task + `</span><span id='main-focus-delete'><img id="main-focus-icon" src="img/delete-icon.png"/></span>`);
-            }
-            focus.ifChecked();
+            };
+            if (localStorage.getItem("main-focus-check") == 'true') {
+                $('#my-focus').prop('checked', true);
+            } else {
+                $('#my-focus').prop('checked', false);
+            };
         };
-        focus.getTask();
-        focus.editTask();
-        focus.deleteTask();
-        $('#focusCheck').click( function(e){
+        $('#focusCheck').click(function(e) {
             focus.taskChecked = !focus.taskChecked;
-             localStorage.setItem("main-focus-check", focus.taskChecked);
-             focus.drawFocus();
+            localStorage.setItem("main-focus-check", focus.taskChecked);
+            focus.drawFocus();
         });
-    },
-    ifChecked: function() {
-        let check = localStorage.getItem("main-focus-check");
-        if (check == 'true') {
-            $('#my-focus').prop('checked', true);
-        } else {
-            $('#my-focus').prop('checked', false);
-        }
-    },
-    deleteTask: function(){
-       $('#main-focus-delete').click( function(e){
+
+        $('#main-focus-delete').click(function(e) {
             localStorage.removeItem("main-focus");
             localStorage.setItem("main-focus-check", 'false');
             focus.task = '';
             focus.drawFocus();
         });
-    },
-    getTask: function () {
+
         $("#main-focus-form").on("submit", function(e) {
             e.preventDefault();
-                    localStorage.removeItem("main-focus");
-                    if (!localStorage.getItem("main-focus")) {
-                        localStorage.setItem("main-focus", $("#main-focus-value").val());
-                        focus.task = localStorage.getItem("main-focus");
-                    };
-                    focus.drawFocus();
+            localStorage.removeItem("main-focus");
+            if (!localStorage.getItem("main-focus")) {
+                localStorage.setItem("main-focus", $("#main-focus-value").val());
+                focus.task = localStorage.getItem("main-focus");
+            };
+            focus.drawFocus();
         });
-    },
-    editTask: function () {
+
         $("#editfocus").keypress(function(e) {
             if (e.which === 13) {
                 localStorage.removeItem("main-focus");
