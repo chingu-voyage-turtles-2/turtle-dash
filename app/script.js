@@ -440,8 +440,8 @@ var todo = {
 }
 //chrome.storage.local.set({ todos: ["Test Todo 1", "Test Todo 2" , "Test Todo 3"], checked: [false, false, false]}); // Reset storage
 
-var searchButton = document.getElementById("top-search-icon");
-var searchBox = document.getElementById("top-search-box");
+var searchButton = document.getElementById("top-search-icon"), 
+searchBox = document.getElementById("top-search-box");
 
 searchButton.addEventListener("click", function() {
     if (searchBox.style.display == "block") {
