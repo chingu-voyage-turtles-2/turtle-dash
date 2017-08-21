@@ -307,20 +307,23 @@ var todo = {
     },
     drawDropup: function(todos) {
         let dropupId = "bottom-todo-dropup";
+        $("#bottom-todo-dropup-todo").html("");
 
         $("#" + dropupId).removeClass("hideTodoDropup");
         $("#" + dropupId).addClass("unhideTodoDropup");
         $("#bottom-todo-arrow").css("display", "block");
         if (todos.length > 27) {
             // Activate scrollbar
-        } else {
+        } else if (todos.length < 7) { // Min height
+            $("#" + dropupId).css("height", (40 + 7 * 22) + "px");
+        } else { // Dynamic Height
             $("#" + dropupId).css("height", (40 + todos.length * 22) + "px");
         }
 
         for (let i = 0; i < todos.length; i++) {
             $("#bottom-todo-dropup-todo").append(`
                 <p id="${dropupId}-todo-${i}" class="todos">
-                    Hello World ${todos[i]}
+                    ${todos[i]}
                 </p>
             `);
         }
@@ -331,18 +334,20 @@ var todo = {
         `);
 
         todo.dropupActive = true;
-        todo.newTodo();
+        todo.addTodoListener();
     },
-    newTodo: function(todos) {
+    addTodoListener: function() {
         $("#bottom-todo-dropup-todo-form").submit(function(e) {
             e.preventDefault();
-//            todos.push($("#bottom-todo-dropup-todo-input").val());
-            console.log($("#bottom-todo-dropup-todo-input").val());
+            chrome.storage.local.get("todos", function(storage) {
+                storage.todos.push($("#bottom-todo-dropup-todo-input").val());
+                todo.drawDropup(storage.todos);
+                chrome.storage.local.set(storage); 
+            });
         });
-
-        //chrome.storage.local.set({ todos: ["todo1", "todo2" , "todo3"]});
     }
 }
+//chrome.storage.local.set({ todos: ["Test Todo 1", "Test Todo 2" , "Test Todo 3"]}); // Reset storage
 
 $("document").ready(function() {
     time.setTime();

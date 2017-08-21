@@ -228,7 +228,7 @@ input[type=text]:focus:not([readonly])+label {
 }
 .unhideTodoDropup {
     display: block;
-    height: 250px;
+    height: 194px;
     width: 250px;
     background-color: rgba(0, 0, 9, 0.88);
     border-radius: 2%;
@@ -247,6 +247,7 @@ input[type=text]:focus:not([readonly])+label {
 .todos {
     padding: 0 0 0 10px;
     margin-bottom: -5px;
+    font-size: 12;
 }
 #bottom-todo-dropup-todo {
     height: inherit;
