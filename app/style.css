@@ -19,6 +19,7 @@ body {
     justify-content: space-between;
 }
 #main {
+    height: inherit;
     align-self: center;
     text-align: center;
     display: flex;
@@ -46,7 +47,6 @@ body {
 #top-logo-spin:hover {
     background-color: rgba(255,255,255,0.3);
 }
-
 /* Main */
 #main-time {
     display: inline-flex;
@@ -86,7 +86,7 @@ input[type=text] {
     color: #fff;
     text-align: center;
     text-shadow: 0px 0px 3px black;
-    font-size: 1rem;
+    font-size: 2rem;
     box-shadow: none;
     -webkit-box-sizing: content-box;
     -moz-box-sizing: content-box;
@@ -116,7 +116,6 @@ input[type=text]:focus:not([readonly])+label {
   color: #fff;
   opacity: 1;
 }
-
 /* Bottom */
 #bottom {
     min-height: 100px;
@@ -199,6 +198,56 @@ input[type=text]:focus:not([readonly])+label {
 }
 #bottom-quote-draw-author:hover {
     opacity: 1;
+}
+#main-focus {
+    font-size: 4.1vh;
+    padding: 2vh;
+    display: inline-flex;
+}
+#main-focus-value{
+    font-size: 1.5rem;
+    width: 50%;
+}
+#main-focus-delete{
+    padding-left:15px
+}
+#main-focus-icon {
+    padding: 5px;
+    height: 30px;
+    width: 30px;
+    cursor: hand;
+}
+#main-focus-icon:hover {
+    background-color: rgba(255,255,255,0.3);
+    border-radius: 50%;
+}
+input#my-focus {
+    position: absolute;
+    left: -9999px;
+    visibility: hidden;
+}
+label {
+    cursor: pointer;
+}
+input#my-focus+label:before {
+    border: 1px solid #fff;
+    content: "\00a0";
+    display: inline-block;
+    font: 20px/1em sans-serif;
+    height: 20px;
+    width: 20px;
+    margin: 5px 0.5em 0 0px;
+    padding: 0;
+    vertical-align: baseline;
+}
+input#my-focus:checked+label:before {
+    background: #fff;
+    color: #333;
+    content: "\2713";
+    text-align: center;
+}
+input#my-focus:checked+label:after {
+    font-weight: bold;
 }
 #bottom-settings-icon {
     height: 24px;
