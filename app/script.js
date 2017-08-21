@@ -332,7 +332,7 @@ var todo = {
     newTodo: function(todos) {
         $("#bottom-todo-dropup-todo-form").submit(function(e) {
             e.preventDefault();
-            todos.push($("#bottom-todo-dropup-todo-input").val());
+//            todos.push($("#bottom-todo-dropup-todo-input").val());
             console.log($("#bottom-todo-dropup-todo-input").val());
         });
 
