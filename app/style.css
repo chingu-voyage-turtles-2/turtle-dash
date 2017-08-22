@@ -37,6 +37,10 @@ body {
 }
 
 /* Top */
+#top-left {
+    display: flex;
+    justify-content: flex-start;
+}
 #top-logo-spin {
     margin: 10px 0 0 10px;
     width: 24px;
@@ -48,13 +52,16 @@ body {
     background-color: rgba(255,255,255,0.3);
     border-radius: 50%;
 }
+#top-search {
+    display: flex;
+    justify-content: flex-start;
+}
 #top-search-icon {
     margin: 10px 0 0 10px;
     width: 24px;
     height: 24px;
     padding: 8px 8px 8px 8px;
     cursor: hand;
-    order: 2;
 }
 #top-search-icon:hover {
     background-color: rgba(255,255,255,0.3);
@@ -63,12 +70,9 @@ body {
 #top-search-box {
     display: none;
     margin-top: 10px;
-    order: 3;
-}
-#top-search-input {
     font-size: 12px;
-    box-sizing: border-box;
 }
+
 /* Main */
 #main-time {
     display: inline-flex;
