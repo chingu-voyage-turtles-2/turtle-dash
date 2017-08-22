@@ -23,7 +23,8 @@
 		"tabs",
 		"activeTab",
 		"history",
-		"storage"
+		"storage",
+		"geolocation"
 	],
 	"background": {
 		"scripts": [
