@@ -12,18 +12,18 @@ var time = {
         addMissingZero.call(this, this.hours);
         addMissingZero.call(this, this.minutes);
         if (this.firstTimeDraw) {
-            fadeOut("main-time-draw");
-            fadeOut("main-greeting");
-            $("#main-time-draw").html(
+            fadeOut("mid-main-time-draw");
+            fadeOut("mid-main-greeting");
+            $("#mid-main-time-draw").html(
                 "<p>" + time.hours + ":" + time.minutes + "<p>"
             );
             user.drawGreeting();
             focus.drawFocus();
-            fadeIn("main-time-draw", 1500);
-            fadeIn("main-greeting", 1800);
+            fadeIn("mid-main-time-draw", 1500);
+            fadeIn("mid-main-greeting", 1800);
             this.firstTimeDraw = false;
         } else {
-            $("#main-time-draw").html(
+            $("#mid-main-time-draw").html(
                 "<p>" + time.hours + ":" + time.minutes + "<p>"
             );
         }
@@ -102,12 +102,12 @@ let user = {
     drawGreeting: function() {
         if (user.name == null) {
             user.name = "User"
-            $("#main-username").html(`
-                <form id="main-username-form">
-                    <input type="text" name="username" id="main-username-input" placeholder="Enter Username">
+            $("#mid-main-username").html(`
+                <form id="mid-main-username-form">
+                    <input type="text" name="username" id="mid-main-username-input" placeholder="Enter Username">
                 </form>`);
         } else {
-            $("#main-username").html("");
+            $("#mid-main-username").html("");
         }
         let greetings = {
             phrasesArray: [],
@@ -130,7 +130,7 @@ let user = {
                 }
             }
         }
-        $("#main-greeting").html(returnRandomPhrase);
+        $("#mid-main-greeting").html(returnRandomPhrase);
         function returnRandomPhrase() {
             //Bulding a array out of the phrases keys and picking a random one
             for (let i in greetings.phrases) {
@@ -147,11 +147,11 @@ let user = {
         user.editName();
     },
     getName: function() {
-        $("#main-username-form").on('submit', function(e) {
+        $("#mid-main-username-form").on('submit', function(e) {
             e.preventDefault();
             localStorage.removeItem("username");
             if (!localStorage.getItem("username")) {
-                localStorage.setItem("username", $("#main-username-input").val());
+                localStorage.setItem("username", $("#mid-main-username-input").val());
                 user.name = localStorage.getItem("username");
             };
             user.drawGreeting();
@@ -199,8 +199,8 @@ var backgroundImage = {
         }
         function setImageCssLocationOwner(url, location, owner) {
             $("body").css("background-image", "url(" + url + ")");
-            $("#bottom-settings-location").text(location);
-            $("#bottom-settings-owner").text("By: " + owner);
+            $("#left-settings-location").text(location);
+            $("#left-settings-owner").text("By: " + owner);
         }
     },
     getImage: function() {
@@ -248,10 +248,10 @@ let quote = {
             }
         }
         function drawQuote(quote, author) {
-            $("#bottom-quote-draw").html(`
-                <p id="bottom-quote-draw-quote">${quote}</p>
-                <span id="bottom-quote-draw-author">${"- " + author}</span>`);
-            $("#bottom-quote-draw").css("bottom", "70px");
+            $("#mid-quote-draw").html(`
+                <p id="mid-quote-draw-quote">${quote}</p>
+                <span id="mid-quote-draw-author">${"- " + author}</span>`);
+            $("#mid-quote-draw").css("bottom", "20px");
         }
     },
     getQuote: function() {
@@ -283,22 +283,22 @@ let quote = {
 }
 
 let focus = {
-    taskChecked: localStorage.getItem("main-focus-check"),
-    task: localStorage.getItem("main-focus"),
+    taskChecked: localStorage.getItem("mid-main-focus-check"),
+    task: localStorage.getItem("mid-main-focus"),
     drawFocus: function() {
         if (localStorage.getItem("username") !== null) {
             if (focus.task == null || focus.task == '') {
-                $("#main-focus").html(`
-                <form id="main-focus-form">
+                $("#mid-main-focus").html(`
+                <form id="mid-main-focus-form">
                     <label>What is your main focus today?</label>
-                    <input type="text" name="focus" id="main-focus-value" placeholder="eg: cooking">
+                    <input type="text" name="focus" id="mid-main-focus-value" placeholder="eg: cooking">
                 </form>`);
             } else {
-                $("#main-focus").html(`<input type="checkbox" id='my-focus' value=" ` + focus.task + `">
+                $("#mid-main-focus").html(`<input type="checkbox" id='my-focus' value=" ` + focus.task + `">
                 <label id='focusCheck'></label>
-                <span id='editfocus' contenteditable >` + focus.task + `</span><span id='main-focus-delete'><img id="main-focus-icon" src="img/delete-icon.png"/></span>`);
+                <span id='editfocus' contenteditable >` + focus.task + `</span><span id='mid-main-focus-delete'><img id="mid-main-focus-icon" src="img/delete-icon.png"/></span>`);
             };
-            if (localStorage.getItem("main-focus-check") == 'true') {
+            if (localStorage.getItem("mid-main-focus-check") == 'true') {
                 $('#my-focus').prop('checked', true);
             } else {
                 $('#my-focus').prop('checked', false);
@@ -306,33 +306,33 @@ let focus = {
         };
         $('#focusCheck').click(function(e) {
             focus.taskChecked = !focus.taskChecked;
-            localStorage.setItem("main-focus-check", focus.taskChecked);
+            localStorage.setItem("mid-main-focus-check", focus.taskChecked);
             focus.drawFocus();
         });
 
-        $('#main-focus-delete').click(function(e) {
-            localStorage.removeItem("main-focus");
-            localStorage.setItem("main-focus-check", 'false');
+        $('#mid-main-focus-delete').click(function(e) {
+            localStorage.removeItem("mid-main-focus");
+            localStorage.setItem("mid-main-focus-check", 'false');
             focus.task = '';
             focus.drawFocus();
         });
 
-        $("#main-focus-form").on("submit", function(e) {
+        $("#mid-main-focus-form").on("submit", function(e) {
             e.preventDefault();
-            localStorage.removeItem("main-focus");
-            if (!localStorage.getItem("main-focus")) {
-                localStorage.setItem("main-focus", $("#main-focus-value").val());
-                focus.task = localStorage.getItem("main-focus");
+            localStorage.removeItem("mid-main-focus");
+            if (!localStorage.getItem("mid-main-focus")) {
+                localStorage.setItem("mid-main-focus", $("#mid-main-focus-value").val());
+                focus.task = localStorage.getItem("mid-main-focus");
             };
             focus.drawFocus();
         });
 
         $("#editfocus").keypress(function(e) {
             if (e.which === 13) {
-                localStorage.removeItem("main-focus");
-                if (!localStorage.getItem("main-focus")) {
-                    localStorage.setItem("main-focus", $("#editfocus").text());
-                    focus.task = localStorage.getItem("main-focus");
+                localStorage.removeItem("mid-main-focus");
+                if (!localStorage.getItem("mid-main-focus")) {
+                    localStorage.setItem("mid-main-focus", $("#editfocus").text());
+                    focus.task = localStorage.getItem("mid-main-focus");
                 };
                 focus.drawFocus();
             }
@@ -343,31 +343,31 @@ let focus = {
 var todo = {
     dropupActive: false,
     dropupListener: function() {
-        document.getElementById("bottom-todo-icon").addEventListener("click",
+        document.getElementById("right-todo-icon").addEventListener("click",
         function triggerDropup() {
             if (!todo.dropupActive) {
                 chrome.storage.local.get(function(storage) {
                     todo.drawDropup(storage);
                 });
             } else {
-                $("#bottom-todo-dropup").removeClass("unhideTodoDropup");
-                $("#bottom-todo-dropup").addClass("hideTodoDropup");
-                $("#bottom-todo-arrow").css("display", "none");
+                $("#right-todo-dropup").removeClass("unhideTodoDropup");
+                $("#right-todo-dropup").addClass("hideTodoDropup");
+                $("#right-todo-arrow").css("display", "none");
 
-                $("#bottom-todo-dropup-todo").html("");
+                $("#right-todo-dropup-todo").html("");
 
                 todo.dropupActive = false;
             }
         });
     },
     drawDropup: function(storage) {
-        let dropupId = "bottom-todo-dropup",
+        let dropupId = "right-todo-dropup",
             todos = storage.todos;
-        $("#bottom-todo-dropup-todo").html("");
+        $("#right-todo-dropup-todo").html("");
         
         $("#" + dropupId).removeClass("hideTodoDropup");
         $("#" + dropupId).addClass("unhideTodoDropup");
-        $("#bottom-todo-arrow").css("display", "block");
+        $("#right-todo-arrow").css("display", "block");
         if (todos.length > 27) {
             // Activate scrollbar
         } else if (todos.length < 7) { // Min height
@@ -400,7 +400,7 @@ var todo = {
                 });
             })(i);
         }
-        $("#bottom-todo-dropup-todo").append(`
+        $("#right-todo-dropup-todo").append(`
             <form id="${dropupId}-todo-form">
                 <input type="text" name="todo" id="${dropupId}-todo-input" placeholder="Enter Todo">
             </form>
@@ -416,7 +416,7 @@ var todo = {
                     checked = "checked";
                 }
             }
-            $("#bottom-todo-dropup-todo").append(`
+            $("#right-todo-dropup-todo").append(`
                 <div class="todo-wrappers">
                     <input id="${dropupId}-checkbox-${i}" type="checkbox" class="todo-checkboxes" ${checked}>
                     <p id="${dropupId}-todo-${i}" class="todos">
@@ -427,10 +427,10 @@ var todo = {
         }
     },
     addTodoListener: function() {
-        $("#bottom-todo-dropup-todo-form").submit(function(e) {
+        $("#right-todo-dropup-todo-form").submit(function(e) {
             e.preventDefault();
             chrome.storage.local.get(function(storage) {
-                storage.todos.push($("#bottom-todo-dropup-todo-input").val());
+                storage.todos.push($("#right-todo-dropup-todo-input").val());
                 storage.checked.push(false);
                 todo.drawDropup(storage);
                 chrome.storage.local.set(storage); 
@@ -447,30 +447,31 @@ $("document").ready(function() {
     quote.setupQuote();
     todo.dropupListener();
 
-    document.getElementById("main-time-draw").addEventListener("dblclick",
+    document.getElementById("mid-main-time-draw").addEventListener("dblclick",
     function toogleTwelveHourDisplay() {
         if (time.AMPMToggled) { //Clear
-            $(".main-time-twelvehours").html("");
+            $(".mid-main-time-twelvehours").html("");
             time.AMPMToggled = false;
         } else { //Draw
-            $(".main-time-twelvehours").html(
+            $(".mid-main-time-twelvehours").html(
                 "<p>" + time.AMPM + "</p>"
             );
             time.AMPMToggled = true;
         }
     });
 
-    $("#bottom-settings-info").hover(
+    $("#left-settings-info").hover(
     function hideOtherDivs() {
-        hide("top");
-        hide("main");
-        hide("bottom-todo");
-        hide("bottom-quote");
+        hide("mid");
+        hide("right");
+        hide("left-logo");
+        hide("right-todo");
+        hide("mid-quote");
 
         function hide(id) {
             $("#" + id).addClass("hideDivs");
             $("#" + id).removeClass("unhideDivs");
-            if (id === "bottom-quote") {
+            if (id === "mid-quote") {
                 $("#" + id).css("transition-delay", "3.5s");
                 $("#" + id).css("transition-duration", "0.75s");
                 $("#" + id).css("transition-property", "all");
@@ -478,15 +479,16 @@ $("document").ready(function() {
             }
         }
     }, function unhideOtherDivs() {
-        unhide("top");
-        unhide("main");
-        unhide("bottom-todo");
-        unhide("bottom-quote");
+        unhide("mid");
+        unhide("right");
+        unhide("left-logo");
+        unhide("right-todo");
+        unhide("mid-quote");
 
         function unhide(id) {
             $("#" + id).addClass("unhideDivs");
             $("#" + id).removeClass("hideDivs");
-            if (id === "bottom-quote") {
+            if (id === "mid-quote") {
                 $("#" + id).css("visibility", "visible");
                 $("#" + id).css("transition-delay", "0.25s");
                 $("#" + id).css("transition-duration", "0.75s");
