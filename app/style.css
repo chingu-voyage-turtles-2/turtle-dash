@@ -131,12 +131,11 @@ input[type=text]:focus:not([readonly])+label {
   opacity: 1;
 }
 #mid-search {
-    /* Putting the search div right next to the logo */
     position: absolute;
     left: 78px;
     display: flex;
     justify-content: flex-start;
-    margin: 10px 0 0 5px;
+    margin: 10px 0 0 10px;
 }
 #mid-search-icon {
     width: 24px;
@@ -150,8 +149,10 @@ input[type=text]:focus:not([readonly])+label {
 }
 #mid-search-box {
     display: none;
-    margin-top: 10px;
+    margin: 6px 0 0 10px;
     font-size: 12px;
+    height: 18px;
+    text-align: left;
 }
 
 /* Right */
