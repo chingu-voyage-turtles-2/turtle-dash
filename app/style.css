@@ -320,7 +320,7 @@ input#my-focus:checked+label:after {
     height: 194px;
     width: 250px;
     background-color: rgba(0, 0, 9, 0.88);
-    border-radius: 2%;
+    border-radius: 2px;
     margin: 0 10px 0 0;
     z-index: 1;
 }
@@ -366,4 +366,11 @@ input#my-focus:checked+label:after {
 }
 p.todos span { /* Indent after line break */
     padding-left: 20px;
+}
+.todo-delete {
+    height: 8px;
+    width: 8px;
+    padding: 0 0 .25px 5px;
+    cursor: hand;
+    margin-top: 2px;
 }

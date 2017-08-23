@@ -377,6 +377,7 @@ var todo = {
             } else {
                 writeTodo(todos[i], i);
             }
+            addTodoListener(i);
             (function addCheckboxListener(i) {
                 $("#" + dropupId + "-checkbox-" + i + "[type=checkbox]").on("click", function() {
                     if ($("#" + dropupId + "-checkbox-" + i + ":checked").length === 1) {
@@ -412,7 +413,7 @@ var todo = {
         }
 
         todo.dropupActive = true;
-        (function addTodoListener() {
+        (function addTodoInputListener() {
             $("#right-todo-dropup-form").submit(function(e) {
                 e.preventDefault();
                 chrome.storage.local.get(function(storage) {
@@ -426,13 +427,14 @@ var todo = {
 
         function writeTodo(content, i) {
             let checked = "",
-                contentFinal = breakupString(content, 23);
+                contentFinal = breakupString(content, 22);
             if (arguments.length === 3) {
                 if (arguments[2].checked[i]) {
                     checked = "checked";
                     contentFinal = "<s>" + contentFinal + "</s>"
                 }
             }
+            contentFinal += `<img src="img/todo-delete.png" id="${dropupId}-todo-${i}-delete" class="todo-delete">`;
             $("#right-todo-dropup-todo").append(`
                 <div class="todo-wrappers">
                     <input id="${dropupId}-checkbox-${i}" type="checkbox" class="todo-checkboxes" ${checked}>
@@ -464,6 +466,19 @@ var todo = {
                 return Array.from(new Array(maxNum - minNum - 1), (x,i) => i - minNum)
             } 
         }
+        function addTodoListener(i) {
+            document.getElementById(dropupId + "-todo-" + i + "-delete").addEventListener("click", function onDelete() {
+                todo.removeTodo(i);
+            });
+        }
+    },
+    removeTodo: function(i) {
+        chrome.storage.local.get(function(storage) {
+            storage.checked.splice(i, 1);
+            storage.todos.splice(i, 1);
+            todo.drawDropup(storage);
+            chrome.storage.local.set(storage); 
+        });
     }
 }
 //chrome.storage.local.set({ todos: ["Test Todo 1", "Test Todo 2" , "Test Todo 3"], checked: [false, false, false]}); // Reset storage
