@@ -354,7 +354,7 @@ var todo = {
                 $("#right-todo-dropup").addClass("hideTodoDropup");
                 $("#right-todo-arrow").css("display", "none");
 
-                $("#right-todo-dropup-todo").html("");
+                $("#right-todo-dropup").html("");
 
                 todo.dropupActive = false;
             }
@@ -363,17 +363,17 @@ var todo = {
     drawDropup: function(storage) {
         let dropupId = "right-todo-dropup",
             todos = storage.todos;
-        $("#right-todo-dropup-todo").html("");
+        $("#right-todo-dropup").html("<div id='right-todo-dropup-todo'></div>");
         
         $("#" + dropupId).removeClass("hideTodoDropup");
         $("#" + dropupId).addClass("unhideTodoDropup");
         $("#right-todo-arrow").css("display", "block");
         if (todos.length > 27) {
-            // Activate scrollbar
-        } else if (todos.length < 7) { // Min height
-            $("#" + dropupId).css("height", (40 + 7 * 22) + "px");
+            $("#" + dropupId + "-todo").css("overflow", "scroll"); //Scrollbar
         } else { // Dynamic Height
-            $("#" + dropupId).css("height", (40 + todos.length * 22) + "px");
+            $("#" + dropupId).css("height", (42 + todos.length * 18) + "px");
+            $("#" + dropupId + "-todo").css("overflow", "hidden");
+            $("#" + dropupId + "-todo").css("height", "inherit");
         }
 
         for (let i = 0; i < todos.length; i++) {
@@ -400,9 +400,9 @@ var todo = {
                 });
             })(i);
         }
-        $("#right-todo-dropup-todo").append(`
-            <form id="${dropupId}-todo-form">
-                <input type="text" name="todo" id="${dropupId}-todo-input" placeholder="Enter Todo">
+        $("#right-todo-dropup").append(`
+            <form id="${dropupId}-form">
+                <input type="text" name="todo" id="${dropupId}-input" placeholder="Enter Todo">
             </form>
         `);
 
@@ -427,10 +427,10 @@ var todo = {
         }
     },
     addTodoListener: function() {
-        $("#right-todo-dropup-todo-form").submit(function(e) {
+        $("#right-todo-dropup-form").submit(function(e) {
             e.preventDefault();
             chrome.storage.local.get(function(storage) {
-                storage.todos.push($("#right-todo-dropup-todo-input").val());
+                storage.todos.push($("#right-todo-dropup-input").val());
                 storage.checked.push(false);
                 todo.drawDropup(storage);
                 chrome.storage.local.set(storage); 

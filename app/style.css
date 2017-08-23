@@ -36,6 +36,8 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top: 15vh;
+    text-align: center;
 }
 
 /* Global Classes */
@@ -61,7 +63,6 @@ body {
     align-items: baseline;
     float: left;
     user-select: none;
-    /* Center time horizontally */
     margin-top: -20vh - 85px;
     margin-bottom: -20vh;
 }
@@ -199,11 +200,13 @@ input[type=text]:focus:not([readonly])+label {
     left: 0;
     right: 0;
     transition: 1.5s;
+    font-size: 2.5vh;
 }
 #mid-quote-draw-author {
     opacity: 0;
     transition-property: opacity;
     transition-duration: .5s;
+    font-size: 2.5vh;
 }
 #mid-quote-draw-quote:hover ~ #mid-quote-draw-author {
     opacity: 1;
@@ -307,7 +310,7 @@ input#my-focus:checked+label:after {
     display: none;
 }
 .todo-wrappers {
-    margin: 5px 0 0 8px;
+    margin: 0 0 0 8px;
 }
 .todo-checkboxes {
     display: inline;
@@ -316,19 +319,24 @@ input#my-focus:checked+label:after {
     font-size: 12;
     display: inline;
 }
-#right-todo-dropup-todo {
-    height: inherit;
+#right-todo {
+    max-height: 75vh;
+    height: 75vh;
+}
+#right-todo-dropup {
     display: flex;
     flex-direction: column;
-    text-align: left;
+    justify-content: space-between;
 }
-#right-todo-dropup-todo-input {
-    position: absolute;
-    bottom: 75;
-    width: 230px;
-    height: 18px;
-    margin: 0 0 0 10px;
-    order: 999;
+#right-todo-dropup-todo {
+    max-width: 245px;
+    margin: 5px 0 5px 0;
+    overflow: hidden;
+}
+#right-todo-dropup-input {
     font-size: inherit;
     text-align: inherit;
+    margin-left: 10px;
+    width: 230px;
+    height: 18px;
 }
