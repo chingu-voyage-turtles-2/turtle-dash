@@ -318,7 +318,7 @@ input#my-focus:checked+label:after {
 .unhideTodoDropup {
     display: block;
     height: 194px;
-    width: 250px;
+    width: 300px;
     background-color: rgba(0, 0, 9, 0.88);
     border-radius: 2px;
     margin: 0 10px 0 0;
@@ -340,7 +340,7 @@ input#my-focus:checked+label:after {
     display: inline;
 }
 .todos {
-    font-size: 12;
+    font-size: 16;
     display: inline;
 }
 #right-todo {
@@ -353,7 +353,7 @@ input#my-focus:checked+label:after {
     justify-content: space-between;
 }
 #right-todo-dropup-todo {
-    max-width: 245px;
+    max-width: 295px;
     margin: 5px 0 5px 0;
     overflow: hidden;
 }
@@ -361,8 +361,9 @@ input#my-focus:checked+label:after {
     font-size: inherit;
     text-align: inherit;
     margin-left: 10px;
-    width: 230px;
-    height: 18px;
+    width: 280px;
+    height: 26px;
+    font-size: 18;
 }
 p.todos span { /* Indent after line break */
     padding-left: 20px;
