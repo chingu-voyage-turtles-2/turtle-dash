@@ -296,7 +296,10 @@ let focus = {
             } else {
                 $("#mid-main-focus").html(`<input type="checkbox" id='my-focus' value=" ` + focus.task + `">
                 <label id='focusCheck'></label>
-                <span id='editfocus' contenteditable >` + focus.task + `</span><span id='mid-main-focus-delete'><img id="mid-main-focus-icon" src="img/delete-icon.png"/></span>`);
+                <span id='editfocus' contenteditable >` + focus.task + `</span>
+                <span id='mid-main-focus-delete'>
+                    <img id="mid-main-focus-icon" src="img/delete-icon.png"/>
+                </span>`);
             };
             if (localStorage.getItem("mid-main-focus-check") == 'true') {
                 $('#my-focus').prop('checked', true);
@@ -449,13 +452,13 @@ var todo = {
                     contentFinal = "<s>" + contentFinal + "</s>"
                 }
             }
-            contentFinal += `<img src="img/todo-delete.png" id="${dropupId}-todo-${i}-delete" class="todo-delete">`;
             $("#right-todo-dropup-todo").append(`
                 <div class="todo-wrappers">
                     <input id="${dropupId}-checkbox-${i}" type="checkbox" class="todo-checkboxes" ${checked}>
-                    <p id="${dropupId}-todo-${i}" class="todos">
+                    <p id="${dropupId}-todo-${i}" class="todos" contenteditable>
                         ${contentFinal}
                     </p>
+                    <img src="img/todo-delete.png" id="${dropupId}-todo-${i}-delete" class="todo-delete">
                 </div>
             `);
         }
@@ -484,6 +487,16 @@ var todo = {
         function addTodoListener(i) {
             document.getElementById(dropupId + "-todo-" + i + "-delete").addEventListener("click", function onDelete() {
                 todo.removeTodo(i);
+            });
+            $("#" + dropupId + "-todo-" + i).keypress(function(e) {
+                if (e.which === 13) {
+                    chrome.storage.local.get(function(storage) {
+                        storage.todos[i] = $("#" + dropupId + "-todo-" + i).text().trim();
+                        console.log($("#" + dropupId + "-todo-" + i).text().trim())
+                        todo.drawDropup(storage);
+                        chrome.storage.local.set(storage); 
+                    });
+                }
             });
         }
     },
