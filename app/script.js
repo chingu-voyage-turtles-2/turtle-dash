@@ -294,11 +294,10 @@ let focus = {
                     <input type="text" name="focus" id="mid-main-focus-value" placeholder="eg: cooking">
                 </form>`);
             } else {
-                $("#mid-main-focus").html(`<div id="mid-main-focus-draw">
+                $("#mid-main-focus").html(`
                 <input type="checkbox" id='my-focus' value=" ` + focus.task + `">
                 <label id='focusCheck'></label>
                 <span id='editfocus' contenteditable >` + focus.task + `</span><span id='mid-main-focus-delete'><img id="mid-main-focus-icon" src="img/delete-icon.png"/></span>
-                <div>
                 `);
             };
             if (localStorage.getItem("mid-main-focus-check") == 'true') {
