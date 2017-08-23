@@ -363,6 +363,7 @@ var todo = {
     drawDropup: function(storage) {
         let dropupId = "right-todo-dropup",
             todos = storage.todos,
+            lineBreakCounter = 0,
             windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
         
         $("#right-todo-dropup").html("<div id='right-todo-dropup-todo'></div>");
@@ -370,19 +371,9 @@ var todo = {
         $("#" + dropupId).addClass("unhideTodoDropup");
         $("#right-todo-arrow").css("display", "block");
 
-        if (todos.length * 18 > windowHeight * 0.7 - 42) {
-            $("#" + dropupId).css("height", (windowHeight * 0.7 - 42) + "px");
-            $("#" + dropupId + "-todo").css("overflow-y", "scroll"); //Scrollbar
-            $("#" + dropupId + "-todo").css("overflow-x", "hidden");
-        } else { // Dynamic Height
-            $("#" + dropupId).css("height", (42 + todos.length * 18) + "px");
-            $("#" + dropupId + "-todo").css("overflow", "hidden");
-            $("#" + dropupId + "-todo").css("height", "inherit");
-        }
-
         for (let i = 0; i < todos.length; i++) {
             if (storage.checked[i]) {
-                writeTodo("<s>" + todos[i] + "</s>", i, storage);
+                writeTodo(todos[i], i, storage);
             } else {
                 writeTodo(todos[i], i);
             }
@@ -410,36 +401,69 @@ var todo = {
             </form>
         `);
 
+        if (todos.length * 18 + lineBreakCounter * 15.1 > windowHeight * 0.7 - 42) { //Scrollbar
+            $("#" + dropupId).css("height", (windowHeight * 0.7 - 42) + "px");
+            $("#" + dropupId + "-todo").css("overflow-y", "scroll");
+            $("#" + dropupId + "-todo").css("overflow-x", "hidden");
+        } else { // Dynamic Height
+            $("#" + dropupId).css("height", (42 + todos.length * 18 + lineBreakCounter * 15.1) + "px");
+            $("#" + dropupId + "-todo").css("overflow", "hidden");
+            $("#" + dropupId + "-todo").css("height", "inherit");
+        }
+
         todo.dropupActive = true;
-        todo.addTodoListener();
+        (function addTodoListener() {
+            $("#right-todo-dropup-form").submit(function(e) {
+                e.preventDefault();
+                chrome.storage.local.get(function(storage) {
+                    storage.todos.push($("#right-todo-dropup-input").val());
+                    storage.checked.push(false);
+                    todo.drawDropup(storage);
+                    chrome.storage.local.set(storage); 
+                });
+            });
+        })();
 
         function writeTodo(content, i) {
-            let checked = "";
+            let checked = "",
+                contentFinal = breakupString(content, 23);
             if (arguments.length === 3) {
                 if (arguments[2].checked[i]) {
                     checked = "checked";
+                    contentFinal = "<s>" + contentFinal + "</s>"
                 }
             }
             $("#right-todo-dropup-todo").append(`
                 <div class="todo-wrappers">
                     <input id="${dropupId}-checkbox-${i}" type="checkbox" class="todo-checkboxes" ${checked}>
                     <p id="${dropupId}-todo-${i}" class="todos">
-                        ${content}
+                        ${contentFinal}
                     </p>
                 </div>
             `);
         }
-    },
-    addTodoListener: function() {
-        $("#right-todo-dropup-form").submit(function(e) {
-            e.preventDefault();
-            chrome.storage.local.get(function(storage) {
-                storage.todos.push($("#right-todo-dropup-input").val());
-                storage.checked.push(false);
-                todo.drawDropup(storage);
-                chrome.storage.local.set(storage); 
-            });
-        });
+        function breakupString(str, splitAt) {
+            if (str.length > splitAt) {
+                let howOften = Math.floor(str.length / splitAt),
+                    res;
+                for (var i of range(1, howOften + 1)) {
+                    if (i === 1) {
+                        res = str.slice(0, splitAt * i);
+                    } else {
+                        res += "<br><span>" + str.slice((splitAt * (i - 1)), splitAt * i) + "</span>";
+                    }
+                }
+                lineBreakCounter += howOften;
+                return res;
+            } else {
+                return str;
+            }
+
+            function range(minNum, maxNum) {
+                minNum -= 2;
+                return Array.from(new Array(maxNum - minNum - 1), (x,i) => i - minNum)
+            } 
+        }
     }
 }
 //chrome.storage.local.set({ todos: ["Test Todo 1", "Test Todo 2" , "Test Todo 3"], checked: [false, false, false]}); // Reset storage

@@ -364,3 +364,6 @@ input#my-focus:checked+label:after {
     width: 230px;
     height: 18px;
 }
+p.todos span { /* Indent after line break */
+    padding-left: 20px;
+}
