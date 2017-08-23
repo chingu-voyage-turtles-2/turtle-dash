@@ -294,9 +294,12 @@ let focus = {
                     <input type="text" name="focus" id="mid-main-focus-value" placeholder="eg: cooking">
                 </form>`);
             } else {
-                $("#mid-main-focus").html(`<input type="checkbox" id='my-focus' value=" ` + focus.task + `">
+                $("#mid-main-focus").html(`<div id="mid-main-focus-draw">
+                <input type="checkbox" id='my-focus' value=" ` + focus.task + `">
                 <label id='focusCheck'></label>
-                <span id='editfocus' contenteditable >` + focus.task + `</span><span id='mid-main-focus-delete'><img id="mid-main-focus-icon" src="img/delete-icon.png"/></span>`);
+                <span id='editfocus' contenteditable >` + focus.task + `</span><span id='mid-main-focus-delete'><img id="mid-main-focus-icon" src="img/delete-icon.png"/></span>
+                <div>
+                `);
             };
             if (localStorage.getItem("mid-main-focus-check") == 'true') {
                 $('#my-focus').prop('checked', true);
@@ -444,7 +447,13 @@ var todo = {
         });
     }
 }
-//chrome.storage.local.set({ todos: ["Test Todo 1", "Test Todo 2" , "Test Todo 3"], checked: [false, false, false]}); // Reset storage
+
+//fixed todo bug
+chrome.storage.local.get("todos", items=>{
+    if (items.todos === undefined){ // if todos is not defined
+         chrome.storage.local.set({ todos: [], checked: []}); // Reset storage
+    }
+});
 
 //var searchButton = document.getElementById("top-search-icon"),
 //searchBox = document.getElementById("top-search-box");
