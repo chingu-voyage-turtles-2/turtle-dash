@@ -307,12 +307,18 @@ let focus = {
         $('#focusCheck').click(function(e) {
             focus.taskChecked = !focus.taskChecked;
             localStorage.setItem("mid-main-focus-check", focus.taskChecked);
+            if(focus.taskChecked === true){
+                $("#mid-main-focus").addClass('mid-main-focus-checked');
+            }else{
+                $("#mid-main-focus").removeClass('mid-main-focus-checked');
+            };
             focus.drawFocus();
         });
 
         $('#mid-main-focus-delete').click(function(e) {
             localStorage.removeItem("mid-main-focus");
             localStorage.setItem("mid-main-focus-check", 'false');
+            $("#mid-main-focus").removeClass('mid-main-focus-checked');
             focus.task = '';
             focus.drawFocus();
         });

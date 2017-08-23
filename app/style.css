@@ -242,6 +242,22 @@ input[type=text]:focus:not([readonly])+label {
     display: inline-flex;
     text-align: center;
 }
+#mid-main-focus-value::-webkit-input-placeholder {
+  color: #fff;
+  opacity: 1;
+}
+#mid-main-focus-value::-moz-placeholder {
+  color: #fff;
+  opacity: 1;
+}
+#mid-main-focus-value:-ms-input-placeholder {
+  color: #fff;
+  opacity: 1;
+}
+#mid-main-focus-value::placeholder {
+  color: #fff;
+  opacity: 1;
+}
 #mid-main-focus-value{
     font-size: 1.5rem;
     width: 50%;
@@ -259,12 +275,15 @@ input[type=text]:focus:not([readonly])+label {
     background-color: rgba(255,255,255,0.3);
     border-radius: 50%;
 }
+.mid-main-focus-checked{
+    text-decoration: line-through;
+}
 input#my-focus {
     position: absolute;
     left: -9999px;
     visibility: hidden;
 }
-label {
+label#focusCheck {
     cursor: pointer;
 }
 input#my-focus+label:before {
@@ -357,3 +376,4 @@ input#my-focus:checked+label:after {
     font-size: inherit;
     text-align: inherit;
 }
+
