@@ -294,11 +294,9 @@ let focus = {
                     <input type="text" name="focus" id="mid-main-focus-value" placeholder="eg: cooking">
                 </form>`);
             } else {
-                $("#mid-main-focus").html(`
-                <input type="checkbox" id='my-focus' value=" ` + focus.task + `">
+                $("#mid-main-focus").html(`<input type="checkbox" id='my-focus' value=" ` + focus.task + `">
                 <label id='focusCheck'></label>
-                <span id='editfocus' contenteditable >` + focus.task + `</span><span id='mid-main-focus-delete'><img id="mid-main-focus-icon" src="img/delete-icon.png"/></span>
-                `);
+                <span id='editfocus' contenteditable >` + focus.task + `</span><span id='mid-main-focus-delete'><img id="mid-main-focus-icon" src="img/delete-icon.png"/></span>`);
             };
             if (localStorage.getItem("mid-main-focus-check") == 'true') {
                 $('#my-focus').prop('checked', true);
@@ -372,6 +370,7 @@ var todo = {
         let dropupId = "right-todo-dropup",
             todos = storage.todos;
         $("#right-todo-dropup-todo").html("");
+
 
         $("#" + dropupId).removeClass("hideTodoDropup");
         $("#" + dropupId).addClass("unhideTodoDropup");
@@ -454,16 +453,15 @@ chrome.storage.local.get("todos", items=>{
     }
 });
 
-//var searchButton = document.getElementById("top-search-icon"),
-//searchBox = document.getElementById("top-search-box");
-//
-//searchButton.addEventListener("click", function() {
-//    if (searchBox.style.display == "block") {
-//        searchBox.style.display = "none";
-//    } else {
-//        searchBox.style.display = "block";
-//    }
-//});
+var searchBox = document.getElementById("mid-search-box");
+
+document.getElementById("mid-search-icon").addEventListener("click", function() {
+    if (searchBox.style.display == "block") {
+        searchBox.style.display = "none";
+    } else {
+        searchBox.style.display = "block";
+    }
+});
 
 $("document").ready(function() {
     time.setTime();
