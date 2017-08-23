@@ -374,3 +374,13 @@ p.todos span { /* Indent after line break */
     cursor: hand;
     margin-top: 2px;
 }
+.emoji {
+    height: 32px;
+    width: 32px;
+    padding-left: 5px;
+}
+#right-todo-dropup-todo-notodo {
+    text-align: center;
+    padding-top: 15px;
+    font-size: 16px;
+}

@@ -364,6 +364,7 @@ var todo = {
         let dropupId = "right-todo-dropup",
             todos = storage.todos,
             lineBreakCounter = 0,
+            noTodoMessage = false,
             windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
         
         $("#right-todo-dropup").html("<div id='right-todo-dropup-todo'></div>");
@@ -371,30 +372,34 @@ var todo = {
         $("#" + dropupId).addClass("unhideTodoDropup");
         $("#right-todo-arrow").css("display", "block");
 
-        for (let i = 0; i < todos.length; i++) {
-            if (storage.checked[i]) {
-                writeTodo(todos[i], i, storage);
-            } else {
-                writeTodo(todos[i], i);
+        if (todos.length === 0) {
+            noTodoMessage = true;
+        } else {
+            for (let i = 0; i < todos.length; i++) {
+                if (storage.checked[i]) {
+                    writeTodo(todos[i], i, storage);
+                } else {
+                    writeTodo(todos[i], i);
+                }
+                addTodoListener(i);
+                (function addCheckboxListener(i) {
+                    $("#" + dropupId + "-checkbox-" + i + "[type=checkbox]").on("click", function() {
+                        if ($("#" + dropupId + "-checkbox-" + i + ":checked").length === 1) {
+                            chrome.storage.local.get(function(storage) {
+                                storage.checked[i] = true;
+                                chrome.storage.local.set(storage);
+                                todo.drawDropup(storage, i);
+                            });
+                        } else {
+                            chrome.storage.local.get(function(storage) {
+                                storage.checked[i] = false;
+                                chrome.storage.local.set(storage);
+                                todo.drawDropup(storage, i);
+                            });
+                        }
+                    });
+                })(i);
             }
-            addTodoListener(i);
-            (function addCheckboxListener(i) {
-                $("#" + dropupId + "-checkbox-" + i + "[type=checkbox]").on("click", function() {
-                    if ($("#" + dropupId + "-checkbox-" + i + ":checked").length === 1) {
-                        chrome.storage.local.get(function(storage) {
-                            storage.checked[i] = true;
-                            chrome.storage.local.set(storage);
-                            todo.drawDropup(storage, i);
-                        });
-                    } else {
-                        chrome.storage.local.get(function(storage) {
-                            storage.checked[i] = false;
-                            chrome.storage.local.set(storage);
-                            todo.drawDropup(storage, i);
-                        });
-                    }
-                });
-            })(i);
         }
         $("#right-todo-dropup").append(`
             <form id="${dropupId}-form">
@@ -410,6 +415,16 @@ var todo = {
             $("#" + dropupId).css("height", (42 + todos.length * 18 + lineBreakCounter * 15.1) + "px");
             $("#" + dropupId + "-todo").css("overflow", "hidden");
             $("#" + dropupId + "-todo").css("height", "inherit");
+        }
+        if (noTodoMessage) {
+            $("#right-todo-dropup-todo").append(`
+            <div id="right-todo-dropup-todo-notodo">
+                <img src="img/wave.png" class="emoji"/>
+                <img src="img/smile.png" class="emoji"/>
+                <p>Hey there ${user.name}!<br>You can add new todo's below:</p>
+            </div>
+            `);
+            $("#" + dropupId).css("height", "170px");
         }
 
         todo.dropupActive = true;
