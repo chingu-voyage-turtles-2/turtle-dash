@@ -440,6 +440,16 @@ var todo = {
 }
 //chrome.storage.local.set({ todos: ["Test Todo 1", "Test Todo 2" , "Test Todo 3"], checked: [false, false, false]}); // Reset storage
 
+var searchBox = document.getElementById("mid-search-box");
+
+document.getElementById("mid-search-icon").addEventListener("click", function() {
+    if (searchBox.style.display == "block") {
+        searchBox.style.display = "none";
+    } else {
+        searchBox.style.display = "block";
+    }
+});
+
 $("document").ready(function() {
     time.setTime();
     time.updateTime();

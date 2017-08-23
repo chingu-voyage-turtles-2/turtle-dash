@@ -46,15 +46,20 @@ body {
 }
 
 /* Left */
+#left {
+    display: flex;
+    justify-content: space-between;
+}
 #left-logo-spin {
     margin: 10px 0 0 10px;
     width: 40px;
     height: 40px;
-    border-radius: 50%;
-    padding: 4px 4px 4px 4px;
+    padding: 8px 8px 8px 8px;
+    cursor: hand;
 }
 #left-logo-spin:hover {
     background-color: rgba(255,255,255,0.3);
+    border-radius: 50%;
 }
 
 /* Mid */
@@ -129,6 +134,24 @@ input[type=text]:focus:not([readonly])+label {
     /* Putting the search div right next to the logo */
     position: absolute;
     left: 78px;
+    display: flex;
+    justify-content: flex-start;
+    margin: 10px 0 0 5px;
+}
+#mid-search-icon {
+    width: 24px;
+    height: 24px;
+    padding: 8px 8px 8px 8px;
+    cursor: hand;
+}
+#mid-search-icon:hover {
+    background-color: rgba(255,255,255,0.3);
+    border-radius: 50%;
+}
+#mid-search-box {
+    display: none;
+    margin-top: 10px;
+    font-size: 12px;
 }
 
 /* Right */
