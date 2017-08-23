@@ -362,14 +362,18 @@ var todo = {
     },
     drawDropup: function(storage) {
         let dropupId = "right-todo-dropup",
-            todos = storage.todos;
-        $("#right-todo-dropup").html("<div id='right-todo-dropup-todo'></div>");
+            todos = storage.todos,
+            windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
         
+        $("#right-todo-dropup").html("<div id='right-todo-dropup-todo'></div>");
         $("#" + dropupId).removeClass("hideTodoDropup");
         $("#" + dropupId).addClass("unhideTodoDropup");
         $("#right-todo-arrow").css("display", "block");
-        if (todos.length > 27) {
-            $("#" + dropupId + "-todo").css("overflow", "scroll"); //Scrollbar
+
+        if (todos.length * 18 > windowHeight * 0.7 - 42) {
+            $("#" + dropupId).css("height", (windowHeight * 0.7 - 42) + "px");
+            $("#" + dropupId + "-todo").css("overflow-y", "scroll"); //Scrollbar
+            $("#" + dropupId + "-todo").css("overflow-x", "hidden");
         } else { // Dynamic Height
             $("#" + dropupId).css("height", (42 + todos.length * 18) + "px");
             $("#" + dropupId + "-todo").css("overflow", "hidden");
