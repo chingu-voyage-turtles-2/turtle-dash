@@ -4,7 +4,7 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
-    caret-color: #4285F4;
+    caret-color: #fff;
  }
 
  /* Flexbox */
@@ -40,7 +40,7 @@ body {
     text-align: center;
 }
 
-/* Global Classes */
+/* Global */
 .outlined {
     text-shadow: 0px 0px 3px black;
 }
@@ -54,12 +54,39 @@ body {
     background-color: rgba(255,255,255,0.3);
     border-radius: 50%;
 }
+input[type=text] {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    border-radius: 0;
+    outline: none;
+    height: 2.1rem;
+    width: 100%;
+    font-family: "Lato";
+    color: #808080;
+    text-align: center;
+    text-shadow: 0px 0px 3px black;
+    font-size: 2rem;
+    box-shadow: none;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    transition: all .3s;
+}
+input[type=text]:focus:not([readonly]) {
+    border-bottom: 1px solid #fff;
+    box-shadow: 0 1px 0 0 #fff;
+}
+input[type=text]:focus:not([readonly])+label {
+    color: #fff;
+}
 
 /* Left */
 #left {
     display: flex;
     justify-content: space-between;
 }
+/* Logo */
 #left-logo-spin {
     margin: 10px 0 0 10px;
     width: 40px;
@@ -71,8 +98,45 @@ body {
     background-color: rgba(255,255,255,0.3);
     border-radius: 50%;
 }
+/* Settings */
+#left-settings {
+    width: 15vw;
+    align-self: flex-end;
+    display: flex;
+}
+#left-settings-icon {
+    margin: 0 3px 0 10px;
+}
+#left-settings-info {
+    transition: all 2s ease;
+    margin-top: 10px;
+}
+#left-settings-info:hover {
+    transform:translate(0,-0.5em);
+}
+#left-settings-location {
+    display:inline-block;
+}
+@keyframes fadeIn {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+#left-settings-location:hover ~ #left-settings-owner {
+    display: block;
+    animation-name: fadeIn;
+    animation-duration: 3s;
+}
+#left-settings-owner {
+    display: none;
+}
+#left-settings-owner:hover {
+    display: block;
+    animation-name: fadeIn;
+    animation-duration: 3s;
+}
 
 /* Mid */
+/* Time */
 #mid-main-time {
     display: inline-flex;
     align-items: baseline;
@@ -90,6 +154,7 @@ body {
 #mid-main-time-twelvehours-hidden {
     visibility: hidden;
 }
+/* Greeting-Usernam */
 #mid-main-greeting {
     font-size: 6vh;
     padding-top: -10vh;
@@ -97,32 +162,6 @@ body {
 #mid-main-username {
     width: 100%;
     padding: 10px;
-}
-input[type=text] {
-    background-color: transparent;
-    border: none;
-    border-bottom: 1px solid #ccc;
-    border-radius: 0;
-    outline: none;
-    height: 2.1rem;
-    width: 100%;
-    font-family: "Lato";
-    color: #fff;
-    text-align: center;
-    text-shadow: 0px 0px 3px black;
-    font-size: 2rem;
-    box-shadow: none;
-    -webkit-box-sizing: content-box;
-    -moz-box-sizing: content-box;
-    box-sizing: content-box;
-    transition: all .3s;
-}
-input[type=text]:focus:not([readonly]) {
-    border-bottom: 1px solid #4285F4;
-    box-shadow: 0 1px 0 0 #4285F4;
-}
-input[type=text]:focus:not([readonly])+label {
-    color: #4285F4;
 }
 #mid-main-username-input::-webkit-input-placeholder {
   color: #fff;
@@ -140,6 +179,7 @@ input[type=text]:focus:not([readonly])+label {
   color: #fff;
   opacity: 1;
 }
+/* Search */
 #mid-search {
     position: absolute;
     left: 78px;
@@ -154,52 +194,7 @@ input[type=text]:focus:not([readonly])+label {
     height: 18px;
     text-align: left;
 }
-
-/* Right */
-#left-settings {
-    width: 15vw;
-    align-self: flex-end;
-    display: flex;
-}
-#left-settings-info {
-    transition: all 2s ease;
-    margin-top: 10px;
-}
-#left-settings-info:hover {
-    transform:translate(0,-0.5em);
-}
-@keyframes fadeIn {
-    0% {opacity: 0;}
-    100% {opacity: 1;}
-}
-#left-settings-location {
-    display:inline-block;
-}
-#left-settings-location:hover ~ #left-settings-owner {
-    display: block;
-    animation-name: fadeIn;
-    animation-duration: 3s;
-}
-#left-settings-owner {
-    display: none;
-}
-#left-settings-owner:hover {
-    display: block;
-    animation-name: fadeIn;
-    animation-duration: 3s;
-}
-#right-todo {
-    height: 40vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: flex-end;
-    width: 15vw;
-}
-#right-todo-icon {
-    margin: 0 10px 0 0;
-    order: 2;
-}
+/* Quote */
 #mid-quote {
     width: 50vw;
     height: 170px;
@@ -230,6 +225,7 @@ input[type=text]:focus:not([readonly])+label {
 #mid-quote-draw-author:hover {
     opacity: 1;
 }
+/* Focus */
 #mid-main-focus {
     font-size: 4.1vh;
     padding: 2vh;
@@ -275,39 +271,20 @@ input[type=text]:focus:not([readonly])+label {
     display: flex;
     align-items: center;
 }
-.mid-main-focus-checked{
-    text-decoration: line-through;
+
+/* Right */
+/* Todo */
+#right-todo {
+    height: 40vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    width: 15vw;
 }
-input#my-focus {
-    position: absolute;
-    left: -9999px;
-    visibility: hidden;
-}
-label {
-    cursor: pointer;
-}
-input#my-focus+label:before {
-    border: 1px solid #fff;
-    content: "\00a0";
-    display: inline-block;
-    font: 20px/1em sans-serif;
-    height: 20px;
-    width: 20px;
-    margin: 5px 0.5em 0 0px;
-    padding: 0;
-    vertical-align: baseline;
-}
-input#my-focus:checked+label:before {
-    background: #fff;
-    color: #333;
-    content: "\2713";
-    text-align: center;
-}
-input#my-focus:checked+label:after {
-    font-weight: bold;
-}
-#left-settings-icon {
-    margin: 0 3px 0 10px;
+#right-todo-icon {
+    margin: 0 10px 0 0;
+    order: 2;
 }
 .hideDivs {
     visibility: hidden;

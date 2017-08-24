@@ -7,8 +7,9 @@ var time = {
         this.hours = new Date().getHours();
         this.minutes = new Date().getMinutes();
         this.seconds = new Date().getSeconds();
-        this.setTimeOfDay(); //Morning, etc.
+        this.setTimeOfDay();
         setAMPM.call(this);
+        this.setAMPMListener();
         addMissingZero.call(this, this.hours);
         addMissingZero.call(this, this.minutes);
         if (this.firstTimeDraw) {
@@ -81,13 +82,27 @@ var time = {
             case(23): case(24): case(1): case(2): case(3):
                 this.timeOfDay = "Night"; //23 - 3
                 break;
-            default: //To avoid defaulting to undefined
+            default:
                 this.timeOfDay = "Day";
         }
+    },
+    setAMPMListener: function() {
+        document.getElementById("mid-main-time-draw").addEventListener("dblclick",
+        function toogleTwelveHourDisplay() {
+            if (time.AMPMToggled) {
+                $(".mid-main-time-twelvehours").html("");
+                time.AMPMToggled = false;
+            } else {
+                $(".mid-main-time-twelvehours").html(
+                    "<p>" + time.AMPM + "</p>"
+                );
+                time.AMPMToggled = true;
+            }
+        });
     }
 }
 
-let user = {
+var user = {
     name: localStorage.getItem("username"),
     drawGreeting: function() {
         if (user.name == null) {
@@ -199,7 +214,7 @@ var backgroundImage = {
     }
 }
 
-let quote = {
+var quote = {
     url: "https://cors-anywhere.herokuapp.com/" + "https://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json",
     author: "",
     quote: "",
@@ -257,7 +272,7 @@ let quote = {
     }
 }
 
-let focus = {
+var focus = {
     task: localStorage.getItem("mid-main-focus"),
     drawFocus: function() {
         let focusChecked,
@@ -279,7 +294,7 @@ let focus = {
             focusChecked = false;
         }
         if (localStorage.getItem("username") !== null) {
-            if (focus.task == null || focus.task == '') {
+            if (focus.task == null || focus.task == "") {
                 $("#mid-main-focus").html(`
                 <form id="mid-main-focus-form">
                     <label>What is your main focus today?</label>
@@ -322,7 +337,7 @@ let focus = {
         $('#mid-main-focus-deleteplus').click(function(e) {
             localStorage.removeItem("mid-main-focus");
             localStorage.setItem("focusChecked", "false");
-            focus.task = '';
+            focus.task = "";
             focus.drawFocus();
         });
 
@@ -352,6 +367,7 @@ let focus = {
 var todo = {
     dropupActive: false,
     dropupListener: function() {
+        this.setupTodoStorage();
         document.getElementById("right-todo-icon").addEventListener("click",
         function triggerDropup() {
             if (!todo.dropupActive) {
@@ -362,9 +378,7 @@ var todo = {
                 $("#right-todo-dropup").removeClass("unhideTodoDropup");
                 $("#right-todo-dropup").addClass("hideTodoDropup");
                 $("#right-todo-arrow").css("display", "none");
-
                 $("#right-todo-dropup").html("");
-
                 todo.dropupActive = false;
             }
         });
@@ -484,11 +498,6 @@ var todo = {
             } else {
                 return str;
             }
-
-            function range(minNum, maxNum) {
-                minNum -= 2;
-                return Array.from(new Array(maxNum - minNum - 1), (x,i) => i - minNum)
-            } 
         }
         function addTodoListener(i) {
             document.getElementById(dropupId + "-todo-" + i + "-delete").addEventListener("click", function onDelete() {
@@ -498,7 +507,6 @@ var todo = {
                 if (e.which === 13) {
                     chrome.storage.local.get(function(storage) {
                         storage.todos[i] = $("#" + dropupId + "-todo-" + i).text().trim();
-                        console.log($("#" + dropupId + "-todo-" + i).text().trim())
                         todo.drawDropup(storage);
                         chrome.storage.local.set(storage); 
                     });
@@ -513,51 +521,73 @@ var todo = {
             todo.drawDropup(storage);
             chrome.storage.local.set(storage); 
         });
+    },
+    setupTodoStorage: function() {
+        chrome.storage.local.get("todos", function(items) {
+            if (items.todos === undefined){
+                 chrome.storage.local.set({ todos: [], checked: []});
+            }
+        });
     }
 }
-//chrome.storage.local.set({ todos: ["Test Todo 1", "Test Todo 2" , "Test Todo 3"], checked: [false, false, false]}); // Reset storage
 
-
-chrome.storage.local.get("todos", items=>{
-    if (items.todos === undefined){
-         chrome.storage.local.set({ todos: [], checked: []});
+var search = {
+    setupSearch: function() {
+        let searchBox = document.getElementById("mid-search-box");
+        document.getElementById("mid-search-icon").addEventListener("click", function() {
+            if (searchBox.style.display == "block") {
+                searchBox.style.display = "none";
+            } else {
+                searchBox.style.display = "block";
+            }
+        });
+        searchBox.addEventListener("keydown", function() {
+            if(event.which === 13) {
+                chrome.tabs.update(null, {url:"http://www.google.com/search?q=" + searchBox.value});
+            }
+        });
     }
-});
+}
 
-var searchBox = document.getElementById("mid-search-box");
-
-document.getElementById("mid-search-icon").addEventListener("click", function() {
-    if (searchBox.style.display == "block") {
-        searchBox.style.display = "none";
-    } else {
-        searchBox.style.display = "block";
-    }
-});
-
-searchBox.addEventListener("keydown", function() {
-    if(event.which === 13) {
-        var searchQuery = searchBox.value;
-        chrome.tabs.update(null, {url:"http://www.google.com/search?q=" + searchQuery});
-    }
-});
-
-var draw = {
-    fadeIn: function(id, timeToOpaque = 1800) {
-        $("#" + id).fadeOut(0);
-        $("#" + id).fadeIn(timeToOpaque);
-    },
-    initalFadeIn: function() {
-        for (let id of [
-            "right",
-            "left",
-            "mid-main-greeting",
-            "mid-main-username",
-            "mid-main-focus",
-            "mid-search"
-        ]) {
-            this.fadeIn(id);
-        }
-        this.fadeIn("mid-main-time-draw", 1500);
+var settings = {
+    setImageLocationHover: function() {
+        $("#left-settings-info").hover(
+            function hideOtherDivs() {
+                hide("mid");
+                hide("right");
+                hide("left-logo");
+                hide("right-todo");
+                hide("mid-quote");
+        
+                function hide(id) {
+                    $("#" + id).addClass("hideDivs");
+                    $("#" + id).removeClass("unhideDivs");
+                    if (id === "mid-quote") {
+                        $("#" + id).css("transition-delay", "3.5s");
+                        $("#" + id).css("transition-duration", "0.75s");
+                        $("#" + id).css("transition-property", "all");
+                        $("#" + id).css("transition-timing-function", "linear");
+                    }
+                }
+            }, function unhideOtherDivs() {
+                unhide("mid");
+                unhide("right");
+                unhide("left-logo");
+                unhide("right-todo");
+                unhide("mid-quote");
+        
+                function unhide(id) {
+                    $("#" + id).addClass("unhideDivs");
+                    $("#" + id).removeClass("hideDivs");
+                    if (id === "mid-quote") {
+                        $("#" + id).css("visibility", "visible");
+                        $("#" + id).css("transition-delay", "0.25s");
+                        $("#" + id).css("transition-duration", "0.75s");
+                        $("#" + id).css("transition-property", "all");
+                        $("#" + id).css("transition-timing-function", "linear");
+                    }
+            }
+        });
     }
 }
 
@@ -567,69 +597,26 @@ $("document").ready(function() {
     backgroundImage.setupImage();
     quote.setupQuote();
     todo.dropupListener();
-    draw.initalFadeIn();
-
-    document.getElementById("mid-main-time-draw").addEventListener("dblclick",
-    function toogleTwelveHourDisplay() {
-        if (time.AMPMToggled) { //Clear
-            $(".mid-main-time-twelvehours").html("");
-            time.AMPMToggled = false;
-        } else { //Draw
-            $(".mid-main-time-twelvehours").html(
-                "<p>" + time.AMPM + "</p>"
-            );
-            time.AMPMToggled = true;
-        }
-    });
-
-    $("#left-settings-info").hover(
-    function hideOtherDivs() {
-        hide("mid");
-        hide("right");
-        hide("left-logo");
-        hide("right-todo");
-        hide("mid-quote");
-
-        function hide(id) {
-            $("#" + id).addClass("hideDivs");
-            $("#" + id).removeClass("unhideDivs");
-            if (id === "mid-quote") {
-                $("#" + id).css("transition-delay", "3.5s");
-                $("#" + id).css("transition-duration", "0.75s");
-                $("#" + id).css("transition-property", "all");
-                $("#" + id).css("transition-timing-function", "linear");
-            }
-        }
-    }, function unhideOtherDivs() {
-        unhide("mid");
-        unhide("right");
-        unhide("left-logo");
-        unhide("right-todo");
-        unhide("mid-quote");
-
-        function unhide(id) {
-            $("#" + id).addClass("unhideDivs");
-            $("#" + id).removeClass("hideDivs");
-            if (id === "mid-quote") {
-                $("#" + id).css("visibility", "visible");
-                $("#" + id).css("transition-delay", "0.25s");
-                $("#" + id).css("transition-duration", "0.75s");
-                $("#" + id).css("transition-property", "all");
-                $("#" + id).css("transition-timing-function", "linear");
-            }
-        }
-    });
+    search.setupSearch();
+    settings.setImageLocationHover();
+    initalFadeIn();
 });
 
-function returnRandomPhrase(phrasesObj, resArr) {
-    //Bulding a array out of the phrases keys and picking a random one
-    for (let i in phrasesObj) {
-        for (let c = 0; c < phrasesObj[i].chance; c++) {
-            resArr.push(i);
-        }
+function initalFadeIn() {
+    for (let id of [
+        "right",
+        "left",
+        "mid-main-greeting",
+        "mid-main-username",
+        "mid-main-focus",
+        "mid-search"
+    ]) {
+        fadeIn(id);
     }
-    let index = resArr[
-        Math.round(Math.random() * (resArr.length - 1))
-        ];
-    return phrasesObj[index].phrase
-};
+    fadeIn("mid-main-time-draw", 1500);
+
+    function fadeIn(id, timeToOpaque = 1800) {
+        $("#" + id).fadeOut(0);
+        $("#" + id).fadeIn(timeToOpaque);
+    }
+}
