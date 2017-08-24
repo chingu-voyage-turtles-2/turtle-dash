@@ -307,6 +307,7 @@ let focus = {
         $('#focusCheck').click(function(e) {
             focus.taskChecked = !focus.taskChecked;
             localStorage.setItem("mid-main-focus-check", focus.taskChecked);
+          
             if(focus.taskChecked === true){
                 $("#mid-main-focus").addClass('mid-main-focus-checked');
             }else{
@@ -318,7 +319,9 @@ let focus = {
         $('#mid-main-focus-delete').click(function(e) {
             localStorage.removeItem("mid-main-focus");
             localStorage.setItem("mid-main-focus-check", 'false');
+      
             $("#mid-main-focus").removeClass('mid-main-focus-checked');
+
             focus.task = '';
             focus.drawFocus();
         });
@@ -370,7 +373,6 @@ var todo = {
         let dropupId = "right-todo-dropup",
             todos = storage.todos;
         $("#right-todo-dropup-todo").html("");
-
 
         $("#" + dropupId).removeClass("hideTodoDropup");
         $("#" + dropupId).addClass("unhideTodoDropup");
@@ -446,14 +448,13 @@ var todo = {
     }
 }
 
-//fixed todo bug
 chrome.storage.local.get("todos", items=>{
-    if (items.todos === undefined){ // if todos is not defined
-         chrome.storage.local.set({ todos: [], checked: []}); // Reset storage
+    if (items.todos === undefined){
+         chrome.storage.local.set({ todos: [], checked: []});
     }
 });
 
-var searchBox = document.getElementById("mid-search-box");
+document.getElementById("mid-search-box");
 
 document.getElementById("mid-search-icon").addEventListener("click", function() {
     if (searchBox.style.display == "block") {
