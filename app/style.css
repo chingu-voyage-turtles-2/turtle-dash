@@ -355,7 +355,7 @@ p.todos span { /* Indent after line break */
 .todo-delete {
     height: 8px;
     width: 8px;
-    padding: 0 0 .25px 5px;
+    padding: 0 0 1px 5px;
     cursor: hand;
     margin-top: 2px;
 }

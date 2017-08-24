@@ -400,12 +400,12 @@ var todo = {
             </form>
         `);
 
-        if (todos.length * 22 + lineBreakCounter * 19.1 > windowHeight * 0.7 - 42) { //Scrollbar
+        if (todos.length * 21 + lineBreakCounter * 19.1 > windowHeight * 0.7 - 42) { //Scrollbar
             $("#" + dropupId).css("height", (windowHeight * 0.7 - 42) + "px");
             $("#" + dropupId + "-todo").css("overflow-y", "scroll");
             $("#" + dropupId + "-todo").css("overflow-x", "hidden");
         } else { // Dynamic Height
-            $("#" + dropupId).css("height", (50 + todos.length * 22 + lineBreakCounter * 19.1) + "px");
+            $("#" + dropupId).css("height", (50 + todos.length * 21 + lineBreakCounter * 19.1) + "px");
             $("#" + dropupId + "-todo").css("overflow", "hidden");
             $("#" + dropupId + "-todo").css("height", "inherit");
         }
