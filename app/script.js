@@ -12,15 +12,11 @@ var time = {
         addMissingZero.call(this, this.hours);
         addMissingZero.call(this, this.minutes);
         if (this.firstTimeDraw) {
-            fadeOut("mid-main-time-draw");
-            fadeOut("mid-main-greeting");
             $("#mid-main-time-draw").html(
                 "<p>" + time.hours + ":" + time.minutes + "<p>"
             );
             user.drawGreeting();
             focus.drawFocus();
-            fadeIn("mid-main-time-draw", 1500);
-            fadeIn("mid-main-greeting", 1800);
             this.firstTimeDraw = false;
         } else {
             $("#mid-main-time-draw").html(
@@ -41,12 +37,6 @@ var time = {
             localStorage.setItem("quoteHour", this.hours);
         } else {
             quote.updateQuote = false;
-        }
-        function fadeOut(name) {
-            $("#" + name).fadeOut(0);
-        }
-        function fadeIn(name, timeToOpaque) {
-            $("#" + name).fadeIn(timeToOpaque);
         }
         function setAMPM() {
             if (this.hours >= 12) {
@@ -115,34 +105,19 @@ let user = {
                 standard: {
                     phrase: "Good " + time.timeOfDay + ", <span id='editname' contenteditable>" + user.name + "</span>!",
                     chance: 70
-                },
-                variation1: {
+                }, variation1: {
                     phrase: "Welcome back, <span id='editname' contenteditable>" + user.name + "</span>!",
                     chance: 15
-                },
-                variation2: {
+                }, variation2: {
                     phrase: "Good to see you this " + time.timeOfDay + "!",
                     chance: 10
-                },
-                variation3: {
+                }, variation3: {
                     phrase: "How's it going <span id='editname' contenteditable>" + user.name + "</span>?",
                     chance: 5
                 }
             }
         }
-        $("#mid-main-greeting").html(returnRandomPhrase);
-        function returnRandomPhrase() {
-            //Bulding a array out of the phrases keys and picking a random one
-            for (let i in greetings.phrases) {
-                for (let c = 0; c < greetings.phrases[i].chance; c++) {
-                    greetings.phrasesArray.push(i);
-                }
-            }
-            let index = greetings.phrasesArray[
-                Math.round(Math.random() * (greetings.phrasesArray.length - 1))
-                ];
-            return greetings.phrases[index].phrase
-        };
+        $("#mid-main-greeting").html(returnRandomPhrase(greetings.phrases, greetings.phrasesArray));
         user.getName();
         user.editName();
     },
@@ -283,45 +258,70 @@ let quote = {
 }
 
 let focus = {
-    taskChecked: localStorage.getItem("mid-main-focus-check"),
     task: localStorage.getItem("mid-main-focus"),
     drawFocus: function() {
+        let focusChecked,
+        placeholders = {
+            placeholdersArray: [],
+            phrases: {
+                variation1: { phrase: "fixing bugs", chance: 1
+                }, variation2: { phrase: "programming", chance: 3
+                }, variation3: { phrase: "contribute to open source", chance: 1
+                }, variation4: { phrase: "reviewing code", chance: 2
+                }, variation5: { phrase: "pairprogramming", chance: 1
+                }, variation6: { phrase: "brainstorming", chance: 2
+                }
+            }
+        }
+        if (localStorage.getItem("focusChecked") == "true") {
+            focusChecked = true;
+        } else {
+            focusChecked = false;
+        }
         if (localStorage.getItem("username") !== null) {
             if (focus.task == null || focus.task == '') {
                 $("#mid-main-focus").html(`
                 <form id="mid-main-focus-form">
                     <label>What is your main focus today?</label>
-                    <input type="text" name="focus" id="mid-main-focus-value" placeholder="eg: cooking">
+                <input type="text" name="focus" id="mid-main-focus-value" 
+                    placeholder="Eg: ${returnRandomPhrase(placeholders.phrases, placeholders.placeholdersArray)}">
                 </form>`);
             } else {
-                $("#mid-main-focus").html(`<input type="checkbox" id='my-focus' value=" ` + focus.task + `">
-                <label id='focusCheck'></label>
-                <span id='editfocus' contenteditable >` + focus.task + `</span><span id='mid-main-focus-delete'><img id="mid-main-focus-icon" src="img/delete-icon.png"/></span>`);
+                if (focusChecked) {
+                    drawHtml("<s>" + focus.task + "</s>", "plus");
+                } else {
+                    drawHtml(focus.task);
+                }
             };
-            if (localStorage.getItem("mid-main-focus-check") == 'true') {
-                $('#my-focus').prop('checked', true);
+
+            if (focusChecked) {
+                $("#mid-main-focus-check").css("background-color", "rgba(255,255,255,0.3)");
             } else {
-                $('#my-focus').prop('checked', false);
+                $("#mid-main-focus-check").css("background-color", "none");
             };
+
+            function drawHtml(task, plusOrDelete = "delete") {
+                $("#mid-main-focus").html(`
+                <div id="mid-main-focus-wrapper">
+                    <img id="mid-main-focus-check" src="img/focus-check.png" class="focus-icons"/>
+                    <span id="editfocus" contenteditable>${task}</span>
+                    <img id="mid-main-focus-deleteplus" src="img/focus-${plusOrDelete}.png" class="focus-icons"/>
+                </div>`);
+            }
         };
-        $('#focusCheck').click(function(e) {
-            focus.taskChecked = !focus.taskChecked;
-            localStorage.setItem("mid-main-focus-check", focus.taskChecked);
-          
-            if(focus.taskChecked === true){
-                $("#mid-main-focus").addClass('mid-main-focus-checked');
-            }else{
-                $("#mid-main-focus").removeClass('mid-main-focus-checked');
-            };
-            focus.drawFocus();
+        $("#mid-main-focus-check").click(function(e) {
+            if (localStorage.getItem("focusChecked") == "true") {
+                localStorage.setItem("focusChecked", "false");
+                focus.drawFocus();
+            } else {
+                localStorage.setItem("focusChecked", "true");
+                focus.drawFocus();
+            }
         });
 
-        $('#mid-main-focus-delete').click(function(e) {
+        $('#mid-main-focus-deleteplus').click(function(e) {
             localStorage.removeItem("mid-main-focus");
-            localStorage.setItem("mid-main-focus-check", 'false');
-      
-            $("#mid-main-focus").removeClass('mid-main-focus-checked');
-
+            localStorage.setItem("focusChecked", "false");
             focus.task = '';
             focus.drawFocus();
         });
@@ -363,7 +363,7 @@ var todo = {
                 $("#right-todo-dropup").addClass("hideTodoDropup");
                 $("#right-todo-arrow").css("display", "none");
 
-                $("#right-todo-dropup-todo").html("");
+                $("#right-todo-dropup").html("");
 
                 todo.dropupActive = false;
             }
@@ -371,79 +371,147 @@ var todo = {
     },
     drawDropup: function(storage) {
         let dropupId = "right-todo-dropup",
-            todos = storage.todos;
-        $("#right-todo-dropup-todo").html("");
-
+            todos = storage.todos,
+            lineBreakCounter = 0,
+            noTodoMessage = false,
+            windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
+        
+        $("#right-todo-dropup").html("<div id='right-todo-dropup-todo'></div>");
         $("#" + dropupId).removeClass("hideTodoDropup");
         $("#" + dropupId).addClass("unhideTodoDropup");
         $("#right-todo-arrow").css("display", "block");
-        if (todos.length > 27) {
-            // Activate scrollbar
-        } else if (todos.length < 7) { // Min height
-            $("#" + dropupId).css("height", (40 + 7 * 22) + "px");
-        } else { // Dynamic Height
-            $("#" + dropupId).css("height", (40 + todos.length * 22) + "px");
-        }
 
-        for (let i = 0; i < todos.length; i++) {
-            if (storage.checked[i]) {
-                writeTodo("<s>" + todos[i] + "</s>", i, storage);
-            } else {
-                writeTodo(todos[i], i);
+        if (todos.length === 0) {
+            noTodoMessage = true;
+        } else {
+            for (let i = 0; i < todos.length; i++) {
+                if (storage.checked[i]) {
+                    writeTodo(todos[i], i, storage);
+                } else {
+                    writeTodo(todos[i], i);
+                }
+                addTodoListener(i);
+                (function addCheckboxListener(i) {
+                    $("#" + dropupId + "-checkbox-" + i + "[type=checkbox]").on("click", function() {
+                        if ($("#" + dropupId + "-checkbox-" + i + ":checked").length === 1) {
+                            chrome.storage.local.get(function(storage) {
+                                storage.checked[i] = true;
+                                chrome.storage.local.set(storage);
+                                todo.drawDropup(storage, i);
+                            });
+                        } else {
+                            chrome.storage.local.get(function(storage) {
+                                storage.checked[i] = false;
+                                chrome.storage.local.set(storage);
+                                todo.drawDropup(storage, i);
+                            });
+                        }
+                    });
+                })(i);
             }
-            (function addCheckboxListener(i) {
-                $("#" + dropupId + "-checkbox-" + i + "[type=checkbox]").on("click", function() {
-                    if ($("#" + dropupId + "-checkbox-" + i + ":checked").length === 1) {
-                        chrome.storage.local.get(function(storage) {
-                            storage.checked[i] = true;
-                            chrome.storage.local.set(storage);
-                            todo.drawDropup(storage, i);
-                        });
-                    } else {
-                        chrome.storage.local.get(function(storage) {
-                            storage.checked[i] = false;
-                            chrome.storage.local.set(storage);
-                            todo.drawDropup(storage, i);
-                        });
-                    }
-                });
-            })(i);
         }
-        $("#right-todo-dropup-todo").append(`
-            <form id="${dropupId}-todo-form">
-                <input type="text" name="todo" id="${dropupId}-todo-input" placeholder="Enter Todo">
+        $("#right-todo-dropup").append(`
+            <form id="${dropupId}-form">
+                <input type="text" name="todo" id="${dropupId}-input" placeholder="Enter Todo">
             </form>
         `);
 
+        if (todos.length * 21 + lineBreakCounter * 19.1 > windowHeight * 0.7 - 42) { //Scrollbar
+            $("#" + dropupId).css("height", (windowHeight * 0.7 - 42) + "px");
+            $("#" + dropupId + "-todo").css("overflow-y", "scroll");
+            $("#" + dropupId + "-todo").css("overflow-x", "hidden");
+        } else { // Dynamic Height
+            $("#" + dropupId).css("height", (50 + todos.length * 21 + lineBreakCounter * 19.1) + "px");
+            $("#" + dropupId + "-todo").css("overflow", "hidden");
+            $("#" + dropupId + "-todo").css("height", "inherit");
+        }
+        if (noTodoMessage) {
+            $("#right-todo-dropup-todo").append(`
+            <div id="right-todo-dropup-todo-notodo">
+                <img src="img/wave.png" class="emoji"/>
+                <img src="img/smile.png" class="emoji"/>
+                <p>Hey there ${user.name}!<br>You can add new todo's below:</p>
+            </div>
+            `);
+            $("#" + dropupId).css("height", "170px");
+        }
+
         todo.dropupActive = true;
-        todo.addTodoListener();
+        (function addTodoInputListener() {
+            $("#right-todo-dropup-form").submit(function(e) {
+                e.preventDefault();
+                chrome.storage.local.get(function(storage) {
+                    storage.todos.push($("#right-todo-dropup-input").val());
+                    storage.checked.push(false);
+                    todo.drawDropup(storage);
+                    chrome.storage.local.set(storage); 
+                });
+            });
+        })();
 
         function writeTodo(content, i) {
-            let checked = "";
+            let checked = "",
+                contentFinal = breakupString(content, 20);
             if (arguments.length === 3) {
                 if (arguments[2].checked[i]) {
                     checked = "checked";
+                    contentFinal = "<s>" + contentFinal + "</s>"
                 }
             }
             $("#right-todo-dropup-todo").append(`
                 <div class="todo-wrappers">
                     <input id="${dropupId}-checkbox-${i}" type="checkbox" class="todo-checkboxes" ${checked}>
-                    <p id="${dropupId}-todo-${i}" class="todos">
-                        ${content}
+                    <p id="${dropupId}-todo-${i}" class="todos" contenteditable>
+                        ${contentFinal}
                     </p>
+                    <img src="img/todo-delete.png" id="${dropupId}-todo-${i}-delete" class="todo-delete">
                 </div>
             `);
         }
-    },
-    addTodoListener: function() {
-        $("#right-todo-dropup-todo-form").submit(function(e) {
-            e.preventDefault();
-            chrome.storage.local.get(function(storage) {
-                storage.todos.push($("#right-todo-dropup-todo-input").val());
-                storage.checked.push(false);
-                todo.drawDropup(storage);
-                chrome.storage.local.set(storage);
+        function breakupString(str, splitAt) {
+            if (str.length > splitAt) {
+                let howOften = Math.floor(str.length / splitAt),
+                    res;
+                for (var i of range(1, howOften + 1)) {
+                    if (i === 1) {
+                        res = str.slice(0, splitAt * i);
+                    } else {
+                        res += "<br><span>" + str.slice((splitAt * (i - 1)), splitAt * i) + "</span>";
+                    }
+                }
+                lineBreakCounter += howOften;
+                return res;
+            } else {
+                return str;
+            }
+
+            function range(minNum, maxNum) {
+                minNum -= 2;
+                return Array.from(new Array(maxNum - minNum - 1), (x,i) => i - minNum)
+            } 
+        }
+        function addTodoListener(i) {
+            document.getElementById(dropupId + "-todo-" + i + "-delete").addEventListener("click", function onDelete() {
+                todo.removeTodo(i);
             });
+            $("#" + dropupId + "-todo-" + i).keypress(function(e) {
+                if (e.which === 13) {
+                    chrome.storage.local.get(function(storage) {
+                        storage.todos[i] = $("#" + dropupId + "-todo-" + i).text().trim();
+                        console.log($("#" + dropupId + "-todo-" + i).text().trim())
+                        todo.drawDropup(storage);
+                        chrome.storage.local.set(storage); 
+                    });
+                }
+            });
+        }
+    },
+    removeTodo: function(i) {
+        chrome.storage.local.get(function(storage) {
+            storage.checked.splice(i, 1);
+            storage.todos.splice(i, 1);
+            todo.drawDropup(storage);
+            chrome.storage.local.set(storage); 
         });
     }
 }
@@ -464,12 +532,33 @@ document.getElementById("mid-search-icon").addEventListener("click", function() 
     }
 });
 
+var draw = {
+    fadeIn: function(id, timeToOpaque = 1800) {
+        $("#" + id).fadeOut(0);
+        $("#" + id).fadeIn(timeToOpaque);
+    },
+    initalFadeIn: function() {
+        for (let id of [
+            "right",
+            "left",
+            "mid-main-greeting",
+            "mid-main-username",
+            "mid-main-focus",
+            "mid-search"
+        ]) {
+            this.fadeIn(id);
+        }
+        this.fadeIn("mid-main-time-draw", 1500);
+    }
+}
+
 $("document").ready(function() {
     time.setTime();
     time.updateTime();
     backgroundImage.setupImage();
     quote.setupQuote();
     todo.dropupListener();
+    draw.initalFadeIn();
 
     document.getElementById("mid-main-time-draw").addEventListener("dblclick",
     function toogleTwelveHourDisplay() {
@@ -522,3 +611,16 @@ $("document").ready(function() {
         }
     });
 });
+
+function returnRandomPhrase(phrasesObj, resArr) {
+    //Bulding a array out of the phrases keys and picking a random one
+    for (let i in phrasesObj) {
+        for (let c = 0; c < phrasesObj[i].chance; c++) {
+            resArr.push(i);
+        }
+    }
+    let index = resArr[
+        Math.round(Math.random() * (resArr.length - 1))
+        ];
+    return phrasesObj[index].phrase
+};
