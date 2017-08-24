@@ -9,8 +9,8 @@ body {
 
  /* Flexbox */
 #container {
-    max-height: 98vh;
-    height: 98vh;
+    max-height: 97vh;
+    height: 97vh;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
