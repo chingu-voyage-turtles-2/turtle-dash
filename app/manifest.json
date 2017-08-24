@@ -22,7 +22,8 @@
 	"permissions": [
 		"tabs",
 		"activeTab",
-		"history"
+		"history",
+		"storage"
 	],
 	"background": {
 		"scripts": [
