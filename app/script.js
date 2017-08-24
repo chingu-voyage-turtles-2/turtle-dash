@@ -105,34 +105,19 @@ let user = {
                 standard: {
                     phrase: "Good " + time.timeOfDay + ", <span id='editname' contenteditable>" + user.name + "</span>!",
                     chance: 70
-                },
-                variation1: {
+                }, variation1: {
                     phrase: "Welcome back, <span id='editname' contenteditable>" + user.name + "</span>!",
                     chance: 15
-                },
-                variation2: {
+                }, variation2: {
                     phrase: "Good to see you this " + time.timeOfDay + "!",
                     chance: 10
-                },
-                variation3: {
+                }, variation3: {
                     phrase: "How's it going <span id='editname' contenteditable>" + user.name + "</span>?",
                     chance: 5
                 }
             }
         }
-        $("#mid-main-greeting").html(returnRandomPhrase);
-        function returnRandomPhrase() {
-            //Bulding a array out of the phrases keys and picking a random one
-            for (let i in greetings.phrases) {
-                for (let c = 0; c < greetings.phrases[i].chance; c++) {
-                    greetings.phrasesArray.push(i);
-                }
-            }
-            let index = greetings.phrasesArray[
-                Math.round(Math.random() * (greetings.phrasesArray.length - 1))
-                ];
-            return greetings.phrases[index].phrase
-        };
+        $("#mid-main-greeting").html(returnRandomPhrase(greetings.phrases, greetings.phrasesArray));
         user.getName();
         user.editName();
     },
@@ -275,7 +260,19 @@ let quote = {
 let focus = {
     task: localStorage.getItem("mid-main-focus"),
     drawFocus: function() {
-        let focusChecked;
+        let focusChecked,
+        placeholders = {
+            placeholdersArray: [],
+            phrases: {
+                variation1: { phrase: "fixing bugs", chance: 1
+                }, variation2: { phrase: "programming", chance: 3
+                }, variation3: { phrase: "contribute to open source", chance: 1
+                }, variation4: { phrase: "reviewing code", chance: 2
+                }, variation5: { phrase: "pairprogramming", chance: 1
+                }, variation6: { phrase: "brainstorming", chance: 2
+                }
+            }
+        }
         if (localStorage.getItem("focusChecked") == "true") {
             focusChecked = true;
         } else {
@@ -286,7 +283,8 @@ let focus = {
                 $("#mid-main-focus").html(`
                 <form id="mid-main-focus-form">
                     <label>What is your main focus today?</label>
-                    <input type="text" name="focus" id="mid-main-focus-value" placeholder="eg: cooking">
+                <input type="text" name="focus" id="mid-main-focus-value" 
+                    placeholder="Eg: ${returnRandomPhrase(placeholders.phrases, placeholders.placeholdersArray)}">
                 </form>`);
             } else {
                 if (focusChecked) {
@@ -608,3 +606,16 @@ $("document").ready(function() {
         }
     });
 });
+
+function returnRandomPhrase(phrasesObj, resArr) {
+    //Bulding a array out of the phrases keys and picking a random one
+    for (let i in phrasesObj) {
+        for (let c = 0; c < phrasesObj[i].chance; c++) {
+            resArr.push(i);
+        }
+    }
+    let index = resArr[
+        Math.round(Math.random() * (resArr.length - 1))
+        ];
+    return phrasesObj[index].phrase
+};
