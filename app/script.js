@@ -440,12 +440,33 @@ var todo = {
 }
 //chrome.storage.local.set({ todos: ["Test Todo 1", "Test Todo 2" , "Test Todo 3"], checked: [false, false, false]}); // Reset storage
 
+let weather = {
+    latitude : "",
+    longitude: "",
+    getLocation: function(){
+        if (navigator.geolocation){
+            navigator.geolocation.getCurrentPosition(function(position) {
+                weather.latitude = position.coords.latitude;
+                weather.longitude = position.coords.longitude;
+        });
+        }
+    },
+
+    getWeatherData: function(){
+        let latitude = weather.latitude;
+        let longitude = weather.longitude;
+        var url = "https://api.darksky.net/forecast/2fd9c6e3bd55ef3fb02da8d9d01ae78b/" + String(latitude) + "," + String(longitude);
+       
+           }
+
+}
 $("document").ready(function() {
     time.setTime();
     time.updateTime();
     backgroundImage.setupImage();
     quote.setupQuote();
     todo.dropupListener();
+    weather.getWeatherData();
 
     document.getElementById("main-time-draw").addEventListener("dblclick",
     function toogleTwelveHourDisplay() {
