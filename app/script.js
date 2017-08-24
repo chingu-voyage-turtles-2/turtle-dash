@@ -12,15 +12,11 @@ var time = {
         addMissingZero.call(this, this.hours);
         addMissingZero.call(this, this.minutes);
         if (this.firstTimeDraw) {
-            fadeOut("mid-main-time-draw");
-            fadeOut("mid-main-greeting");
             $("#mid-main-time-draw").html(
                 "<p>" + time.hours + ":" + time.minutes + "<p>"
             );
             user.drawGreeting();
             focus.drawFocus();
-            fadeIn("mid-main-time-draw", 1500);
-            fadeIn("mid-main-greeting", 1800);
             this.firstTimeDraw = false;
         } else {
             $("#mid-main-time-draw").html(
@@ -41,12 +37,6 @@ var time = {
             localStorage.setItem("quoteHour", this.hours);
         } else {
             quote.updateQuote = false;
-        }
-        function fadeOut(name) {
-            $("#" + name).fadeOut(0);
-        }
-        function fadeIn(name, timeToOpaque) {
-            $("#" + name).fadeIn(timeToOpaque);
         }
         function setAMPM() {
             if (this.hours >= 12) {
@@ -521,12 +511,33 @@ document.getElementById("mid-search-icon").addEventListener("click", function() 
     }
 });
 
+var draw = {
+    fadeIn: function(id, timeToOpaque = 1800) {
+        $("#" + id).fadeOut(0);
+        $("#" + id).fadeIn(timeToOpaque);
+    },
+    initalFadeIn: function() {
+        for (let id of [
+            "right",
+            "left",
+            "mid-main-greeting",
+            "mid-main-username",
+            "mid-main-focus",
+            "mid-search"
+        ]) {
+            this.fadeIn(id);
+        }
+        this.fadeIn("mid-main-time-draw", 1500);
+    }
+}
+
 $("document").ready(function() {
     time.setTime();
     time.updateTime();
     backgroundImage.setupImage();
     quote.setupQuote();
     todo.dropupListener();
+    draw.initalFadeIn();
 
     document.getElementById("mid-main-time-draw").addEventListener("dblclick",
     function toogleTwelveHourDisplay() {
