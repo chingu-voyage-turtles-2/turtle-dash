@@ -515,7 +515,14 @@ var todo = {
         });
     }
 }
-chrome.storage.local.set({ todos: ["Test Todo 1", "Test Todo 2" , "Test Todo 3"], checked: [false, false, false]}); // Reset storage
+//chrome.storage.local.set({ todos: ["Test Todo 1", "Test Todo 2" , "Test Todo 3"], checked: [false, false, false]}); // Reset storage
+
+
+chrome.storage.local.get("todos", items=>{
+    if (items.todos === undefined){
+         chrome.storage.local.set({ todos: [], checked: []});
+    }
+});
 
 var searchBox = document.getElementById("mid-search-box");
 

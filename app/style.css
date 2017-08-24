@@ -236,6 +236,22 @@ input[type=text]:focus:not([readonly])+label {
     display: inline-flex;
     text-align: center;
 }
+#mid-main-focus-value::-webkit-input-placeholder {
+  color: #fff;
+  opacity: 1;
+}
+#mid-main-focus-value::-moz-placeholder {
+  color: #fff;
+  opacity: 1;
+}
+#mid-main-focus-value:-ms-input-placeholder {
+  color: #fff;
+  opacity: 1;
+}
+#mid-main-focus-value::placeholder {
+  color: #fff;
+  opacity: 1;
+}
 #mid-main-focus-value{
     font-size: 1.5rem;
     width: 50%;
@@ -258,6 +274,9 @@ input[type=text]:focus:not([readonly])+label {
 #mid-main-focus-wrapper {
     display: flex;
     align-items: center;
+}
+.mid-main-focus-checked{
+    text-decoration: line-through;
 }
 input#my-focus {
     position: absolute;
