@@ -9,8 +9,8 @@ body {
 
  /* Flexbox */
 #container {
-    max-height: 98vh;
-    height: 98vh;
+    max-height: 97vh;
+    height: 97vh;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -36,11 +36,23 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top: 15vh;
+    text-align: center;
 }
 
 /* Global Classes */
 .outlined {
     text-shadow: 0px 0px 3px black;
+}
+.icons {
+    height: 32px;
+    width: 32px;
+    padding: 6px;
+    cursor: hand;
+}
+.icons:hover {
+    background-color: rgba(255,255,255,0.3);
+    border-radius: 50%;
 }
 
 /* Left */
@@ -66,7 +78,6 @@ body {
     align-items: baseline;
     float: left;
     user-select: none;
-    /* Center time horizontally */
     margin-top: -20vh - 85px;
     margin-bottom: -20vh;
 }
@@ -130,27 +141,18 @@ input[type=text]:focus:not([readonly])+label {
   opacity: 1;
 }
 #mid-search {
-    /* Putting the search div right next to the logo */
     position: absolute;
     left: 78px;
     display: flex;
     justify-content: flex-start;
-    margin: 10px 0 0 5px;
-}
-#mid-search-icon {
-    width: 24px;
-    height: 24px;
-    padding: 8px 8px 8px 8px;
-    cursor: hand;
-}
-#mid-search-icon:hover {
-    background-color: rgba(255,255,255,0.3);
-    border-radius: 50%;
+    margin: 10px 0 0 10px;
 }
 #mid-search-box {
     display: none;
-    margin-top: 10px;
+    margin: 6px 0 0 10px;
     font-size: 12px;
+    height: 18px;
+    text-align: left;
 }
 
 /* Right */
@@ -196,15 +198,7 @@ input[type=text]:focus:not([readonly])+label {
 }
 #right-todo-icon {
     margin: 0 10px 0 0;
-    height: 24px;
-    width: 24px;
-    padding: 8px 8px 8px 8px;
-    cursor: hand;
     order: 2;
-}
-#right-todo-icon:hover {
-    background-color: rgba(255,255,255,0.3);
-    border-radius: 50%;
 }
 #mid-quote {
     width: 50vw;
@@ -222,11 +216,13 @@ input[type=text]:focus:not([readonly])+label {
     left: 0;
     right: 0;
     transition: 1.5s;
+    font-size: 2.5vh;
 }
 #mid-quote-draw-author {
     opacity: 0;
     transition-property: opacity;
     transition-duration: .5s;
+    font-size: 2.5vh;
 }
 #mid-quote-draw-quote:hover ~ #mid-quote-draw-author {
     opacity: 1;
@@ -244,18 +240,24 @@ input[type=text]:focus:not([readonly])+label {
     font-size: 1.5rem;
     width: 50%;
 }
-#mid-main-focus-delete{
-    padding-left:15px
-}
-#mid-main-focus-icon {
-    padding: 5px;
-    height: 30px;
-    width: 30px;
+.focus-icons {
+    height: 32px;
+    width: 32px;
     cursor: hand;
-}
-#mid-main-focus-icon:hover {
-    background-color: rgba(255,255,255,0.3);
     border-radius: 50%;
+}
+.focus-icons:hover {
+    background-color: rgba(255,255,255,0.3);
+}
+#mid-main-focus-deleteplus {
+    margin-left: 10px;
+}
+#mid-main-focus-check {
+    margin-right: 10px;
+}
+#mid-main-focus-wrapper {
+    display: flex;
+    align-items: center;
 }
 input#my-focus {
     position: absolute;
@@ -286,15 +288,7 @@ input#my-focus:checked+label:after {
     font-weight: bold;
 }
 #left-settings-icon {
-    height: 24px;
-    width: 24px;
-    padding: 8px 8px 8px 8px;
-    cursor: hand;
     margin: 0 3px 0 10px;
-}
-#left-settings-icon:hover {
-    background-color: rgba(255,255,255,0.3);
-    border-radius: 50%;
 }
 .hideDivs {
     visibility: hidden;
@@ -314,9 +308,9 @@ input#my-focus:checked+label:after {
 .unhideTodoDropup {
     display: block;
     height: 194px;
-    width: 250px;
+    width: 300px;
     background-color: rgba(0, 0, 9, 0.88);
-    border-radius: 2%;
+    border-radius: 2px;
     margin: 0 10px 0 0;
     z-index: 1;
 }
@@ -330,28 +324,54 @@ input#my-focus:checked+label:after {
     display: none;
 }
 .todo-wrappers {
-    margin: 5px 0 0 8px;
+    margin: 0 0 0 8px;
 }
 .todo-checkboxes {
     display: inline;
 }
 .todos {
-    font-size: 12;
+    font-size: 16;
     display: inline;
 }
-#right-todo-dropup-todo {
-    height: inherit;
+#right-todo {
+    max-height: 75vh;
+    height: 75vh;
+}
+#right-todo-dropup {
     display: flex;
     flex-direction: column;
-    text-align: left;
+    justify-content: space-between;
 }
-#right-todo-dropup-todo-input {
-    position: absolute;
-    bottom: 75;
-    width: 230px;
-    height: 18px;
-    margin: 0 0 0 10px;
-    order: 999;
+#right-todo-dropup-todo {
+    max-width: 295px;
+    margin: 5px 0 5px 0;
+    overflow: hidden;
+}
+#right-todo-dropup-input {
     font-size: inherit;
     text-align: inherit;
+    margin-left: 10px;
+    width: 280px;
+    height: 26px;
+    font-size: 18;
+}
+p.todos span { /* Indent after line break */
+    padding-left: 20px;
+}
+.todo-delete {
+    height: 8px;
+    width: 8px;
+    padding: 0 0 1px 5px;
+    cursor: hand;
+    margin-top: 2px;
+}
+.emoji {
+    height: 32px;
+    width: 32px;
+    padding-left: 5px;
+}
+#right-todo-dropup-todo-notodo {
+    text-align: center;
+    padding-top: 15px;
+    font-size: 16px;
 }
