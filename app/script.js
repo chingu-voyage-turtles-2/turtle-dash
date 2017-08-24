@@ -273,9 +273,14 @@ let quote = {
 }
 
 let focus = {
-    taskChecked: localStorage.getItem("mid-main-focus-check"),
     task: localStorage.getItem("mid-main-focus"),
     drawFocus: function() {
+        let focusChecked;
+        if (localStorage.getItem("focusChecked") == "true") {
+            focusChecked = true;
+        } else {
+            focusChecked = false;
+        }
         if (localStorage.getItem("username") !== null) {
             if (focus.task == null || focus.task == '') {
                 $("#mid-main-focus").html(`
@@ -284,28 +289,41 @@ let focus = {
                     <input type="text" name="focus" id="mid-main-focus-value" placeholder="eg: cooking">
                 </form>`);
             } else {
-                $("#mid-main-focus").html(`<input type="checkbox" id='my-focus' value=" ` + focus.task + `">
-                <label id='focusCheck'></label>
-                <span id='editfocus' contenteditable >` + focus.task + `</span>
-                <span id='mid-main-focus-delete'>
-                    <img id="mid-main-focus-icon" src="img/delete-icon.png"/>
-                </span>`);
+                if (focusChecked) {
+                    drawHtml("<s>" + focus.task + "</s>", "plus");
+                } else {
+                    drawHtml(focus.task);
+                }
             };
-            if (localStorage.getItem("mid-main-focus-check") == 'true') {
-                $('#my-focus').prop('checked', true);
+
+            if (focusChecked) {
+                $("#mid-main-focus-check").css("background-color", "rgba(255,255,255,0.3)");
             } else {
-                $('#my-focus').prop('checked', false);
+                $("#mid-main-focus-check").css("background-color", "none");
             };
+
+            function drawHtml(task, plusOrDelete = "delete") {
+                $("#mid-main-focus").html(`
+                <div id="mid-main-focus-wrapper">
+                    <img id="mid-main-focus-check" src="img/focus-check.png" class="focus-icons"/>
+                    <span id="editfocus" contenteditable>${task}</span>
+                    <img id="mid-main-focus-deleteplus" src="img/focus-${plusOrDelete}.png" class="focus-icons"/>
+                </div>`);
+            }
         };
-        $('#focusCheck').click(function(e) {
-            focus.taskChecked = !focus.taskChecked;
-            localStorage.setItem("mid-main-focus-check", focus.taskChecked);
-            focus.drawFocus();
+        $("#mid-main-focus-check").click(function(e) {
+            if (localStorage.getItem("focusChecked") == "true") {
+                localStorage.setItem("focusChecked", "false");
+                focus.drawFocus();
+            } else {
+                localStorage.setItem("focusChecked", "true");
+                focus.drawFocus();
+            }
         });
 
-        $('#mid-main-focus-delete').click(function(e) {
+        $('#mid-main-focus-deleteplus').click(function(e) {
             localStorage.removeItem("mid-main-focus");
-            localStorage.setItem("mid-main-focus-check", 'false');
+            localStorage.setItem("focusChecked", "false");
             focus.task = '';
             focus.drawFocus();
         });

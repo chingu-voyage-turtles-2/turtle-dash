@@ -240,18 +240,24 @@ input[type=text]:focus:not([readonly])+label {
     font-size: 1.5rem;
     width: 50%;
 }
-#mid-main-focus-delete{
-    padding-left:15px
-}
-#mid-main-focus-icon {
-    padding: 5px;
-    height: 30px;
-    width: 30px;
+.focus-icons {
+    height: 32px;
+    width: 32px;
     cursor: hand;
-}
-#mid-main-focus-icon:hover {
-    background-color: rgba(255,255,255,0.3);
     border-radius: 50%;
+}
+.focus-icons:hover {
+    background-color: rgba(255,255,255,0.3);
+}
+#mid-main-focus-deleteplus {
+    margin-left: 10px;
+}
+#mid-main-focus-check {
+    margin-right: 10px;
+}
+#mid-main-focus-wrapper {
+    display: flex;
+    align-items: center;
 }
 input#my-focus {
     position: absolute;
