@@ -309,7 +309,7 @@ input#my-focus:checked+label:after {
     display: block;
     height: 194px;
     width: 300px;
-    background-color: rgba(0, 0, 9, 0.88);
+    background-color: rgba(0, 0, 0, 0.88);
     border-radius: 2px;
     margin: 0 10px 0 0;
     z-index: 1;
@@ -318,7 +318,7 @@ input#my-focus:checked+label:after {
     display: none;
 }
 #right-todo-arrow {
-    margin: 0 23px 3px 0;
+    margin: 0 25px 3px 0;
     height: 8px;
     width: 14px;
     display: none;
