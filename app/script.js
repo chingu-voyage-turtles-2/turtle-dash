@@ -338,6 +338,7 @@ var focus = {
             localStorage.removeItem("mid-main-focus");
             localStorage.setItem("focusChecked", "false");
             focus.task = "";
+            fadeIn("mid-main-focus", 500);
             focus.drawFocus();
         });
 
@@ -614,9 +615,4 @@ function initalFadeIn() {
         fadeIn(id);
     }
     fadeIn("mid-main-time-draw", 1500);
-
-    function fadeIn(id, timeToOpaque = 1800) {
-        $("#" + id).fadeOut(0);
-        $("#" + id).fadeIn(timeToOpaque);
-    }
 }

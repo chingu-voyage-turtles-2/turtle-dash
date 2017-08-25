@@ -15,3 +15,8 @@ function returnRandomPhrase(phrasesObj, resArr) {
         ];
     return phrasesObj[index].phrase
 };
+
+function fadeIn(id, timeToOpaque = 1800) {
+    $("#" + id).fadeOut(0);
+    $("#" + id).fadeIn(timeToOpaque);
+}

@@ -57,13 +57,13 @@ body {
 input[type=text] {
     background-color: transparent;
     border: none;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #808080;
     border-radius: 0;
     outline: none;
     height: 2.1rem;
     width: 100%;
     font-family: "Lato";
-    color: #808080;
+    color: #fff;
     text-align: center;
     text-shadow: 0px 0px 3px black;
     font-size: 2rem;
@@ -162,21 +162,22 @@ input[type=text]:focus:not([readonly])+label {
 #mid-main-username {
     width: 100%;
     padding: 10px;
+    text-shadow: none;
 }
 #mid-main-username-input::-webkit-input-placeholder {
-  color: #fff;
+  color: #808080;
   opacity: 1;
 }
 #mid-main-username-input::-moz-placeholder {
-  color: #fff;
+  color: #808080;
   opacity: 1;
 }
 #mid-main-username-input:-ms-input-placeholder {
-  color: #fff;
+  color: #808080;
   opacity: 1;
 }
 #mid-main-username-input::placeholder {
-  color: #fff;
+  color: #808080;
   opacity: 1;
 }
 /* Search */
@@ -233,19 +234,19 @@ input[type=text]:focus:not([readonly])+label {
     text-align: center;
 }
 #mid-main-focus-value::-webkit-input-placeholder {
-  color: #fff;
+  color: #808080;
   opacity: 1;
 }
 #mid-main-focus-value::-moz-placeholder {
-  color: #fff;
+  color: #808080;
   opacity: 1;
 }
 #mid-main-focus-value:-ms-input-placeholder {
-  color: #fff;
+  color: #808080;
   opacity: 1;
 }
 #mid-main-focus-value::placeholder {
-  color: #fff;
+  color: #808080;
   opacity: 1;
 }
 #mid-main-focus-value{
