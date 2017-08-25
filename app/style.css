@@ -4,13 +4,13 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
-    caret-color: #4285F4;
+    caret-color: #fff;
  }
 
  /* Flexbox */
 #container {
-    max-height: 98vh;
-    height: 98vh;
+    max-height: 97vh;
+    height: 97vh;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -36,11 +36,49 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top: 15vh;
+    text-align: center;
 }
 
-/* Global Classes */
+/* Global */
 .outlined {
     text-shadow: 0px 0px 3px black;
+}
+.icons {
+    height: 32px;
+    width: 32px;
+    padding: 6px;
+    cursor: hand;
+}
+.icons:hover {
+    background-color: rgba(255,255,255,0.3);
+    border-radius: 50%;
+}
+input[type=text] {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    border-radius: 0;
+    outline: none;
+    height: 2.1rem;
+    width: 100%;
+    font-family: "Lato";
+    color: #808080;
+    text-align: center;
+    text-shadow: 0px 0px 3px black;
+    font-size: 2rem;
+    box-shadow: none;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    transition: all .3s;
+}
+input[type=text]:focus:not([readonly]) {
+    border-bottom: 1px solid #fff;
+    box-shadow: 0 1px 0 0 #fff;
+}
+input[type=text]:focus:not([readonly])+label {
+    color: #fff;
 }
 
 /* Left */
@@ -48,6 +86,7 @@ body {
     display: flex;
     justify-content: space-between;
 }
+/* Logo */
 #left-logo-spin {
     margin: 10px 0 0 10px;
     width: 40px;
@@ -59,14 +98,50 @@ body {
     background-color: rgba(255,255,255,0.3);
     border-radius: 50%;
 }
+/* Settings */
+#left-settings {
+    width: 15vw;
+    align-self: flex-end;
+    display: flex;
+}
+#left-settings-icon {
+    margin: 0 3px 0 10px;
+}
+#left-settings-info {
+    transition: all 2s ease;
+    margin-top: 10px;
+}
+#left-settings-info:hover {
+    transform:translate(0,-0.5em);
+}
+#left-settings-location {
+    display:inline-block;
+}
+@keyframes fadeIn {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+#left-settings-location:hover ~ #left-settings-owner {
+    display: block;
+    animation-name: fadeIn;
+    animation-duration: 3s;
+}
+#left-settings-owner {
+    display: none;
+}
+#left-settings-owner:hover {
+    display: block;
+    animation-name: fadeIn;
+    animation-duration: 3s;
+}
 
 /* Mid */
+/* Time */
 #mid-main-time {
     display: inline-flex;
     align-items: baseline;
     float: left;
     user-select: none;
-    /* Center time horizontally */
     margin-top: -20vh - 85px;
     margin-bottom: -20vh;
 }
@@ -79,6 +154,7 @@ body {
 #mid-main-time-twelvehours-hidden {
     visibility: hidden;
 }
+/* Greeting-Usernam */
 #mid-main-greeting {
     font-size: 6vh;
     padding-top: -10vh;
@@ -86,32 +162,6 @@ body {
 #mid-main-username {
     width: 100%;
     padding: 10px;
-}
-input[type=text] {
-    background-color: transparent;
-    border: none;
-    border-bottom: 1px solid #ccc;
-    border-radius: 0;
-    outline: none;
-    height: 2.1rem;
-    width: 100%;
-    font-family: "Lato";
-    color: #fff;
-    text-align: center;
-    text-shadow: 0px 0px 3px black;
-    font-size: 2rem;
-    box-shadow: none;
-    -webkit-box-sizing: content-box;
-    -moz-box-sizing: content-box;
-    box-sizing: content-box;
-    transition: all .3s;
-}
-input[type=text]:focus:not([readonly]) {
-    border-bottom: 1px solid #4285F4;
-    box-shadow: 0 1px 0 0 #4285F4;
-}
-input[type=text]:focus:not([readonly])+label {
-    color: #4285F4;
 }
 #mid-main-username-input::-webkit-input-placeholder {
   color: #fff;
@@ -129,83 +179,22 @@ input[type=text]:focus:not([readonly])+label {
   color: #fff;
   opacity: 1;
 }
+/* Search */
 #mid-search {
-    /* Putting the search div right next to the logo */
     position: absolute;
     left: 78px;
     display: flex;
     justify-content: flex-start;
-    margin: 10px 0 0 5px;
-}
-#mid-search-icon {
-    width: 24px;
-    height: 24px;
-    padding: 8px 8px 8px 8px;
-    cursor: hand;
-}
-#mid-search-icon:hover {
-    background-color: rgba(255,255,255,0.3);
-    border-radius: 50%;
+    margin: 10px 0 0 10px;
 }
 #mid-search-box {
     display: none;
-    margin-top: 10px;
+    margin: 6px 0 0 10px;
     font-size: 12px;
+    height: 18px;
+    text-align: left;
 }
-
-/* Right */
-#left-settings {
-    width: 15vw;
-    align-self: flex-end;
-    display: flex;
-}
-#left-settings-info {
-    transition: all 2s ease;
-    margin-top: 10px;
-}
-#left-settings-info:hover {
-    transform:translate(0,-0.5em);
-}
-@keyframes fadeIn {
-    0% {opacity: 0;}
-    100% {opacity: 1;}
-}
-#left-settings-location {
-    display:inline-block;
-}
-#left-settings-location:hover ~ #left-settings-owner {
-    display: block;
-    animation-name: fadeIn;
-    animation-duration: 3s;
-}
-#left-settings-owner {
-    display: none;
-}
-#left-settings-owner:hover {
-    display: block;
-    animation-name: fadeIn;
-    animation-duration: 3s;
-}
-#right-todo {
-    height: 40vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: flex-end;
-    width: 15vw;
-}
-#right-todo-icon {
-    margin: 0 10px 0 0;
-    height: 24px;
-    width: 24px;
-    padding: 8px 8px 8px 8px;
-    cursor: hand;
-    order: 2;
-}
-#right-todo-icon:hover {
-    background-color: rgba(255,255,255,0.3);
-    border-radius: 50%;
-}
+/* Quote */
 #mid-quote {
     width: 50vw;
     height: 170px;
@@ -222,11 +211,13 @@ input[type=text]:focus:not([readonly])+label {
     left: 0;
     right: 0;
     transition: 1.5s;
+    font-size: 2.5vh;
 }
 #mid-quote-draw-author {
     opacity: 0;
     transition-property: opacity;
     transition-duration: .5s;
+    font-size: 2.5vh;
 }
 #mid-quote-draw-quote:hover ~ #mid-quote-draw-author {
     opacity: 1;
@@ -234,67 +225,66 @@ input[type=text]:focus:not([readonly])+label {
 #mid-quote-draw-author:hover {
     opacity: 1;
 }
+/* Focus */
 #mid-main-focus {
     font-size: 4.1vh;
     padding: 2vh;
     display: inline-flex;
     text-align: center;
 }
+#mid-main-focus-value::-webkit-input-placeholder {
+  color: #fff;
+  opacity: 1;
+}
+#mid-main-focus-value::-moz-placeholder {
+  color: #fff;
+  opacity: 1;
+}
+#mid-main-focus-value:-ms-input-placeholder {
+  color: #fff;
+  opacity: 1;
+}
+#mid-main-focus-value::placeholder {
+  color: #fff;
+  opacity: 1;
+}
 #mid-main-focus-value{
     font-size: 1.5rem;
     width: 50%;
 }
-#mid-main-focus-delete{
-    padding-left:15px
-}
-#mid-main-focus-icon {
-    padding: 5px;
-    height: 30px;
-    width: 30px;
+.focus-icons {
+    height: 32px;
+    width: 32px;
     cursor: hand;
-}
-#mid-main-focus-icon:hover {
-    background-color: rgba(255,255,255,0.3);
     border-radius: 50%;
 }
-input#my-focus {
-    position: absolute;
-    left: -9999px;
-    visibility: hidden;
-}
-label {
-    cursor: pointer;
-}
-input#my-focus+label:before {
-    border: 1px solid #fff;
-    content: "\00a0";
-    display: inline-block;
-    font: 20px/1em sans-serif;
-    height: 20px;
-    width: 20px;
-    margin: 5px 0.5em 0 0px;
-    padding: 0;
-    vertical-align: baseline;
-}
-input#my-focus:checked+label:before {
-    background: #fff;
-    color: #333;
-    content: "\2713";
-    text-align: center;
-}
-input#my-focus:checked+label:after {
-    font-weight: bold;
-}
-#left-settings-icon {
-    height: 24px;
-    width: 24px;
-    padding: 8px 8px 8px 8px;
-    cursor: hand;
-    margin: 0 3px 0 10px;
-}
-#left-settings-icon:hover {
+.focus-icons:hover {
     background-color: rgba(255,255,255,0.3);
-    border-radius: 50%;
+}
+#mid-main-focus-deleteplus {
+    margin-left: 10px;
+}
+#mid-main-focus-check {
+    margin-right: 10px;
+}
+#mid-main-focus-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+/* Right */
+/* Todo */
+#right-todo {
+    height: 40vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    width: 15vw;
+}
+#right-todo-icon {
+    margin: 0 10px 0 0;
+    order: 2;
 }
 .hideDivs {
     visibility: hidden;
@@ -314,9 +304,9 @@ input#my-focus:checked+label:after {
 .unhideTodoDropup {
     display: block;
     height: 194px;
-    width: 250px;
-    background-color: rgba(0, 0, 9, 0.88);
-    border-radius: 2%;
+    width: 300px;
+    background-color: rgba(0, 0, 0, 0.88);
+    border-radius: 2px;
     margin: 0 10px 0 0;
     z-index: 1;
 }
@@ -324,34 +314,60 @@ input#my-focus:checked+label:after {
     display: none;
 }
 #right-todo-arrow {
-    margin: 0 23px 3px 0;
+    margin: 0 25px 3px 0;
     height: 8px;
     width: 14px;
     display: none;
 }
 .todo-wrappers {
-    margin: 5px 0 0 8px;
+    margin: 0 0 0 8px;
 }
 .todo-checkboxes {
     display: inline;
 }
 .todos {
-    font-size: 12;
+    font-size: 16;
     display: inline;
 }
-#right-todo-dropup-todo {
-    height: inherit;
+#right-todo {
+    max-height: 75vh;
+    height: 75vh;
+}
+#right-todo-dropup {
     display: flex;
     flex-direction: column;
-    text-align: left;
+    justify-content: space-between;
 }
-#right-todo-dropup-todo-input {
-    position: absolute;
-    bottom: 75;
-    width: 230px;
-    height: 18px;
-    margin: 0 0 0 10px;
-    order: 999;
+#right-todo-dropup-todo {
+    max-width: 295px;
+    margin: 5px 0 5px 0;
+    overflow: hidden;
+}
+#right-todo-dropup-input {
     font-size: inherit;
     text-align: inherit;
+    margin-left: 10px;
+    width: 280px;
+    height: 26px;
+    font-size: 18;
+}
+p.todos span { /* Indent after line break */
+    padding-left: 20px;
+}
+.todo-delete {
+    height: 8px;
+    width: 8px;
+    padding: 0 0 1px 5px;
+    cursor: hand;
+    margin-top: 2px;
+}
+.emoji {
+    height: 32px;
+    width: 32px;
+    padding-left: 5px;
+}
+#right-todo-dropup-todo-notodo {
+    text-align: center;
+    padding-top: 15px;
+    font-size: 16px;
 }
