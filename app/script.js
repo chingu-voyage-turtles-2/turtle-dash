@@ -444,7 +444,7 @@ var todo = {
             <div id="right-todo-dropup-todo-notodo">
                 <img src="img/wave.png" class="emoji"/>
                 <img src="img/smile.png" class="emoji"/>
-                <p>Hey there ${user.name}!<br>You can add new todo's below:</p>
+                <p>Hey there ${user.name}!<br>You can add new todos below:</p>
             </div>
             `);
             $("#" + dropupId).css("height", "170px");
@@ -591,6 +591,37 @@ var settings = {
     }
 }
 
+
+var weather = {
+    latitude : "",
+    longitude : "",
+    getLocation: function(){
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+            weather.latitude =  position.coords.latitude; 
+            weather.longitude = position.coords.longitude;
+            });
+     
+    }
+    },
+    getWeatherData: function(){
+        let apiKey = "fdb696c0c21ab91c3e5ea397229e3e80";
+        let url = "https://api.darksky.net/forecast/" + apiKey + "/" + weather.latitude + "," + weather.longitude;
+        
+
+        $.ajax(url, {
+            url: url,
+            dataType: "jsonp",
+            async: false,
+            success: function (data) {
+                console.log(data);
+                farenheitTemperature = data.currently.temperature;
+            }
+  });
+
+    }
+
+}
 $("document").ready(function() {
     time.setTime();
     time.updateTime();
@@ -600,6 +631,7 @@ $("document").ready(function() {
     search.setupSearch();
     settings.setImageLocationHover();
     initalFadeIn();
+    weather.getWeatherData();
 });
 
 function initalFadeIn() {
