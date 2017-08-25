@@ -1,8 +1,8 @@
 {
 	"manifest_version": 2,
 
-  	"name": "Momentum Dash",
-	"description": "A momentum dash clone",
+  	"name": "Turtle Dash",
+	"description": "Chingu Voyage - Turtles #2's Momentum Dash Clone",
 	"version": "1.0",
 	"icons": {
 		"16": "img/logo 16.png",
