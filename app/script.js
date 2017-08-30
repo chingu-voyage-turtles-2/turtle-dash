@@ -1,5 +1,7 @@
 "use strict";
 
+/* globals chrome range returnRandomPhrase fadeIn */
+
 const time = {
     firstTimeDraw: true,
     AMPMToggled  : false,
