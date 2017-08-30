@@ -309,9 +309,12 @@ input[type=text]:focus:not([readonly])+label {
     border-radius: 2px;
     margin: 0 10px 0 0;
     z-index: 1;
+    overflow: hidden;
+    transition: height 0.75s linear;
 }
 .hideTodoDropup {
     display: none;
+    height: 0 !important;
 }
 #right-todo-arrow {
     margin: 0 25px 3px 0;
