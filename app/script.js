@@ -28,14 +28,14 @@ const time = {
         }
         // Update background image every day
         this.date = new Date().getDate();
-        if ( this.date !== localStorage.getItem( "imageDate" ) ) {
+        if ( this.date != localStorage.getItem( "imageDate" ) ) {
             backgroundImage.updateImage = true;
             localStorage.setItem( "imageDate", this.date );
         } else {
             backgroundImage.updateImage = false;
         }
         // Update quote every hour
-        if ( this.hours !== localStorage.getItem( "quoteHour" ) ) {
+        if ( this.hours != localStorage.getItem( "quoteHour" ) ) {
             quote.updateQuote = true;
             localStorage.setItem( "quoteHour", this.hours );
         } else {
