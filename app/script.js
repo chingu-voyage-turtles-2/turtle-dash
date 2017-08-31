@@ -298,7 +298,7 @@ var focus = {
                 $("#mid-main-focus").html(`
                 <form id="mid-main-focus-form">
                     <label>What is your main focus today?</label>
-                <input type="text" name="focus" id="mid-main-focus-value" 
+                <input type="text" name="focus" id="mid-main-focus-value"
                     placeholder="Eg: ${returnRandomPhrase(placeholders.phrases, placeholders.placeholdersArray)}">
                 </form>`);
             } else {
@@ -389,7 +389,7 @@ var todo = {
             lineBreakCounter = 0,
             noTodoMessage = false,
             windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
-        
+
         $("#right-todo-dropup").html("<div id='right-todo-dropup-todo'></div>");
         $("#" + dropupId).removeClass("hideTodoDropup");
         $("#" + dropupId).addClass("unhideTodoDropup");
@@ -398,7 +398,7 @@ var todo = {
         if (todos.length === 0) {
             noTodoMessage = true;
         } else {
-            for (let i = 0; i < todos.length; i++) {
+            for (let i in todos) {
                 if (storage.checked[i]) {
                     writeTodo(todos[i], i, storage);
                 } else {
@@ -458,7 +458,7 @@ var todo = {
                     storage.todos.push($("#right-todo-dropup-input").val());
                     storage.checked.push(false);
                     todo.drawDropup(storage);
-                    chrome.storage.local.set(storage); 
+                    chrome.storage.local.set(storage);
                 });
             });
         })();
@@ -508,7 +508,7 @@ var todo = {
                     chrome.storage.local.get(function(storage) {
                         storage.todos[i] = $("#" + dropupId + "-todo-" + i).text().trim();
                         todo.drawDropup(storage);
-                        chrome.storage.local.set(storage); 
+                        chrome.storage.local.set(storage);
                     });
                 }
             });
@@ -519,7 +519,7 @@ var todo = {
             storage.checked.splice(i, 1);
             storage.todos.splice(i, 1);
             todo.drawDropup(storage);
-            chrome.storage.local.set(storage); 
+            chrome.storage.local.set(storage);
         });
     },
     setupTodoStorage: function() {
@@ -550,7 +550,93 @@ var search = {
 }
 
 var settings = {
-    setImageLocationHover: function() {
+    dropupActive: false,
+    checkSetting: function (storage) {
+        chrome.storage.local.get(function (storage) {
+            for (let i in storage.parts) {
+                if (storage.settingsChecked[i] !== "checked") {
+                    $("#" + storage.parts[i]).toggleClass("hideView");
+                }
+            }
+        });
+    },
+    dropupListener: function () {
+        settings.checkSetting();
+        settings.setupSettingsStorage();
+        settings.setImageLocationHover();
+        document.getElementById("left-settings-icon").addEventListener("click",
+            function triggerDropup() {
+                if (!settings.dropupActive) {
+                    chrome.storage.local.get(function (storage) {
+                        settings.drawDropup(storage);
+                    });
+                } else {
+                    $("#left-settings-dropup").removeClass("unhideSettingsDropup");
+                    $("#left-settings-info").removeClass("hideSettingsDropup");
+                    $("#left-settings-dropup").addClass("hideSettingsDropup");
+                    $("#left-settings-arrow").css("display", "none");
+                    $("#main-settings-view").html("");
+                    settings.dropupActive = false;
+                }
+            });
+    },
+    drawDropup: function (storage) {
+        let dropupId = "left-settings-dropup",
+            setttings = storage.settings;
+        $("#left-settings-info").addClass("hideSettingsDropup");
+        $("#main-settings-view").html(`
+                <div id="setting-header" class="row">
+                    General Settings
+                </div>
+                `);
+        for (let i in setttings) {
+            $("#main-settings-view").append(`
+                <div class="row">
+                    <div class="question">
+                        ${setttings[i]}
+                    </div>
+                    <div class="switch">
+                        <input id="settings-toggle-${i}" class="settings-toggle settings-toggle-round" type="checkbox" ${storage.settingsChecked[i]}>
+                        <label for="settings-toggle-${i}"></label>
+                    </div>
+                </div>
+        `);
+            (function addToggleboxListener(i) {
+                $("#settings-toggle-" + i + "[type=checkbox]").on("click", function () {
+                    if (storage.settingsChecked[i] === "checked") {
+                        chrome.storage.local.get(function (storage) {
+                            storage.settingsChecked[i] = "unchecked";
+                            chrome.storage.local.set(storage);
+                            settings.drawDropup(storage, i);
+                        });
+                    } else {
+                        chrome.storage.local.get(function (storage) {
+                            storage.settingsChecked[i] = "checked";
+                            chrome.storage.local.set(storage);
+                            settings.drawDropup(storage, i);
+                        });
+                    }
+                    $("#" + storage.parts[i]).toggleClass("hideView");
+                });
+            })(i);
+        };
+        $("#" + dropupId).removeClass("hideSettingsDropup");
+        $("#" + dropupId).addClass("unhideSettingsDropup");
+        $("#left-settings-arrow").css("display", "block");
+        settings.dropupActive = true;
+    },
+    setupSettingsStorage: function () {
+        chrome.storage.local.get("settings", function (items) {
+            if (items.settings === undefined) {
+                chrome.storage.local.set({
+                    settings: ["Toggle Temperature Unit", "Show Search", "Show Weather", "Show Time", "Show To-Do"],
+                    settingsChecked: ["checked", "checked", "checked", "checked", "checked", "checked"],
+                    parts: ['Temperature-Unit', 'mid-search', 'right-weather', 'mid-main-time', 'right-todo']
+                });
+            }
+        });
+    },
+    setImageLocationHover: function () {
         $("#left-settings-info").hover(
             function hideOtherDivs() {
                 hide("mid");
@@ -558,7 +644,7 @@ var settings = {
                 hide("left-logo");
                 hide("right-todo");
                 hide("mid-quote");
-        
+
                 function hide(id) {
                     $("#" + id).addClass("hideDivs");
                     $("#" + id).removeClass("unhideDivs");
@@ -569,13 +655,14 @@ var settings = {
                         $("#" + id).css("transition-timing-function", "linear");
                     }
                 }
-            }, function unhideOtherDivs() {
+            },
+            function unhideOtherDivs() {
                 unhide("mid");
                 unhide("right");
                 unhide("left-logo");
                 unhide("right-todo");
                 unhide("mid-quote");
-        
+
                 function unhide(id) {
                     $("#" + id).addClass("unhideDivs");
                     $("#" + id).removeClass("hideDivs");
@@ -586,8 +673,8 @@ var settings = {
                         $("#" + id).css("transition-property", "all");
                         $("#" + id).css("transition-timing-function", "linear");
                     }
-            }
-        });
+                }
+            });
     }
 }
 
@@ -597,8 +684,8 @@ $("document").ready(function() {
     backgroundImage.setupImage();
     quote.setupQuote();
     todo.dropupListener();
+    settings.dropupListener();
     search.setupSearch();
-    settings.setImageLocationHover();
     initalFadeIn();
 });
 
