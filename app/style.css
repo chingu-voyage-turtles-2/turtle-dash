@@ -310,7 +310,7 @@ input[type=text]:focus:not([readonly])+label {
     margin: 0 10px 0 0;
     z-index: 1;
     overflow: hidden;
-    transition: height 0.75s linear;
+    transition: height 0.25s linear;
 }
 .hideTodoDropup {
     display: none;
