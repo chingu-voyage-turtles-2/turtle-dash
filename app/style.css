@@ -290,17 +290,11 @@ input[type=text]:focus:not([readonly])+label {
 .hideDivs {
     visibility: hidden;
     opacity: 0;
-    transition-delay: 3.5s;
-    transition-duration: 0.75s;
-    transition-property: all;
-    transition-timing-function: linear;
+    transition: all 0.75s linear 3.5s;
 }
 .unhideDivs {
     visibility: visible;
-    transition-delay: 0.25s;
-    transition-duration: 0.75s;
-    transition-property: all;
-    transition-timing-function: linear;
+    transition: all 0.75s linear 0.25s;
 }
 .unhideTodoDropup {
     display: block;
@@ -359,9 +353,10 @@ input[type=text]:focus:not([readonly])+label {
 .todo-delete {
     height: 8px;
     width: 8px;
-    padding: 0 0 1px 5px;
+    margin: 2px 0 1px 5px; 
     cursor: hand;
-    margin-top: 2px;
+    opacity: 0;
+    transition: opacity 0.2s linear;
 }
 .emoji {
     height: 32px;

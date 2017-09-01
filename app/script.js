@@ -1,6 +1,6 @@
 "use strict";
 
-/* globals chrome range returnRandomPhrase fadeIn */
+/* globals chrome returnRandomPhrase fadeIn */
 
 const time = {
     firstTimeDraw: true,
@@ -437,6 +437,11 @@ todo = {
                 }
                 addTodoListener( i );
                 addCheckboxListener( i );
+                $( `#todo-wrapper-${i}` ).hover( function onHover() {
+                    $( `#${dropupId}-todo-${i}-delete` ).css( "opacity", "1" );
+                }, function offHover() {
+                    $( `#${dropupId}-todo-${i}-delete` ).css( "opacity", "0" );
+                } );
             }
         }
         $( "#right-todo-dropup" ).append( `
@@ -454,7 +459,7 @@ todo = {
             $( `#${dropupId}-todo` ).css( "overflow", "hidden" );
             $( `#${dropupId}-todo` ).css( "height", "inherit" );
         }
-        if ( noTodoMessage ) {
+        if ( noTodoMessage ) { // If drawn directly if would be overwritten
             $( "#right-todo-dropup-todo" ).append( `
             <div id="right-todo-dropup-todo-notodo">
                 <img src="img/wave.png" class="emoji"/>
@@ -480,7 +485,7 @@ todo = {
 
         function writeTodo( content, i, ...rest ) {
             let checked = "",
-                contentFinal = breakupString( content, i );
+                contentFinal = breakupString( content );
             if ( rest.length > 0 ) {
                 if ( rest[0].checked[i] ) {
                     checked = "checked";
@@ -488,7 +493,7 @@ todo = {
                 }
             }
             $( "#right-todo-dropup-todo" ).append( `
-                <div id="-todo-wrapper-${i}" class="todo-wrappers">
+                <div id="todo-wrapper-${i}" class="todo-wrappers">
                     <input id="${dropupId}-checkbox-${i}" type="checkbox" class="todo-checkboxes" ${checked}>
                     <p id="${dropupId}-todo-${i}" class="todos" contenteditable>
                         ${contentFinal}
@@ -497,7 +502,7 @@ todo = {
                 </div>
             ` );
         }
-        function breakupString( str, i ) {
+        function breakupString( str ) {
             if ( str.length > 25 ) {
                 lineBreakCounter += Math.floor( str.length / 25 );
             }
