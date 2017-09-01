@@ -6,6 +6,8 @@ body {
     background-position: center center;
     caret-color: #fff;
 }
+
+
 /* Flexbox */
 #container {
     max-height: 97vh;
@@ -38,6 +40,8 @@ body {
     margin-top: 15vh;
     text-align: center;
 }
+
+
 /* Global */
 .outlined {
     text-shadow: 0px 0px 3px black;
@@ -79,11 +83,14 @@ input[type=text]:focus:not([readonly]) {
 input[type=text]:focus:not([readonly])+label {
     color: #fff;
 }
+
+
 /* Left */
 #left {
     display: flex;
     justify-content: space-between;
 }
+
 /* Logo */
 #left-logo-spin {
     margin: 10px 0 0 10px;
@@ -92,6 +99,7 @@ input[type=text]:focus:not([readonly])+label {
     padding: 8px 8px 8px 8px;
     cursor: hand;
 }
+
 /* Settings */
 #left-settings {
     width: 15vw;
@@ -143,7 +151,102 @@ input[type=text]:focus:not([readonly])+label {
 .controlDropup{
     margin-left: -250px;
 }
+#main-settings-view {
+  display: table;
+  width: 100%;
+}
+#main-settings-view .question,
+#main-settings-view .switch {
+  display: table-cell;
+  vertical-align: middle;
+  padding: 10px;
+}
+#main-settings-view .question {
+  width: 600px;
+  font-size: 17px;
+}
+#setting-header {
+    width: 100%;
+    text-align: center;
+    font-size: 19px;
+}
+.settings-toggle {
+  position: absolute;
+  margin-left: -9999px;
+  visibility: hidden;
+}
+.settings-toggle + label {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+/* Switch 1  */
+input.settings-toggle-round + label {
+    padding: 2px;
+    width: 40px;
+    height: 20px;
+    background-color: #dddddd;
+    -webkit-border-radius: 60px;
+    -moz-border-radius: 60px;
+    -ms-border-radius: 60px;
+    -o-border-radius: 60px;
+    border-radius: 60px;
+}
+input.settings-toggle-round + label:before, input.settings-toggle-round + label:after {
+  display: block;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  bottom: 1px;
+  content: "";
+}
+input.settings-toggle-round + label:before {
+  right: 1px;
+  background-color: #f1f1f1;
+  -webkit-border-radius: 60px;
+  -moz-border-radius: 60px;
+  -ms-border-radius: 60px;
+  -o-border-radius: 60px;
+  border-radius: 60px;
+  -webkit-transition: background 0.4s;
+  -moz-transition: background 0.4s;
+  -o-transition: background 0.4s;
+  transition: background 0.4s;
+}
+input.settings-toggle-round + label:after {
+    width: 20px;
+    background-color: #fff;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    -ms-border-radius: 100%;
+    -o-border-radius: 100%;
+    border-radius: 100%;
+    -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    -webkit-transition: margin 0.4s;
+    -moz-transition: margin 0.4s;
+    -o-transition: margin 0.4s;
+    transition: margin 0.4s;
+}
+input.settings-toggle-round:checked + label:before {
+  background-color: #8ce196;
+}
+input.settings-toggle-round:checked + label:after {
+  margin-left: 22px;
+}
+.hideView{
+    visibility: hidden;
+}
+
+
 /* Mid */
+
 /* Time */
 #mid-main-time {
     display: inline-flex;
@@ -162,7 +265,8 @@ input[type=text]:focus:not([readonly])+label {
 #mid-main-time-twelvehours-hidden {
     visibility: hidden;
 }
-/* Greeting-Usernam */
+
+/* Greeting-Username */
 #mid-main-greeting {
     font-size: 6vh;
     padding-top: -10vh;
@@ -188,6 +292,7 @@ input[type=text]:focus:not([readonly])+label {
     color: #fff;
     opacity: 1;
 }
+
 /* Search */
 #mid-search {
     position: absolute;
@@ -234,6 +339,7 @@ input[type=text]:focus:not([readonly])+label {
 #mid-quote-draw-author:hover {
     opacity: 1;
 }
+
 /* Focus */
 #mid-main-focus {
     font-size: 4.1vh;
@@ -280,20 +386,9 @@ input[type=text]:focus:not([readonly])+label {
     display: flex;
     align-items: center;
 }
+
+
 /* Right */
-/*Weather*/
-#right-weather{
-    padding-left: 100px;
-}
-
-#right-weather-draw-temperature-f{
-    font-size: 20px;
-}
-
-#right-weather-draw-temperature-c{
-    font-size: 20px;
-}
-
 
 /* Todo */
 #right-todo {
@@ -410,95 +505,20 @@ input[type=text]:focus:not([readonly])+label {
     padding-top: 15px;
     font-size: 16px;
 }
-#main-settings-view {
-  display: table;
-  width: 100%;
+
+/*Weather*/
+#right-weather{
+    padding-left: 100px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
-#main-settings-view .question,
-#main-settings-view .switch {
-  display: table-cell;
-  vertical-align: middle;
-  padding: 10px;
+
+#right-weather-draw-temperature-f{
+    font-size: 20px;
 }
-#main-settings-view .question {
-  width: 600px;
-  font-size: 17px;
-}
-#setting-header {
-    width: 100%;
-    text-align: center;
-    font-size: 19px;
-}
-.settings-toggle {
-  position: absolute;
-  margin-left: -9999px;
-  visibility: hidden;
-}
-.settings-toggle + label {
-  display: block;
-  position: relative;
-  cursor: pointer;
-  outline: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-/* Switch 1  */
-input.settings-toggle-round + label {
-    padding: 2px;
-    width: 40px;
-    height: 20px;
-    background-color: #dddddd;
-    -webkit-border-radius: 60px;
-    -moz-border-radius: 60px;
-    -ms-border-radius: 60px;
-    -o-border-radius: 60px;
-    border-radius: 60px;
-}
-input.settings-toggle-round + label:before, input.settings-toggle-round + label:after {
-  display: block;
-  position: absolute;
-  top: 1px;
-  left: 1px;
-  bottom: 1px;
-  content: "";
-}
-input.settings-toggle-round + label:before {
-  right: 1px;
-  background-color: #f1f1f1;
-  -webkit-border-radius: 60px;
-  -moz-border-radius: 60px;
-  -ms-border-radius: 60px;
-  -o-border-radius: 60px;
-  border-radius: 60px;
-  -webkit-transition: background 0.4s;
-  -moz-transition: background 0.4s;
-  -o-transition: background 0.4s;
-  transition: background 0.4s;
-}
-input.settings-toggle-round + label:after {
-    width: 20px;
-    background-color: #fff;
-    -webkit-border-radius: 100%;
-    -moz-border-radius: 100%;
-    -ms-border-radius: 100%;
-    -o-border-radius: 100%;
-    border-radius: 100%;
-    -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    -moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    -webkit-transition: margin 0.4s;
-    -moz-transition: margin 0.4s;
-    -o-transition: margin 0.4s;
-    transition: margin 0.4s;
-}
-input.settings-toggle-round:checked + label:before {
-  background-color: #8ce196;
-}
-input.settings-toggle-round:checked + label:after {
-  margin-left: 22px;
-}
-.hideView{
-    visibility: hidden;
+
+#right-weather-draw-temperature-c{
+    font-size: 20px;
 }

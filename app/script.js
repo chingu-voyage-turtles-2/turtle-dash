@@ -572,9 +572,8 @@ search = {
             }
         });
     }
-}
-
-var settings = {
+},
+settings = {
     dropupActive: false,
     checkSetting: function (storage) {
         chrome.storage.local.get(function (storage) {
@@ -701,58 +700,45 @@ var settings = {
                 }
             });
     }
-}
-
-
-var weather = {
-    latitude : "",
-    longitude: "",
+},
+weather = {
     toggle_fahrenheit : false, 
-
-    getWeatherData: function(){
+    getWeatherData(){
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-            weather.latitude =  position.coords.latitude; 
-            weather.longitude = position.coords.longitude;
-            
-            let apiKey = "fdb696c0c21ab91c3e5ea397229e3e80";
-            let url = "https://cors-anywhere.herokuapp.com/" +  "https://api.darksky.net/forecast/" + apiKey + "/" + weather.latitude + "," + weather.longitude;
+            navigator.geolocation.getCurrentPosition(function(position) {            
+            const apiKey = "fdb696c0c21ab91c3e5ea397229e3e80";
+            const url = `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/${apiKey}/${position.coords.latitude},${position.coords.longitude}`;
             $.getJSON(url,function(json) {
-                var temp_in_f = Math.round(json.currently.temperature);
-                var temp_in_c = Math.round((json.currently.temperature - 32) / (9 / 5));
+                const temp_in_f = Math.round(json.currently.temperature),
+                    temp_in_c = Math.round((json.currently.temperature - 32) / (9 / 5));
 
-                if (weather.toggle_fahrenheit) {
-                    $("#right-weather-draw").html(`
-                        <span id="right-weather-draw-temperature-f">${temp_in_f}&#8457</span>
-                        <p id="right-weather-draw-userLocation">${json.timezone}</p>`);
-                    $("#right-weather-draw").css("bottom", "20px");
-                } 
-                
-                else {
-                    $("#right-weather-draw").html(`
-                        <span id="right-weather-draw-temperature-c">${temp_in_c}&#8451</span>
-                        <p id="right-weather-draw-userLocation">${json.timezone}</p>`);
-                    $("#right-weather-draw").css("bottom", "20px");
+                drawWeather();
+                function drawWeather( ...rest ) {
+                    let temp;
+                    if (weather.toggle_fahrenheit) {
+                        temp = `${temp_in_f}&#8457`;
+                    } else {
+                        temp = `${temp_in_c}&#8451`;
+                    }
+                    if (rest.length === 0 ) {
+                        draw(temp);
+                    } else {
+                        $("#right-weather-draw-temperature").html(`${temp}`);
+                    }
+                    function draw(temp) {
+                        $("#right-weather-draw").html(`
+                            <span id="right-weather-draw-temperature">${temp}</span>
+                            <p id="right-weather-draw-userLocation">${json.timezone}</p>`);
+                        $("#right-weather-draw").css("bottom", "20px");
+                    }
                 }
 
-                $(document).on("click", "#right-weather-draw-temperature-c", function() {
-                    weather.toggle_fahrenheit = true;
-                    $("#right-weather-draw").html(`
-                        <span id="right-weather-draw-temperature-f">${temp_in_f}&#8457</span>
-                        <p id="right-weather-draw-userLocation">${json.timezone}</p>`);
-                    $("#right-weather-draw").css("bottom", "20px");                 
+                document.getElementById("right-weather-draw-temperature").addEventListener("click", () => {
+                    weather.toggle_fahrenheit = !weather.toggle_fahrenheit;
+                    drawWeather(true);
+                } );
 
-                });
-
-                $(document).on("click", "#right-weather-draw-temperature-f", function() {
-                    weather.toggle_fahrenheit = false;
-                    $("#right-weather-draw").html(`
-                        <span id="right-weather-draw-temperature-c">${temp_in_c}&#8451</span>
-                        <p id="right-weather-draw-userLocation">${json.timezone}</p>`);
-                    $("#right-weather-draw").css("bottom", "20px");        
-                });
-
-                switch (json.currently.icon) { //Icon
+                switch (json.currently.icon) {
                     case ("clear-day"):
                         $("#main-icon-div").html('<img id="main-icon" src="img/weather/weather clear-day.png">');
                         break;
@@ -801,10 +787,10 @@ $( "document" ).ready( () => {
     todo.dropupListener();
     settings.dropupListener();
     search.setupSearch();
+    weather.getWeatherData();
     initalFadeIn();
-  weather.getWeatherData();
 } );
-    
+
 
 function initalFadeIn() {
     for ( const id of [
