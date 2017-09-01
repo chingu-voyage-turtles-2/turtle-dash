@@ -278,7 +278,11 @@ input[type=text]:focus:not([readonly])+label {
     padding-left: 100px;
 }
 
-#right-weather-draw-temperature{
+#right-weather-draw-temperature-f{
+    font-size: 20px;
+}
+
+#right-weather-draw-temperature-c{
     font-size: 20px;
 }
 

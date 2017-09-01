@@ -593,25 +593,52 @@ var settings = {
 
 
 var weather = {
+    latitude : "",
+    longitude: "",
+    toggle_fahrenheit : false, 
 
     getWeatherData: function(){
-        let latitude = "";
-        let longitude = "";
-
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
-            latitude =  position.coords.latitude; 
-            longitude = position.coords.longitude;
+            weather.latitude =  position.coords.latitude; 
+            weather.longitude = position.coords.longitude;
             
             let apiKey = "fdb696c0c21ab91c3e5ea397229e3e80";
-            let url = "https://cors-anywhere.herokuapp.com/" +  "https://api.darksky.net/forecast/" + apiKey + "/" + latitude + "," + longitude;
+            let url = "https://cors-anywhere.herokuapp.com/" +  "https://api.darksky.net/forecast/" + apiKey + "/" + weather.latitude + "," + weather.longitude;
             $.getJSON(url,function(json) {
-                console.log(json.currently.temperature);
-                console.log(json.timezone);
-                $("#right-weather-draw").html(`
-                    <span id="right-weather-draw-temperature">${json.currently.temperature}</span>
-                    <p id="right-weather-draw-userLocation">${json.timezone}</p>`);
-                $("#right-weather-draw").css("bottom", "20px");
+                var temp_in_f = Math.round(json.currently.temperature);
+                var temp_in_c = Math.round((json.currently.temperature - 32) / (9 / 5));
+
+                if (weather.toggle_fahrenheit) {
+                    $("#right-weather-draw").html(`
+                        <span id="right-weather-draw-temperature-f">${temp_in_f}&#8457</span>
+                        <p id="right-weather-draw-userLocation">${json.timezone}</p>`);
+                    $("#right-weather-draw").css("bottom", "20px");
+                } 
+                
+                else {
+                    $("#right-weather-draw").html(`
+                        <span id="right-weather-draw-temperature-c">${temp_in_c}&#8451</span>
+                        <p id="right-weather-draw-userLocation">${json.timezone}</p>`);
+                    $("#right-weather-draw").css("bottom", "20px");
+                }
+
+                $(document).on("click", "#right-weather-draw-temperature-c", function() {
+                    weather.toggle_fahrenheit = true;
+                    $("#right-weather-draw").html(`
+                        <span id="right-weather-draw-temperature-f">${temp_in_f}&#8457</span>
+                        <p id="right-weather-draw-userLocation">${json.timezone}</p>`);
+                    $("#right-weather-draw").css("bottom", "20px");                 
+
+                });
+
+                $(document).on("click", "#right-weather-draw-temperature-f", function() {
+                    weather.toggle_fahrenheit = false;
+                    $("#right-weather-draw").html(`
+                        <span id="right-weather-draw-temperature-c">${temp_in_c}&#8451</span>
+                        <p id="right-weather-draw-userLocation">${json.timezone}</p>`);
+                    $("#right-weather-draw").css("bottom", "20px");        
+                });
 
                 switch (json.currently.icon) { //Icon
                     case ("clear-day"):
