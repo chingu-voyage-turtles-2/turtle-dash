@@ -273,6 +273,16 @@ input[type=text]:focus:not([readonly])+label {
 }
 
 /* Right */
+/*Weather*/
+#right-weather{
+    padding-left: 100px;
+}
+
+#right-weather-draw-temperature{
+    font-size: 20px;
+}
+
+
 /* Todo */
 #right-todo {
     height: 40vh;
@@ -371,3 +381,6 @@ p.todos span { /* Indent after line break */
     padding-top: 15px;
     font-size: 16px;
 }
+
+
+
