@@ -49,10 +49,11 @@ body {
     width: 32px;
     padding: 6px;
     cursor: hand;
+    border-radius: 50%;
+    transition: background-color 0.2s linear;
 }
 .icons:hover {
     background-color: rgba(255,255,255,0.3);
-    border-radius: 50%;
 }
 input[type=text] {
     background-color: transparent;
@@ -93,10 +94,6 @@ input[type=text]:focus:not([readonly])+label {
     height: 40px;
     padding: 8px 8px 8px 8px;
     cursor: hand;
-}
-#left-logo-spin:hover {
-    background-color: rgba(255,255,255,0.3);
-    border-radius: 50%;
 }
 /* Settings */
 #left-settings {
