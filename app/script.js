@@ -754,37 +754,37 @@ var weather = {
 
                 switch (json.currently.icon) { //Icon
                     case ("clear-day"):
-                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather clear-day.png">');
+                        $("#main-icon-div").html('<img id="main-icon" src="img/weather/weather clear-day.png">');
                         break;
                     case ("clear-night"):
-                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather clear-night.png">');
+                        $("#main-icon-div").html('<img id="main-icon" src="img/weather/weather clear-night.png">');
                         break;
                     case ("rain"):
-                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather rain.png">');
+                        $("#main-icon-div").html('<img id="main-icon" src="img/weather/weather rain.png">');
                         break;
                     case ("snow"):
-                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather snow.png">');
+                        $("#main-icon-div").html('<img id="main-icon" src="img/weather/weather snow.png">');
                         break;
                     case ("sleet"):
-                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather sleet.png">');
+                        $("#main-icon-div").html('<img id="main-icon" src="img/weather/weather sleet.png">');
                         break;
                     case ("wind"):
-                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather wind.png">');
+                        $("#main-icon-div").html('<img id="main-icon" src="img/weather/weather wind.png">');
                         break;
                     case ("fog"):
-                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather fog.png">');
+                        $("#main-icon-div").html('<img id="main-icon" src="img/weather/weather fog.png">');
                         break;
                     case ("cloudy"):
-                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather cloudy.png">');
+                        $("#main-icon-div").html('<img id="main-icon" src="img/weather/weather cloudy.png">');
                         break;
                     case ("partly-cloudy-day"):
-                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather partly-cloudy-day.png">');
+                        $("#main-icon-div").html('<img id="main-icon" src="img/weather/weather partly-cloudy-day.png">');
                         break;
                     case ("partly-cloudy-night"):
-                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather partly-cloudy-night.png">');
+                        $("#main-icon-div").html('<img id="main-icon" src="img/weather/weather partly-cloudy-night.png">');
                         break;
                     default:
-                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather cloudy.png">');
+                        $("#main-icon-div").html('<img id="main-icon" src="img/weather/weather cloudy.png">');
                 };
             
                 });

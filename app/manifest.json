@@ -5,18 +5,18 @@
 	"description": "Chingu Voyage - Turtles #2's Momentum Dash Clone",
 	"version": "1.0",
 	"icons": {
-		"16": "img/logo 16.png",
-		"24": "img/logo 24.png",
-		"36": "img/logo 36.png",
-		"48": "img/logo 48.png"
+		"16": "img/logo/logo 16.png",
+		"24": "img/logo/logo 24.png",
+		"36": "img/logo/logo 36.png",
+		"48": "img/logo/logo 48.png"
 	},
 
   	"browser_action": {
   		"default_icon": {
-			"16": "img/logo 16.png",
-			"24": "img/logo 24.png",
-			"36": "img/logo 36.png",
-			"48": "img/logo 48.png"
+			"16": "img/logo/logo 16.png",
+			"24": "img/logo/logo 24.png",
+			"36": "img/logo/logo 36.png",
+			"48": "img/logo/logo 48.png"
 		}
 	  },
 	"permissions": [
