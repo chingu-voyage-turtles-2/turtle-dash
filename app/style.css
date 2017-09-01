@@ -47,15 +47,16 @@ body {
     width: 32px;
     padding: 6px;
     cursor: hand;
+    border-radius: 50%;
+    transition: background-color 0.2s linear;
 }
 .icons:hover {
-    background-color: rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
+    background-color: rgba(255,255,255,0.3);
 }
 input[type=text] {
     background-color: transparent;
     border: none;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #808080;
     border-radius: 0;
     outline: none;
     height: 2.1rem;
@@ -90,10 +91,6 @@ input[type=text]:focus:not([readonly])+label {
     height: 40px;
     padding: 8px 8px 8px 8px;
     cursor: hand;
-}
-#left-logo-spin:hover {
-    background-color: rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
 }
 /* Settings */
 #left-settings {
@@ -173,6 +170,7 @@ input[type=text]:focus:not([readonly])+label {
 #mid-main-username {
     width: 100%;
     padding: 10px;
+    text-shadow: none;
 }
 #mid-main-username-input::-webkit-input-placeholder {
     color: #fff;
@@ -313,17 +311,11 @@ input[type=text]:focus:not([readonly])+label {
 .hideDivs {
     visibility: hidden;
     opacity: 0;
-    transition-delay: 3.5s;
-    transition-duration: 0.75s;
-    transition-property: all;
-    transition-timing-function: linear;
+    transition: all 0.75s linear 3.5s;
 }
 .unhideDivs {
     visibility: visible;
-    transition-delay: 0.25s;
-    transition-duration: 0.75s;
-    transition-property: all;
-    transition-timing-function: linear;
+    transition: all 0.75s linear 0.25s;
 }
 .unhideTodoDropup {
     display: block;
@@ -369,10 +361,14 @@ input[type=text]:focus:not([readonly])+label {
 }
 .todo-checkboxes {
     display: inline;
+    vertical-align: top;
 }
 .todos {
     font-size: 16;
-    display: inline;
+    display: inline-block;
+    width: 247px;
+    margin: 0;
+    padding: 0 0 3px 0;
 }
 #right-todo {
     max-height: 75vh;
@@ -396,16 +392,13 @@ input[type=text]:focus:not([readonly])+label {
     height: 26px;
     font-size: 18;
 }
-p.todos span {
-    /* Indent after line break */
-    padding-left: 20px;
-}
 .todo-delete {
     height: 8px;
     width: 8px;
-    padding: 0 0 1px 5px;
+    margin: 2px 0 1px 5px; 
     cursor: hand;
-    margin-top: 2px;
+    opacity: 0;
+    transition: opacity 0.2s linear;
 }
 .emoji {
     height: 32px;

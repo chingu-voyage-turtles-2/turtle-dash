@@ -1,8 +1,3 @@
-function range(minNum, maxNum) {
-    minNum -= 2;
-    return Array.from(new Array(maxNum - minNum - 1), (x,i) => i - minNum)
-} 
-
 function returnRandomPhrase(phrasesObj, resArr) {
     //Bulding a array out of the phrases keys and picking a random one
     for (let i in phrasesObj) {
@@ -15,3 +10,8 @@ function returnRandomPhrase(phrasesObj, resArr) {
         ];
     return phrasesObj[index].phrase
 };
+
+function fadeIn(id, timeToOpaque = 1800) {
+    $("#" + id).fadeOut(0);
+    $("#" + id).fadeIn(timeToOpaque);
+}
