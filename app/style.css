@@ -325,10 +325,14 @@ input[type=text]:focus:not([readonly])+label {
 }
 .todo-checkboxes {
     display: inline;
+    vertical-align: top;
 }
 .todos {
     font-size: 16;
-    display: inline;
+    display: inline-block;
+    width: 247px;
+    margin: 0;
+    padding: 0 0 3px 0;
 }
 #right-todo {
     max-height: 75vh;
@@ -351,9 +355,6 @@ input[type=text]:focus:not([readonly])+label {
     width: 280px;
     height: 26px;
     font-size: 18;
-}
-p.todos span { /* Indent after line break */
-    padding-left: 20px;
 }
 .todo-delete {
     height: 8px;

@@ -445,12 +445,12 @@ todo = {
             </form>
         ` );
 
-        if ( ( todos.length * 21 ) + ( lineBreakCounter * 19.1 ) > ( windowHeight * 0.7 ) - 42 ) {
+        if ( ( todos.length * 22 ) + ( lineBreakCounter * 19.1 ) > ( windowHeight * 0.7 ) - 42 ) {
             $( `#${dropupId}` ).css( "height", `${( windowHeight * 0.7 ) - 42}px` ); // Scrollbar
             $( `#${dropupId}-todo` ).css( "overflow-y", "scroll" );
             $( `#${dropupId}-todo` ).css( "overflow-x", "hidden" );
         } else { // Dynamic Height
-            $( `#${dropupId}` ).css( "height", `${50 + ( todos.length * 21 ) + ( lineBreakCounter * 19.1 )}px` );
+            $( `#${dropupId}` ).css( "height", `${50 + ( todos.length * 22 ) + ( lineBreakCounter * 19.1 )}px` );
             $( `#${dropupId}-todo` ).css( "overflow", "hidden" );
             $( `#${dropupId}-todo` ).css( "height", "inherit" );
         }
@@ -480,15 +480,15 @@ todo = {
 
         function writeTodo( content, i, ...rest ) {
             let checked = "",
-                contentFinal = breakupString( content, 20 );
+                contentFinal = breakupString( content, i );
             if ( rest.length > 0 ) {
                 if ( rest[0].checked[i] ) {
                     checked = "checked";
-                    contentFinal = `<s>${contentFinal}</s>`;
+                    contentFinal = `<s>${content}</s>`;
                 }
             }
             $( "#right-todo-dropup-todo" ).append( `
-                <div class="todo-wrappers">
+                <div id="-todo-wrapper-${i}" class="todo-wrappers">
                     <input id="${dropupId}-checkbox-${i}" type="checkbox" class="todo-checkboxes" ${checked}>
                     <p id="${dropupId}-todo-${i}" class="todos" contenteditable>
                         ${contentFinal}
@@ -497,19 +497,9 @@ todo = {
                 </div>
             ` );
         }
-        function breakupString( str, splitAt ) {
-            if ( str.length > splitAt ) {
-                const howOften = Math.floor( str.length / splitAt );
-                let res;
-                for ( const i of range( 1, howOften + 1 ) ) {
-                    if ( i === 1 ) {
-                        res = str.slice( 0, splitAt * i );
-                    } else {
-                        res += `<br><span>${str.slice( splitAt * ( i - 1 ), splitAt * i )}</span>`;
-                    }
-                }
-                lineBreakCounter += howOften;
-                return res;
+        function breakupString( str, i ) {
+            if ( str.length > 25 ) {
+                lineBreakCounter += Math.floor( str.length / 25 );
             }
             return str;
         }
