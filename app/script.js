@@ -593,35 +593,67 @@ var settings = {
 
 
 var weather = {
-    latitude : "",
-    longitude : "",
-    getLocation: function(){
+
+    getWeatherData: function(){
+        let latitude = "";
+        let longitude = "";
+
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
-            weather.latitude =  position.coords.latitude; 
-            weather.longitude = position.coords.longitude;
+            latitude =  position.coords.latitude; 
+            longitude = position.coords.longitude;
+            
+            let apiKey = "fdb696c0c21ab91c3e5ea397229e3e80";
+            let url = "https://cors-anywhere.herokuapp.com/" +  "https://api.darksky.net/forecast/" + apiKey + "/" + latitude + "," + longitude;
+            $.getJSON(url,function(json) {
+                console.log(json.currently.temperature);
+                console.log(json.timezone);
+                $("#right-weather-draw").html(`
+                    <span id="right-weather-draw-temperature">${json.currently.temperature}</span>
+                    <p id="right-weather-draw-userLocation">${json.timezone}</p>`);
+                $("#right-weather-draw").css("bottom", "20px");
+
+                switch (json.currently.icon) { //Icon
+                    case ("clear-day"):
+                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather clear-day.png">');
+                        break;
+                    case ("clear-night"):
+                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather clear-night.png">');
+                        break;
+                    case ("rain"):
+                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather rain.png">');
+                        break;
+                    case ("snow"):
+                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather snow.png">');
+                        break;
+                    case ("sleet"):
+                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather sleet.png">');
+                        break;
+                    case ("wind"):
+                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather wind.png">');
+                        break;
+                    case ("fog"):
+                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather fog.png">');
+                        break;
+                    case ("cloudy"):
+                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather cloudy.png">');
+                        break;
+                    case ("partly-cloudy-day"):
+                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather partly-cloudy-day.png">');
+                        break;
+                    case ("partly-cloudy-night"):
+                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather partly-cloudy-night.png">');
+                        break;
+                    default:
+                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather cloudy.png">');
+                };
+            
+                });
             });
-     
+        }
     }
-    },
-    getWeatherData: function(){
-        let apiKey = "fdb696c0c21ab91c3e5ea397229e3e80";
-        let url = "https://api.darksky.net/forecast/" + apiKey + "/" + weather.latitude + "," + weather.longitude;
-        
-
-        $.ajax(url, {
-            url: url,
-            dataType: "jsonp",
-            async: false,
-            success: function (data) {
-                console.log(data);
-                farenheitTemperature = data.currently.temperature;
-            }
-  });
-
-    }
-
 }
+
 $("document").ready(function() {
     time.setTime();
     time.updateTime();
