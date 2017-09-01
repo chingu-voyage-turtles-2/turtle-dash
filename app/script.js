@@ -464,7 +464,7 @@ todo = {
             <div id="right-todo-dropup-todo-notodo">
                 <img src="img/wave.png" class="emoji"/>
                 <img src="img/smile.png" class="emoji"/>
-                <p>Hey there ${user.name}!<br>You can add new todo's below:</p>
+                <p>Hey there ${user.name}!<br>You can add new todos below:</p>
             </div>
             ` );
             $( `#${dropupId}` ).css( "height", "170px" );
@@ -570,50 +570,228 @@ search = {
             if ( event.which === 13 ) {
                 chrome.tabs.update( null, { url: `http://www.google.com/search?q=${searchBox.value}` } );
             }
-        } );
-    },
-},
-settings = {
-    setImageLocationHover() {
-        $( "#left-settings-info" ).hover(
-            function hideOtherDivs() {
-                hide( "mid" );
-                hide( "right" );
-                hide( "left-logo" );
-                hide( "right-todo" );
-                hide( "mid-quote" );
+        });
+    }
+}
 
-                function hide( id ) {
-                    $( `#${id}` ).addClass( "hideDivs" );
-                    $( `#${id}` ).removeClass( "unhideDivs" );
-                    if ( id === "mid-quote" ) {
-                        $( `#${id}` ).css( "transition-delay", "3.5s" );
-                        $( `#${id}` ).css( "transition-duration", "0.75s" );
-                        $( `#${id}` ).css( "transition-property", "all" );
-                        $( `#${id}` ).css( "transition-timing-function", "linear" );
+var settings = {
+    dropupActive: false,
+    checkSetting: function (storage) {
+        chrome.storage.local.get(function (storage) {
+            for (let i in storage.parts) {
+                if (storage.settingsChecked[i] !== "checked") {
+                    $("#" + storage.parts[i]).toggleClass("hideView");
+                }
+            }
+        });
+    },
+    dropupListener: function () {
+        settings.checkSetting();
+        settings.setupSettingsStorage();
+        settings.setImageLocationHover();
+        document.getElementById("left-settings-icon").addEventListener("click",
+            function triggerDropup() {
+                if (!settings.dropupActive) {
+                    chrome.storage.local.get(function (storage) {
+                        settings.drawDropup(storage);
+                    });
+                } else {
+                    $("#left-settings-dropup").removeClass("unhideSettingsDropup");
+                    $("#left-settings-info").removeClass("hideSettingsDropup");
+                    $("#left-settings-dropup").addClass("hideSettingsDropup");
+                    $("#left-settings-arrow").css("display", "none");
+                    $("#main-settings-view").html("");
+                    settings.dropupActive = false;
+                }
+            });
+    },
+    drawDropup: function (storage) {
+        let dropupId = "left-settings-dropup",
+            setttings = storage.settings;
+        $("#left-settings-info").addClass("hideSettingsDropup");
+        $("#main-settings-view").html(`
+                <div id="setting-header" class="row">
+                    General Settings
+                </div>
+                `);
+        for (let i in setttings) {
+            $("#main-settings-view").append(`
+                <div class="row">
+                    <div class="question">
+                        ${setttings[i]}
+                    </div>
+                    <div class="switch">
+                        <input id="settings-toggle-${i}" class="settings-toggle settings-toggle-round" type="checkbox" ${storage.settingsChecked[i]}>
+                        <label for="settings-toggle-${i}"></label>
+                    </div>
+                </div>
+        `);
+            (function addToggleboxListener(i) {
+                $("#settings-toggle-" + i + "[type=checkbox]").on("click", function () {
+                    if (storage.settingsChecked[i] === "checked") {
+                        chrome.storage.local.get(function (storage) {
+                            storage.settingsChecked[i] = "unchecked";
+                            chrome.storage.local.set(storage);
+                            settings.drawDropup(storage, i);
+                        });
+                    } else {
+                        chrome.storage.local.get(function (storage) {
+                            storage.settingsChecked[i] = "checked";
+                            chrome.storage.local.set(storage);
+                            settings.drawDropup(storage, i);
+                        });
+                    }
+                    $("#" + storage.parts[i]).toggleClass("hideView");
+                });
+            })(i);
+        };
+        $("#" + dropupId).removeClass("hideSettingsDropup");
+        $("#" + dropupId).addClass("unhideSettingsDropup");
+        $("#left-settings-arrow").css("display", "block");
+        settings.dropupActive = true;
+    },
+    setupSettingsStorage: function () {
+        chrome.storage.local.get("settings", function (items) {
+            if (items.settings === undefined) {
+                chrome.storage.local.set({
+                    settings: ["Toggle Temperature Unit", "Show Search", "Show Weather", "Show Time", "Show To-Do"],
+                    settingsChecked: ["checked", "checked", "checked", "checked", "checked", "checked"],
+                    parts: ['Temperature-Unit', 'mid-search', 'right-weather', 'mid-main-time', 'right-todo']
+                });
+            }
+        });
+    },
+    setImageLocationHover: function () {
+        $("#left-settings-info").hover(
+            function hideOtherDivs() {
+                hide("mid");
+                hide("right");
+                hide("left-logo");
+                hide("right-todo");
+                hide("mid-quote");
+
+                function hide(id) {
+                    $("#" + id).addClass("hideDivs");
+                    $("#" + id).removeClass("unhideDivs");
+                    if (id === "mid-quote") {
+                        $("#" + id).css("transition-delay", "3.5s");
+                        $("#" + id).css("transition-duration", "0.75s");
+                        $("#" + id).css("transition-property", "all");
+                        $("#" + id).css("transition-timing-function", "linear");
                     }
                 }
-            }, function unhideOtherDivs() {
-                unhide( "mid" );
-                unhide( "right" );
-                unhide( "left-logo" );
-                unhide( "right-todo" );
-                unhide( "mid-quote" );
+            },
+            function unhideOtherDivs() {
+                unhide("mid");
+                unhide("right");
+                unhide("left-logo");
+                unhide("right-todo");
+                unhide("mid-quote");
 
-                function unhide( id ) {
-                    $( `#${id}` ).addClass( "unhideDivs" );
-                    $( `#${id}` ).removeClass( "hideDivs" );
-                    if ( id === "mid-quote" ) {
-                        $( `#${id}` ).css( "visibility", "visible" );
-                        $( `#${id}` ).css( "transition-delay", "0.25s" );
-                        $( `#${id}` ).css( "transition-duration", "0.75s" );
-                        $( `#${id}` ).css( "transition-property", "all" );
-                        $( `#${id}` ).css( "transition-timing-function", "linear" );
+                function unhide(id) {
+                    $("#" + id).addClass("unhideDivs");
+                    $("#" + id).removeClass("hideDivs");
+                    if (id === "mid-quote") {
+                        $("#" + id).css("visibility", "visible");
+                        $("#" + id).css("transition-delay", "0.25s");
+                        $("#" + id).css("transition-duration", "0.75s");
+                        $("#" + id).css("transition-property", "all");
+                        $("#" + id).css("transition-timing-function", "linear");
                     }
-            }
-        } );
-    },
-};
+                }
+            });
+    }
+}
+
+
+var weather = {
+    latitude : "",
+    longitude: "",
+    toggle_fahrenheit : false, 
+
+    getWeatherData: function(){
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+            weather.latitude =  position.coords.latitude; 
+            weather.longitude = position.coords.longitude;
+            
+            let apiKey = "fdb696c0c21ab91c3e5ea397229e3e80";
+            let url = "https://cors-anywhere.herokuapp.com/" +  "https://api.darksky.net/forecast/" + apiKey + "/" + weather.latitude + "," + weather.longitude;
+            $.getJSON(url,function(json) {
+                var temp_in_f = Math.round(json.currently.temperature);
+                var temp_in_c = Math.round((json.currently.temperature - 32) / (9 / 5));
+
+                if (weather.toggle_fahrenheit) {
+                    $("#right-weather-draw").html(`
+                        <span id="right-weather-draw-temperature-f">${temp_in_f}&#8457</span>
+                        <p id="right-weather-draw-userLocation">${json.timezone}</p>`);
+                    $("#right-weather-draw").css("bottom", "20px");
+                } 
+                
+                else {
+                    $("#right-weather-draw").html(`
+                        <span id="right-weather-draw-temperature-c">${temp_in_c}&#8451</span>
+                        <p id="right-weather-draw-userLocation">${json.timezone}</p>`);
+                    $("#right-weather-draw").css("bottom", "20px");
+                }
+
+                $(document).on("click", "#right-weather-draw-temperature-c", function() {
+                    weather.toggle_fahrenheit = true;
+                    $("#right-weather-draw").html(`
+                        <span id="right-weather-draw-temperature-f">${temp_in_f}&#8457</span>
+                        <p id="right-weather-draw-userLocation">${json.timezone}</p>`);
+                    $("#right-weather-draw").css("bottom", "20px");                 
+
+                });
+
+                $(document).on("click", "#right-weather-draw-temperature-f", function() {
+                    weather.toggle_fahrenheit = false;
+                    $("#right-weather-draw").html(`
+                        <span id="right-weather-draw-temperature-c">${temp_in_c}&#8451</span>
+                        <p id="right-weather-draw-userLocation">${json.timezone}</p>`);
+                    $("#right-weather-draw").css("bottom", "20px");        
+                });
+
+                switch (json.currently.icon) { //Icon
+                    case ("clear-day"):
+                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather clear-day.png">');
+                        break;
+                    case ("clear-night"):
+                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather clear-night.png">');
+                        break;
+                    case ("rain"):
+                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather rain.png">');
+                        break;
+                    case ("snow"):
+                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather snow.png">');
+                        break;
+                    case ("sleet"):
+                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather sleet.png">');
+                        break;
+                    case ("wind"):
+                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather wind.png">');
+                        break;
+                    case ("fog"):
+                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather fog.png">');
+                        break;
+                    case ("cloudy"):
+                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather cloudy.png">');
+                        break;
+                    case ("partly-cloudy-day"):
+                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather partly-cloudy-day.png">');
+                        break;
+                    case ("partly-cloudy-night"):
+                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather partly-cloudy-night.png">');
+                        break;
+                    default:
+                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather cloudy.png">');
+                };
+            
+                });
+            });
+        }
+    }
+}
 
 $( "document" ).ready( () => {
     time.setTime();
@@ -621,10 +799,12 @@ $( "document" ).ready( () => {
     backgroundImage.setupImage();
     quote.setupQuote();
     todo.dropupListener();
+    settings.dropupListener();
     search.setupSearch();
-    settings.setImageLocationHover();
     initalFadeIn();
+  weather.getWeatherData();
 } );
+    
 
 function initalFadeIn() {
     for ( const id of [
