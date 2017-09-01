@@ -706,75 +706,40 @@ weather = {
     getWeatherData(){
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {            
-            const apiKey = "fdb696c0c21ab91c3e5ea397229e3e80";
-            const url = `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/${apiKey}/${position.coords.latitude},${position.coords.longitude}`;
-            $.getJSON(url,function(json) {
-                const temp_in_f = Math.round(json.currently.temperature),
-                    temp_in_c = Math.round((json.currently.temperature - 32) / (9 / 5));
+                const url = `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/fdb696c0c21ab91c3e5ea397229e3e80/${position.coords.latitude},${position.coords.longitude}`;
+                $.getJSON(url,function(json) {
+                    drawWeather();
+                    function drawWeather( ...rest ) {
+                        let temp;
+                        if (weather.toggle_fahrenheit) { // °F
+                            temp = `${Math.round(json.currently.temperature)}&#8457`;
+                        } else { // °C
+                            temp = `${Math.round((json.currently.temperature - 32) / (9 / 5))}&#8451`;
+                        }
+                        if (rest.length !== 0 ) { // Only update temperature
+                            $("#right-weather-temperature").html(`${temp}`);
+                        } else if ( json.currently.icon || ~[ "clear-day", "clear-night", "cloudy", "partly-cloudy-day", "partly-cloudy-night", "rain", "snow", "weather windy" ].indexOf() ) {
+                            draw( temp, json.currently.icon );
+                        } else {
+                            draw( temp, "cloudy" );
+                        }
+                        function draw( temp, icon ) {
+                            $("#right-weather").html(`
+                                <div id="weather-wrapper">
+                                    <p id="right-weather-temperature">${temp}</p>
+                                    <img id="right-weather-icon" src="img/weather/weather ${icon}.png">
+                                </div>
+                                <p id="right-weather-location">${json.timezone}</p>`
+                            );
+                        }
+                    }
 
-                drawWeather();
-                function drawWeather( ...rest ) {
-                    let temp;
-                    if (weather.toggle_fahrenheit) {
-                        temp = `${temp_in_f}&#8457`;
-                    } else {
-                        temp = `${temp_in_c}&#8451`;
-                    }
-                    if (rest.length === 0 ) {
-                        draw(temp);
-                    } else {
-                        $("#right-weather-draw-temperature").html(`${temp}`);
-                    }
-                    function draw(temp) {
-                        $("#right-weather-draw").html(`
-                            <span id="right-weather-draw-temperature">${temp}</span>
-                            <p id="right-weather-draw-userLocation">${json.timezone}</p>`);
-                        $("#right-weather-draw").css("bottom", "20px");
-                    }
-                }
-
-                document.getElementById("right-weather-draw-temperature").addEventListener("click", () => {
-                    weather.toggle_fahrenheit = !weather.toggle_fahrenheit;
-                    drawWeather(true);
+                    document.getElementById("right-weather-temperature").addEventListener("dblclick", () => {
+                        weather.toggle_fahrenheit = !weather.toggle_fahrenheit;
+                        drawWeather(true);
+                    } ); 
                 } );
-
-                switch (json.currently.icon) {
-                    case ("clear-day"):
-                        $("#main-icon-div").html('<img id="main-icon" src="img/weather/weather clear-day.png">');
-                        break;
-                    case ("clear-night"):
-                        $("#main-icon-div").html('<img id="main-icon" src="img/weather/weather clear-night.png">');
-                        break;
-                    case ("rain"):
-                        $("#main-icon-div").html('<img id="main-icon" src="img/weather/weather rain.png">');
-                        break;
-                    case ("snow"):
-                        $("#main-icon-div").html('<img id="main-icon" src="img/weather/weather snow.png">');
-                        break;
-                    case ("sleet"):
-                        $("#main-icon-div").html('<img id="main-icon" src="img/weather/weather sleet.png">');
-                        break;
-                    case ("wind"):
-                        $("#main-icon-div").html('<img id="main-icon" src="img/weather/weather wind.png">');
-                        break;
-                    case ("fog"):
-                        $("#main-icon-div").html('<img id="main-icon" src="img/weather/weather fog.png">');
-                        break;
-                    case ("cloudy"):
-                        $("#main-icon-div").html('<img id="main-icon" src="img/weather/weather cloudy.png">');
-                        break;
-                    case ("partly-cloudy-day"):
-                        $("#main-icon-div").html('<img id="main-icon" src="img/weather/weather partly-cloudy-day.png">');
-                        break;
-                    case ("partly-cloudy-night"):
-                        $("#main-icon-div").html('<img id="main-icon" src="img/weather/weather partly-cloudy-night.png">');
-                        break;
-                    default:
-                        $("#main-icon-div").html('<img id="main-icon" src="img/weather/weather cloudy.png">');
-                };
-            
-                });
-            });
+            } );
         }
     }
 }

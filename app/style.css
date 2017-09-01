@@ -506,19 +506,38 @@ input.settings-toggle-round:checked + label:after {
     font-size: 16px;
 }
 
-/*Weather*/
+/* Weather */
+
 #right-weather{
-    padding-left: 100px;
+    margin: 10px 18px 0 0;
+    align-self: flex-end;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
 }
-
-#right-weather-draw-temperature-f{
-    font-size: 20px;
+#right-weather-temperature {
+    font-size: 32px;
+    padding: 9px 10px 0 0;
 }
-
-#right-weather-draw-temperature-c{
-    font-size: 20px;
+#right-weather-icon {
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    align-self: center;
+}
+#right-weather-location {
+    margin-top: 0px;
+    font-size: 15px;
+}
+#weather-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: flex-end;
+    margin: -28px 0;
 }
