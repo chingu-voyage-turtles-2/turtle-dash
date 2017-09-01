@@ -283,6 +283,20 @@ input[type=text]:focus:not([readonly])+label {
     align-items: center;
 }
 /* Right */
+/*Weather*/
+#right-weather{
+    padding-left: 100px;
+}
+
+#right-weather-draw-temperature-f{
+    font-size: 20px;
+}
+
+#right-weather-draw-temperature-c{
+    font-size: 20px;
+}
+
+
 /* Todo */
 #right-todo {
     height: 40vh;
@@ -403,7 +417,6 @@ p.todos span {
     padding-top: 15px;
     font-size: 16px;
 }
-/* settings */
 #main-settings-view {
   display: table;
   width: 100%;

@@ -444,7 +444,7 @@ var todo = {
             <div id="right-todo-dropup-todo-notodo">
                 <img src="img/wave.png" class="emoji"/>
                 <img src="img/smile.png" class="emoji"/>
-                <p>Hey there ${user.name}!<br>You can add new todo's below:</p>
+                <p>Hey there ${user.name}!<br>You can add new todos below:</p>
             </div>
             `);
             $("#" + dropupId).css("height", "170px");
@@ -678,6 +678,96 @@ var settings = {
     }
 }
 
+
+var weather = {
+    latitude : "",
+    longitude: "",
+    toggle_fahrenheit : false, 
+
+    getWeatherData: function(){
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+            weather.latitude =  position.coords.latitude; 
+            weather.longitude = position.coords.longitude;
+            
+            let apiKey = "fdb696c0c21ab91c3e5ea397229e3e80";
+            let url = "https://cors-anywhere.herokuapp.com/" +  "https://api.darksky.net/forecast/" + apiKey + "/" + weather.latitude + "," + weather.longitude;
+            $.getJSON(url,function(json) {
+                var temp_in_f = Math.round(json.currently.temperature);
+                var temp_in_c = Math.round((json.currently.temperature - 32) / (9 / 5));
+
+                if (weather.toggle_fahrenheit) {
+                    $("#right-weather-draw").html(`
+                        <span id="right-weather-draw-temperature-f">${temp_in_f}&#8457</span>
+                        <p id="right-weather-draw-userLocation">${json.timezone}</p>`);
+                    $("#right-weather-draw").css("bottom", "20px");
+                } 
+                
+                else {
+                    $("#right-weather-draw").html(`
+                        <span id="right-weather-draw-temperature-c">${temp_in_c}&#8451</span>
+                        <p id="right-weather-draw-userLocation">${json.timezone}</p>`);
+                    $("#right-weather-draw").css("bottom", "20px");
+                }
+
+                $(document).on("click", "#right-weather-draw-temperature-c", function() {
+                    weather.toggle_fahrenheit = true;
+                    $("#right-weather-draw").html(`
+                        <span id="right-weather-draw-temperature-f">${temp_in_f}&#8457</span>
+                        <p id="right-weather-draw-userLocation">${json.timezone}</p>`);
+                    $("#right-weather-draw").css("bottom", "20px");                 
+
+                });
+
+                $(document).on("click", "#right-weather-draw-temperature-f", function() {
+                    weather.toggle_fahrenheit = false;
+                    $("#right-weather-draw").html(`
+                        <span id="right-weather-draw-temperature-c">${temp_in_c}&#8451</span>
+                        <p id="right-weather-draw-userLocation">${json.timezone}</p>`);
+                    $("#right-weather-draw").css("bottom", "20px");        
+                });
+
+                switch (json.currently.icon) { //Icon
+                    case ("clear-day"):
+                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather clear-day.png">');
+                        break;
+                    case ("clear-night"):
+                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather clear-night.png">');
+                        break;
+                    case ("rain"):
+                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather rain.png">');
+                        break;
+                    case ("snow"):
+                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather snow.png">');
+                        break;
+                    case ("sleet"):
+                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather sleet.png">');
+                        break;
+                    case ("wind"):
+                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather wind.png">');
+                        break;
+                    case ("fog"):
+                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather fog.png">');
+                        break;
+                    case ("cloudy"):
+                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather cloudy.png">');
+                        break;
+                    case ("partly-cloudy-day"):
+                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather partly-cloudy-day.png">');
+                        break;
+                    case ("partly-cloudy-night"):
+                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather partly-cloudy-night.png">');
+                        break;
+                    default:
+                        $("#main-icon-div").html('<img id="main-icon" src="img/pictures/weather cloudy.png">');
+                };
+            
+                });
+            });
+        }
+    }
+}
+
 $("document").ready(function() {
     time.setTime();
     time.updateTime();
@@ -687,6 +777,7 @@ $("document").ready(function() {
     settings.dropupListener();
     search.setupSearch();
     initalFadeIn();
+    weather.getWeatherData();
 });
 
 function initalFadeIn() {
