@@ -694,6 +694,9 @@ settings = {
 weather = {
     toggle_fahrenheit: false,
     getWeatherData() {
+        if ( !(localStorage.getItem( "weather" ) === undefined )) {
+            this.writeWeather( localStorage.getItem( "weather" ), localStorage.getItem( "weatherIcon" ), localStorage.getItem( "weatherLocation" ) );
+        }
         if ( navigator.geolocation ) {
             navigator.geolocation.getCurrentPosition( ( position ) => {
                 const url = `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/fdb696c0c21ab91c3e5ea397229e3e80/${position.coords.latitude},${position.coords.longitude}`;
@@ -709,18 +712,16 @@ weather = {
                         if ( rest.length !== 0 ) { // Only update temperature
                             $( "#right-weather-temperature" ).html( `${temp}` );
                         } else if ( json.currently.icon || ~[ "clear-day", "clear-night", "cloudy", "partly-cloudy-day", "partly-cloudy-night", "rain", "snow", "weather windy" ].indexOf() ) {
-                            draw( temp, json.currently.icon );
+                            setStorage( temp, json.currently.icon, json.timezone );
+                            weather.writeWeather( temp, json.currently.icon, json.timezone );
                         } else {
-                            draw( temp, "cloudy" );
+                            setStorage( temp, "cloudy", json.timezone );
+                            weather.writeWeather( temp, "cloudy", json.timezone );
                         }
-                        function draw( temp, icon ) {
-                            $( "#right-weather" ).html( `
-                                <div id="weather-wrapper">
-                                    <p id="right-weather-temperature">${temp}</p>
-                                    <img id="right-weather-icon" src="img/weather/weather ${icon}.png">
-                                </div>
-                                <p id="right-weather-location">${json.timezone}</p>`
-                            );
+                        function setStorage( weather, icon, location ) {
+                            localStorage.setItem( "weather", weather );
+                            localStorage.setItem( "weatherIcon", icon );
+                            localStorage.setItem( "weatherLocation", location );
                         }
                     }
 
@@ -732,6 +733,15 @@ weather = {
             } );
         }
     },
+    writeWeather( weather, icon, location ) {
+        $( "#right-weather" ).html( `
+            <div id="weather-wrapper">
+                <p id="right-weather-temperature">${weather}</p>
+                <img id="right-weather-icon" src="img/weather/weather ${icon}.png">
+            </div>
+            <p id="right-weather-location">${location}</p>`
+        );
+    }
 };
 
 $( "document" ).ready( () => {
