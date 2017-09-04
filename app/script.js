@@ -597,7 +597,7 @@ settings = {
                         } );
                     } else {
                         $( "#left-settings-dropup" ).removeClass( "unhideSettingsDropup" );
-                        $( "#left-settings-dropup" ).css( "hideSettingsDropup" );
+                        $( "#left-settings-dropup" ).addClass( "hideSettingsDropup" );
                         $( "#left-settings-arrow" ).css( "display", "none" );
                         $( "#main-settings-view" ).html( "" );
                         settings.dropupActive = false;

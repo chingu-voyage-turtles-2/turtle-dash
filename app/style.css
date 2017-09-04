@@ -114,6 +114,21 @@ input[type=text]:focus:not([readonly])+label {
     margin: 0 3px 0 10px;
     display: inline;
 }
+.unhideSettingsDropup {
+    display: block;
+    height: 250px;
+    width: 300px;
+    background-color: rgba(0, 0, 0, 0.88);
+    border-radius: 2px;
+    margin: 0 10px 0 0;
+    z-index: 1;
+    overflow: hidden;
+    transition: height 0.25s linear;
+}
+.hideSettingsDropup {
+    display: none;
+    height: 0 !important;
+}
 #left-settings-info {
     transition: all 2s ease;
     margin-top: 10px;
@@ -432,15 +447,6 @@ input.settings-toggle-round:checked + label:after {
 .hideTodoDropup {
     display: none;
     height: 0 !important;
-}
-.unhideSettingsDropup {
-    display: block;
-    height: 250px;
-    width: 300px;
-    background-color: rgba(0, 0, 0, 0.88);
-    border-radius: 2px;
-    margin: 0 10px 0 0;
-    z-index: 1;
 }
 #right-todo-arrow {
     margin: 0 25px 3px 0;
