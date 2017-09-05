@@ -257,7 +257,7 @@ input.settings-toggle-round:checked + label:after {
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
     background: rgba(0, 0, 0, 0.88);
-    opacity: 0.4;
+    opacity: 0.6;
     cursor: hand;
 }
 #left-settings-tabs-toogle {
@@ -338,6 +338,7 @@ input.settings-toggle-round:checked + label:after {
     background: #000;
     color: #fff;
     border: 2px solid #fff;
+    border-radius: 3px;
 }
 .settings-refresh-wrapper {
     width: inherit;

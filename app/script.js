@@ -264,7 +264,7 @@ quote = {
     getQuote() {
         ( function requestQuote() {
             $.getJSON( this.url, ( json ) => {
-                if ( json.quoteText > 140 ) { // Limiting the length of the quote
+                if ( json.quoteText > 120 ) { // Limiting the length of the quote
                     quote.getQuote();
                 } else {
                     localStorage.setItem( "quote", json.quoteText );
@@ -522,7 +522,7 @@ todo = {
     setupTodoStorage() {
         chrome.storage.local.get( "todos", ( items ) => {
             if ( items.todos === undefined ) {
-                 chrome.storage.local.set( { todos: [], checked: [] } );
+                chrome.storage.local.set( { todos: [], checked: [] } );
             }
         } );
     },
@@ -564,6 +564,7 @@ settings = {
                 function triggerDropup() {
                     if ( !settings.dropupActive ) {
                         chrome.storage.local.get( ( storage ) => {
+                            setTabOpacities( "toogle" );
                             settings.drawFeatures( storage );
                         } );
                     } else {
@@ -610,8 +611,8 @@ settings = {
                     case("refresh"):
                         others.push("creators", "toogle");
                 }
-                $( `#left-settings-tabs-${others[0]}` ).css( "opacity", "0.4" );
-                $( `#left-settings-tabs-${others[1]}` ).css( "opacity", "0.4" );
+                $( `#left-settings-tabs-${others[0]}` ).css( "opacity", "0.6" );
+                $( `#left-settings-tabs-${others[1]}` ).css( "opacity", "0.6" );
             }
         } );
     },
@@ -679,7 +680,7 @@ settings = {
     },
     drawRefresh() {
         const content = [ 
-            [ "Refresh background image", "Refresh", "pic" ],
+            [ "Refresh background image", "Refresh", "img" ],
             [ "Refresh quote", "Refresh", "quote" ], 
             [ "Reset todos", "Reset", "todo" ],
         ]
@@ -697,6 +698,27 @@ settings = {
             `
             );
         }
+        document.getElementById( "settings-refresh-button-img" ).addEventListener( "click", () => {
+            backgroundImage.getImage();
+        });
+        document.getElementById( "settings-refresh-button-quote" ).addEventListener( "click", () => {
+            quote.getQuote();
+        });
+        document.getElementById( "settings-refresh-button-todo" ).addEventListener( "click", () => {
+            chrome.storage.local.get( ( storage ) => {
+                chrome.storage.local.set( { todos: [], checked: [] } );
+                if ( todo.dropupActive ) {
+                    todo.drawDropup( storage );
+                }
+            } );
+            if ( todo.dropupActive ) {
+                setTimeout( () => { // Instant call won't update the screen if todo active
+                    chrome.storage.local.get( ( storage ) => {
+                        todo.drawDropup( storage );
+                    });
+                }, 1000);
+            }
+        });
     },
     setImageLocationHover() {
         $( "#left-settings-info" ).hover(
