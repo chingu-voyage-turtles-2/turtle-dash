@@ -557,7 +557,7 @@ settings = {
                 chrome.storage.local.set( {
                     settings       : [ "Display Search", "Display Weather", "Display Focus", "Display Quote", "Display Todo List" ],
                     parts          : [ "mid-search", "right-weather", "mid-main-focus", "mid-quote", "right-todo" ],
-                    settingsChecked: [ "checked", "checked", "checked", "checked", "checked", "checked", ],
+                    settingsChecked: [ "checked", "checked", "checked", "checked", "checked", "checked" ],
                 } );
             }
             document.getElementById( "left-settings-icon" ).addEventListener( "click",
@@ -571,11 +571,11 @@ settings = {
                         $( "#left-settings-dropup" ).removeClass( "unhideSettingsDropup" );
                         $( "#left-settings-dropup" ).css( "hideSettingsDropup" );
                         $( "#left-settings-arrow" ).css( "display", "none" );
-                        $( `#left-settings-tabs`).css( "display", "none" );
+                        $( `#left-settings-tabs` ).css( "display", "none" );
                         $( "#main-settings-view" ).html( "" );
                         settings.dropupActive = false;
                     }
-                } 
+                }
             );
             document.getElementById( "left-settings-tabs-toogle" ).addEventListener( "click",
                 function triggerDropup() {
@@ -591,7 +591,7 @@ settings = {
                     $( "#main-settings-view" ).html( "" );
                     setTabOpacities( "creators" );
                     settings.drawCreators();
-                } 
+                }
             );
             document.getElementById( "left-settings-tabs-refresh" ).addEventListener( "click",
                 function triggerDropup() {
@@ -603,13 +603,15 @@ settings = {
             function setTabOpacities( tab ) {
                 const others = [];
                 $( `#left-settings-tabs-${tab}` ).css( "opacity", "1" );
-                switch(tab) {
-                    case("toogle"):
-                        others.push("creators", "refresh");
-                    case("creators"):
-                        others.push("toogle", "refresh");
-                    case("refresh"):
-                        others.push("creators", "toogle");
+                switch ( tab ) {
+                    case "toogle" :
+                        others.push( "creators", "refresh" );
+                        break;
+                    case "creators" :
+                        others.push( "toogle", "refresh" );
+                        break;
+                    case "refresh" :
+                        others.push( "creators", "toogle" );
                 }
                 $( `#left-settings-tabs-${others[0]}` ).css( "opacity", "0.6" );
                 $( `#left-settings-tabs-${others[1]}` ).css( "opacity", "0.6" );
@@ -622,7 +624,7 @@ settings = {
         $( "#main-settings-view" ).html( `
             <p id="setting-header">
                 Toggle Features
-            </p>` 
+            </p>`
         );
         for ( const i in setttings ) {
             $( "#main-settings-view" ).append( `
@@ -634,7 +636,7 @@ settings = {
                         <input id="settings-toggle-${i}" class="settings-toggle settings-toggle-round" type="checkbox" ${storage.settingsChecked[i]}>
                         <label for="settings-toggle-${i}"></label>
                     </div>
-                </div>` 
+                </div>`
             );
             ( function addToggleboxListener( i ) {
                 $( `#settings-toggle-${i}[type=checkbox]` ).on( "click", () => {
@@ -658,19 +660,19 @@ settings = {
         $( `#${dropupId}` ).removeClass( "hideSettingsDropup" );
         $( `#${dropupId}` ).addClass( "unhideSettingsDropup" );
         $( "#left-settings-arrow" ).css( "display", "block" );
-        $( `#left-settings-tabs`).css( "display", "block" );
+        $( `#left-settings-tabs` ).css( "display", "block" );
         settings.dropupActive = true;
     },
     drawCreators() {
         const names = [ "Dahra", "Dansteve", "Jneidel <span>(Project Manager)</span>", "Timh1203" ],
-            githubs = [ "https://github.com/DaraAsaolu" , "https://github.com/Dansteve", "https://github.com/jneidel", "https://github.com/timh1203" ];
-        $( "#main-settings-view" ).html(`
+            githubs = [ "https://github.com/DaraAsaolu", "https://github.com/Dansteve", "https://github.com/jneidel", "https://github.com/timh1203" ];
+        $( "#main-settings-view" ).html( `
             <div id="left-settings-creators">
                 <p id="settings-creators-header">Brought to you by</p>
             </div>`
         );
         for ( const i in names ) {
-            $( "#left-settings-creators" ).append(`
+            $( "#left-settings-creators" ).append( `
                 <div class="settings-creators-pair">
                     <a href="${githubs[i]}" target="_blank"><img class="settings-creators-github" src="img/settings/github.png"></a>
                     <span class="settings-creators-names">@${names[i]}</span>
@@ -679,17 +681,17 @@ settings = {
         }
     },
     drawRefresh() {
-        const content = [ 
+        const content = [
             [ "Refresh background image", "Refresh", "img" ],
-            [ "Refresh quote", "Refresh", "quote" ], 
+            [ "Refresh quote", "Refresh", "quote" ],
             [ "Reset todos", "Reset", "todo" ],
-        ]
-        $( "#main-settings-view" ).html(`
+        ];
+        $( "#main-settings-view" ).html( `
             <div id="left-settings-refresh">
                 <p id="settings-refresh-header">Refresh</p>`
         );
         for ( const i of content ) {
-            $( "#left-settings-refresh" ).append(`
+            $( "#left-settings-refresh" ).append( `
                 <div class="settings-refresh-wrapper">
                     <span class="settings-refresh-text">
                         ${i[0]}</span>
@@ -700,10 +702,10 @@ settings = {
         }
         document.getElementById( "settings-refresh-button-img" ).addEventListener( "click", () => {
             backgroundImage.getImage();
-        });
+        } );
         document.getElementById( "settings-refresh-button-quote" ).addEventListener( "click", () => {
             quote.getQuote();
-        });
+        } );
         document.getElementById( "settings-refresh-button-todo" ).addEventListener( "click", () => {
             chrome.storage.local.get( ( storage ) => {
                 chrome.storage.local.set( { todos: [], checked: [] } );
@@ -715,10 +717,10 @@ settings = {
                 setTimeout( () => { // Instant call won't update the screen if todo active
                     chrome.storage.local.get( ( storage ) => {
                         todo.drawDropup( storage );
-                    });
-                }, 1000);
+                    } );
+                }, 1000 );
             }
-        });
+        } );
     },
     setImageLocationHover() {
         $( "#left-settings-info" ).hover(
@@ -764,7 +766,7 @@ settings = {
 weather = {
     toggle_fahrenheit: false,
     getWeatherData() {
-        if ( !(localStorage.getItem( "weather" ) === undefined )) {
+        if ( !( localStorage.getItem( "weather" ) === undefined ) ) {
             this.writeWeather( localStorage.getItem( "weather" ), localStorage.getItem( "weatherIcon" ), localStorage.getItem( "weatherLocation" ) );
         }
         if ( navigator.geolocation ) {
@@ -811,7 +813,7 @@ weather = {
             </div>
             <p id="right-weather-location">${location}</p>`
         );
-    }
+    },
 };
 
 $( "document" ).ready( () => {
