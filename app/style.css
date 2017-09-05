@@ -277,12 +277,8 @@ input.settings-toggle-round:checked + label:after {
     left: 126px;
 }
 #left-settings-creators {
-    /* height: 200px;
-    width: 300px; */
     display: flex;
     flex-direction: column;
-    align-items: space-between;
-    justify-content: space-between;
     padding: 10px;
 }
 .settings-creators-names {
@@ -296,9 +292,14 @@ input.settings-toggle-round:checked + label:after {
     width: 24px;
     cursor: hand;
     border-radius: 50%;
+    border: 2px solid #fff;
+    filter: invert(100%);
 }
 .settings-creators-github:hover {
-    background: rgba(140, 225, 150, 0.8);
+    filter: invert(0%);
+    border: 2px solid #fff;
+    background: #fff;
+    color: #000;
 }
 #settings-creators-header {
     text-align: center;
@@ -309,6 +310,41 @@ input.settings-toggle-round:checked + label:after {
     display: flex;
     align-items: center;
     padding: 10px;
+}
+#left-settings-refresh {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+#settings-refresh-header {
+    text-align: center;
+    font-size: 19px;
+    margin: 9px 0 5px 0;
+}
+.settings-refresh-text {
+    font-size: 17px;
+    padding: 10px 0;
+}
+.settings-refresh-button {
+    background: #fff;
+    color: #000;
+    text-shadow: none;
+    padding: 3px;
+    border-radius: 3px;
+    border: 2px solid #000;
+    cursor: hand;
+}
+.settings-refresh-button:hover {
+    background: #000;
+    color: #fff;
+    border: 2px solid #fff;
+}
+.settings-refresh-wrapper {
+    width: inherit;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 10px;
 }
 
 

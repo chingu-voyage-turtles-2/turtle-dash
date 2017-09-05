@@ -596,7 +596,7 @@ settings = {
                 function triggerDropup() {
                     $( "#main-settings-view" ).html( "" );
                     setTabOpacities( "refresh" );
-                
+                    settings.drawRefresh();
                     }
             );
             function setTabOpacities( tab ) {
@@ -665,7 +665,7 @@ settings = {
             githubs = [ "https://github.com/DaraAsaolu" , "https://github.com/Dansteve", "https://github.com/jneidel", "https://github.com/timh1203" ];
         $( "#main-settings-view" ).html(`
             <div id="left-settings-creators">
-                <p id="settings-creators-header">Brought to you by:</p>
+                <p id="settings-creators-header">Brought to you by</p>
             </div>`
         );
         for ( const i in names ) {
@@ -674,6 +674,27 @@ settings = {
                     <a href="${githubs[i]}" target="_blank"><img class="settings-creators-github" src="img/settings/github.png"></a>
                     <span class="settings-creators-names">@${names[i]}</span>
                 </div>`
+            );
+        }
+    },
+    drawRefresh() {
+        const content = [ 
+            [ "Refresh background image", "Refresh", "pic" ],
+            [ "Refresh quote", "Refresh", "quote" ], 
+            [ "Reset todos", "Reset", "todo" ],
+        ]
+        $( "#main-settings-view" ).html(`
+            <div id="left-settings-refresh">
+                <p id="settings-refresh-header">Refresh</p>`
+        );
+        for ( const i of content ) {
+            $( "#left-settings-refresh" ).append(`
+                <div class="settings-refresh-wrapper">
+                    <span class="settings-refresh-text">
+                        ${i[0]}</span>
+                    <span id="settings-refresh-button-${i[2]}" class="settings-refresh-button">${i[1]}</span>
+                </div>
+            `
             );
         }
     },
