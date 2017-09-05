@@ -584,29 +584,67 @@ settings = {
             }
             if ( !storage.settings ) {
                 chrome.storage.local.set( {
-                    settings       : [ "Display Search", "Display Weather", "Display Time", "Display Todo List" ],
-                    parts          : [ "mid-search", "right-weather", "mid-main-time", "right-todo" ],
-                    settingsChecked: [ "checked", "checked", "checked", "checked", "checked", ],
+                    settings       : [ "Display Search", "Display Weather", "Display Focus", "Display Quote", "Display Todo List" ],
+                    parts          : [ "mid-search", "right-weather", "mid-main-focus", "mid-quote", "right-todo" ],
+                    settingsChecked: [ "checked", "checked", "checked", "checked", "checked", "checked", ],
                 } );
             }
             document.getElementById( "left-settings-icon" ).addEventListener( "click",
                 function triggerDropup() {
                     if ( !settings.dropupActive ) {
                         chrome.storage.local.get( ( storage ) => {
-                            settings.drawDropup( storage );
+                            settings.drawFeatures( storage );
                         } );
                     } else {
                         $( "#left-settings-dropup" ).removeClass( "unhideSettingsDropup" );
                         $( "#left-settings-dropup" ).css( "hideSettingsDropup" );
                         $( "#left-settings-arrow" ).css( "display", "none" );
+                        $( `#left-settings-tabs`).css( "display", "none" );
                         $( "#main-settings-view" ).html( "" );
                         settings.dropupActive = false;
                     }
                 } 
             );
+            document.getElementById( "left-settings-tabs-toogle" ).addEventListener( "click",
+                function triggerDropup() {
+                    $( "#main-settings-view" ).html( "" );
+                    setTabOpacities( "toogle" );
+                    chrome.storage.local.get( ( storage ) => {
+                        settings.drawFeatures( storage );
+                    } );
+                }
+            );
+            document.getElementById( "left-settings-tabs-creators" ).addEventListener( "click",
+                function triggerDropup() {
+                    $( "#main-settings-view" ).html( "" );
+                    setTabOpacities( "creators" );
+                    
+                } 
+            );
+            document.getElementById( "left-settings-tabs-refresh" ).addEventListener( "click",
+                function triggerDropup() {
+                    $( "#main-settings-view" ).html( "" );
+                    setTabOpacities( "refresh" );
+                
+                    }
+            );
+            function setTabOpacities( tab ) {
+                const others = [];
+                $( `#left-settings-tabs-${tab}` ).css( "opacity", "1" );
+                switch(tab) {
+                    case("toogle"):
+                        others.push("creators", "refresh");
+                    case("creators"):
+                        others.push("toogle", "refresh");
+                    case("refresh"):
+                        others.push("creators", "toogle");
+                }
+                $( `#left-settings-tabs-${others[0]}` ).css( "opacity", "0.4" );
+                $( `#left-settings-tabs-${others[1]}` ).css( "opacity", "0.4" );
+            }
         } );
     },
-    drawDropup( storage ) {
+    drawFeatures( storage ) {
         const dropupId = "left-settings-dropup",
             setttings = storage.settings;
         $( "#main-settings-view" ).html( `
@@ -632,13 +670,13 @@ settings = {
                         chrome.storage.local.get( ( storage ) => {
                             storage.settingsChecked[i] = false;
                             chrome.storage.local.set( storage );
-                            settings.drawDropup( storage );
+                            settings.drawFeatures( storage );
                         } );
                     } else {
                         chrome.storage.local.get( ( storage ) => {
                             storage.settingsChecked[i] = "checked";
                             chrome.storage.local.set( storage );
-                            settings.drawDropup( storage );
+                            settings.drawFeatures( storage );
                         } );
                     }
                     $( `#${storage.parts[i]}` ).toggleClass( "hideView" );
@@ -648,6 +686,7 @@ settings = {
         $( `#${dropupId}` ).removeClass( "hideSettingsDropup" );
         $( `#${dropupId}` ).addClass( "unhideSettingsDropup" );
         $( "#left-settings-arrow" ).css( "display", "block" );
+        $( `#left-settings-tabs`).css( "display", "block" );
         settings.dropupActive = true;
     },
     setImageLocationHover() {
