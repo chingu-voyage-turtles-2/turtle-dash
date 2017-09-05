@@ -618,7 +618,7 @@ settings = {
                 function triggerDropup() {
                     $( "#main-settings-view" ).html( "" );
                     setTabOpacities( "creators" );
-                    
+                    settings.drawCreators();
                 } 
             );
             document.getElementById( "left-settings-tabs-refresh" ).addEventListener( "click",
@@ -688,6 +688,23 @@ settings = {
         $( "#left-settings-arrow" ).css( "display", "block" );
         $( `#left-settings-tabs`).css( "display", "block" );
         settings.dropupActive = true;
+    },
+    drawCreators() {
+        const names = [ "Dahra", "Dansteve", "Jneidel <span>(Project Manager)</span>", "Timh1203" ],
+            githubs = [ "https://github.com/DaraAsaolu" , "https://github.com/Dansteve", "https://github.com/jneidel", "https://github.com/timh1203" ];
+        $( "#main-settings-view" ).html(`
+            <div id="left-settings-creators">
+                <p id="settings-creators-header">Brought to you by:</p>
+            </div>`
+        );
+        for ( const i in names ) {
+            $( "#left-settings-creators" ).append(`
+                <div class="settings-creators-pair">
+                    <a href="${githubs[i]}" target="_blank"><img class="settings-creators-github" src="img/settings/github.png"></a>
+                    <span class="settings-creators-names">@${names[i]}</span>
+                </div>`
+            );
+        }
     },
     setImageLocationHover() {
         $( "#left-settings-info" ).hover(
