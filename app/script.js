@@ -292,35 +292,6 @@ focus = {
     task: localStorage.getItem( "mid-main-focus" ),
     drawFocus() {
         let focusChecked;
-        const placeholders = {
-            placeholdersArray: [],
-            phrases          : {
-                variation1: {
-                    phrase: "fixing bugs",
-                    chance: 1,
-                },
-                variation2: {
-                    phrase: "programming",
-                    chance: 3,
-                },
-                variation3: {
-                    phrase: "contribute to open source",
-                    chance: 1,
-                },
-                variation4: {
-                    phrase: "reviewing code",
-                    chance: 2,
-                },
-                variation5: {
-                    phrase: "pairprogramming",
-                    chance: 1,
-                },
-                variation6: {
-                    phrase: "brainstorming",
-                    chance: 2,
-                },
-            },
-        };
         if ( localStorage.getItem( "focusChecked" ) === "true" ) {
             focusChecked = true;
         } else {
@@ -332,7 +303,7 @@ focus = {
                 <form id="mid-main-focus-form">
                     <label>What is your main focus today?</label>
                 <input type="text" name="focus" id="mid-main-focus-value" 
-                    placeholder="Eg: ${returnRandomPhrase( placeholders.phrases, placeholders.placeholdersArray )}">
+                    placeholder="Type focus here">
                 </form>` );
             } else if ( focusChecked ) {
                     drawHtml( `<s>${focus.task}</s>`, "plus" );
