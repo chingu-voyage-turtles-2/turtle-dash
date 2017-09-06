@@ -411,6 +411,47 @@ input.settings-toggle-round:checked + label:after {
 
 /* Right */
 
+/* Weather */
+#right-weather{
+    margin: 10px 18px 0 0;
+    align-self: flex-end;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+    font-family: 'Raleway', sans-serif;
+    transition: all 0.2s ease;  
+}
+#right-weather:hover {
+    transform: scale(1.05);
+    text-shadow: 1px 1px 1px black;       
+}
+#right-weather-temperature {
+    font-size: 32px;
+    padding: 9px 10px 0 0;
+}
+#right-weather-icon {
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    align-self: center;
+}
+#right-weather-location {
+    margin-top: 0px;
+    font-size: 15px;
+}
+#weather-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: flex-end;
+    margin: -28px 0;
+}
+
 /* Todo */
 #right-todo {
     height: 40vh;
@@ -513,40 +554,4 @@ input.settings-toggle-round:checked + label:after {
     text-align: center;
     padding-top: 15px;
     font-size: 16px;
-}
-
-/* Weather */
-
-#right-weather{
-    margin: 10px 18px 0 0;
-    align-self: flex-end;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-end;
-}
-#right-weather-temperature {
-    font-size: 32px;
-    padding: 9px 10px 0 0;
-}
-#right-weather-icon {
-    width: 40px;
-    height: 40px;
-    display: inline-block;
-    align-self: center;
-}
-#right-weather-location {
-    margin-top: 0px;
-    font-size: 15px;
-}
-#weather-wrapper {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
-    justify-content: flex-end;
-    margin: -28px 0;
 }
