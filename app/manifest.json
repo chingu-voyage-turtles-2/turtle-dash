@@ -8,7 +8,10 @@
 		"16": "img/logo/logo 16.png",
 		"24": "img/logo/logo 24.png",
 		"36": "img/logo/logo 36.png",
-		"48": "img/logo/logo 48.png"
+		"48": "img/logo/logo 48.png",
+		"64": "img/logo/logo 64.png",
+		"128": "img/logo/logo 128.png",
+		"256": "img/logo/logo 256.png"
 	},
 
   	"browser_action": {
@@ -16,7 +19,10 @@
 			"16": "img/logo/logo 16.png",
 			"24": "img/logo/logo 24.png",
 			"36": "img/logo/logo 36.png",
-			"48": "img/logo/logo 48.png"
+			"48": "img/logo/logo 48.png",
+			"64": "img/logo/logo 64.png",
+			"128": "img/logo/logo 128.png",
+			"256": "img/logo/logo 256.png"
 		}
 	  },
 	"permissions": [
