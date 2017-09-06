@@ -1,8 +1,9 @@
 <html>
 <head>
-    <title></title>
+    <title>Turtle Dash</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="external/jquery-3.2.1.js"></script>
+    <script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
     <script src="helpers.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Lato|Raleway" rel="stylesheet">
 </head>
@@ -18,7 +19,7 @@
             <div id="left-settings" class="outlined">
                 <div id="left-main-settings">
                     <div id="left-settings-dropup" class="hideSettingsDropup">
-                        <div id='main-settings-view'></div>
+                        <div id="main-settings-view"></div>
                     </div>
                     <img id="left-settings-arrow" src="img/arrow.png"/>
                 </div>
@@ -29,7 +30,11 @@
                         <span id="left-settings-owner"></span>
                     </div>
                 </div>
-               
+                <div id="left-settings-tabs">
+                    <img id="left-settings-tabs-toogle" class="tabs" src="img/settings/toogle.png"/>
+                    <img id="left-settings-tabs-refresh" class="tabs" src="img/settings/refresh.png"/>
+                    <img id="left-settings-tabs-creators" class="tabs" src="img/settings/creators.png"/>
+                </div>
             </div>
         </div>
 
@@ -47,17 +52,11 @@
                     <span id="mid-main-time-twelvehours" class="mid-main-time-twelvehours"></span>
                 </div>
 
-                <div id="mid-main-username">
+                <div id="mid-main-username"></div>
 
-                </div>
+                <div id="mid-main-greeting"></div>
 
-                <div id="mid-main-greeting">
-
-                </div>
-
-                <div id="mid-main-focus">
-
-                </div>
+                <div id="mid-main-focus"></div>
             </div>
 
             <div id="mid-quote" class="outlined">
@@ -67,9 +66,7 @@
 
         <div id="right">
 
-            <div id="right-weather">
-
-            </div>
+            <div id="right-weather"></div>
 
             <div id="right-todo">
                 <img id="right-todo-icon" src="img/todo.png" class="icons"/>
