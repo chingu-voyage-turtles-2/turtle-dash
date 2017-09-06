@@ -1,25 +1,39 @@
 <html>
 <head>
-    <title></title>
+    <title>Turtle Dash</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="external/jquery-3.2.1.js"></script>
+    <script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
     <script src="helpers.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato|Raleway" rel="stylesheet">
 </head>
 <body>
     <div id="container" class="outlined">
         <div id="left">
             <div id="left-logo">
                 <a href="https://github.com/chingu-voyage-turtles-2" target="_blank">
-                    <img id="left-logo-spin" src="img/turtle spin.svg"/>
+                    <img id="left-logo-spin" src="img/logo/turtle spin.svg" class="icons"/>
                 </a>
             </div>
 
             <div id="left-settings" class="outlined">
-                <img id="left-settings-icon" src="img/settings.png" class="icons">
-                <div id="left-settings-info">
-                    <span id="left-settings-location"></span>
-                    <span id="left-settings-owner"></span>
+                <div id="left-main-settings">
+                    <div id="left-settings-dropup" class="hideSettingsDropup">
+                        <div id="main-settings-view"></div>
+                    </div>
+                    <img id="left-settings-arrow" src="img/arrow.png"/>
+                </div>
+                <div id="left-setttings-wrapper">
+                    <img id="left-settings-icon" src="img/settings.png" class="icons"/>
+                    <div id="left-settings-info">
+                        <span id="left-settings-location"></span>
+                        <span id="left-settings-owner"></span>
+                    </div>
+                </div>
+                <div id="left-settings-tabs">
+                    <img id="left-settings-tabs-toogle" class="tabs" src="img/settings/toogle.png"/>
+                    <img id="left-settings-tabs-refresh" class="tabs" src="img/settings/refresh.png"/>
+                    <img id="left-settings-tabs-creators" class="tabs" src="img/settings/creators.png"/>
                 </div>
             </div>
         </div>
@@ -27,7 +41,7 @@
         <div id="mid">
             <div id="mid-search">
                 <img id="mid-search-icon" src="img/search.png" class="icons"/>
-                <input type="text" id="mid-search-box" placeholder="Search Google..."></input>
+                <input type="text" id="mid-search-box" placeholder="Search Google...">
             </div>
 
             <div id="mid-main">
@@ -38,17 +52,11 @@
                     <span id="mid-main-time-twelvehours" class="mid-main-time-twelvehours"></span>
                 </div>
 
-                <div id="mid-main-username">
-                        
-                </div>
+                <div id="mid-main-username"></div>
 
-                <div id="mid-main-greeting">
-                        
-                </div>
+                <div id="mid-main-greeting"></div>
 
-                <div id="mid-main-focus">
-                        
-                </div>
+                <div id="mid-main-focus"></div>
             </div>
 
             <div id="mid-quote" class="outlined">
@@ -57,9 +65,8 @@
         </div>
 
         <div id="right">
-            <div id="right-weather">
-            
-            </div>
+
+            <div id="right-weather"></div>
 
             <div id="right-todo">
                 <img id="right-todo-icon" src="img/todo.png" class="icons"/>

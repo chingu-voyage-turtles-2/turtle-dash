@@ -1,3 +1,3 @@
-# urban-turtle
+# Turtle Dash
 
-<a href="https://chingu-voyage-turtles-2.github.io/urban-turtle/app/index.html">View here</a>
+You can [download the app in the Chrome Web Store](https://chrome.google.com/webstore/detail/turtle-dash/odijnkiclhddnfdgnbjghchkhagnooek).
