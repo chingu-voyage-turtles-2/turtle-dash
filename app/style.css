@@ -274,7 +274,7 @@ input.settings-toggle-round:checked + label:after {
     background: rgba(0, 0, 0, 0.88);
     opacity: 0.6;
     cursor: hand;
-    bottom: 323px;
+    bottom: 325px;
 }
 #left-settings-tabs-toogle {
     height: 20px;
@@ -322,7 +322,7 @@ input.settings-toggle-round:checked + label:after {
 .settings-creators-pair {
     display: flex;
     align-items: center;
-    padding: 5px;
+    padding: 10px 5px;
 }
 #left-settings-refresh {
     display: flex;

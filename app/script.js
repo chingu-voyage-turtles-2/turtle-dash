@@ -256,7 +256,7 @@ quote = {
         }
         function drawQuote( quote, author ) {
             $( "#mid-quote-draw" ).html( `
-                <p id="mid-quote-draw-quote">" ${quote} "</p>
+                <p id="mid-quote-draw-quote">&#8220;${quote}&#8221;</p>
                 <span id="mid-quote-draw-author">- ${author}</span>` );
             $( "#mid-quote-draw" ).css( "bottom", "20px" );
         }
