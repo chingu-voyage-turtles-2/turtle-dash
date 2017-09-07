@@ -223,6 +223,19 @@ backgroundImage = {
             localStorage.setItem( "imageUrl", json.urls.full );
             localStorage.setItem( "imageUser", json.user.name );
             backgroundImage.setImage( json );
+        } ).always( ( error, status ) => {
+            if ( status != "success" ) {
+                switch ( error.status ) {
+                    case 403 :
+                        alert( "You have exceded the limit for loading new background pictures." );
+                        break;
+                    case 500 :
+                        alert( "The picture server is momentraily not available, please retry refreshing the background image later." );
+                        break;
+                    default:
+                        backgroundImage.getImage();
+                }
+            }
         } );
     },
     setupImage() {
@@ -766,7 +779,7 @@ settings = {
 weather = {
     toggle_fahrenheit: false,
     getWeatherData() {
-        if ( !( localStorage.getItem( "weather" ) === undefined ) ) {
+        if ( !( localStorage.getItem( "weather" ) === null ) ) {
             this.writeWeather( localStorage.getItem( "weather" ), localStorage.getItem( "weatherIcon" ), localStorage.getItem( "weatherLocation" ) );
         }
         if ( navigator.geolocation ) {
