@@ -116,7 +116,7 @@ input[type=text]:focus:not([readonly])+label {
 }
 .unhideSettingsDropup {
     display: block;
-    height: 250px;
+    height: 255px;
     width: 300px;
     background-color: rgba(0, 0, 0, 0.88);
     border-radius: 2px;
@@ -274,7 +274,7 @@ input.settings-toggle-round:checked + label:after {
     background: rgba(0, 0, 0, 0.88);
     opacity: 0.6;
     cursor: hand;
-    bottom: 318px;
+    bottom: 323px;
 }
 #left-settings-tabs-toogle {
     height: 20px;
@@ -322,7 +322,7 @@ input.settings-toggle-round:checked + label:after {
 .settings-creators-pair {
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding: 5px;
 }
 #left-settings-refresh {
     display: flex;
@@ -346,6 +346,9 @@ input.settings-toggle-round:checked + label:after {
     border-radius: 3px;
     border: 2px solid #000;
     cursor: hand;
+    width: 60px;
+    text-align: center;
+    height: 20px;
 }
 .settings-refresh-button:hover {
     background: #000;
@@ -424,6 +427,22 @@ input.settings-toggle-round:checked + label:after {
     font-size: 12px;
     height: 18px;
     text-align: left;
+}
+#mid-search-box::-webkit-input-placeholder {
+    color: #fff;
+    opacity: 1;
+}
+#mid-search-box::-moz-placeholder {
+    color: #fff;
+    opacity: 1;
+}
+#mid-search-box:-ms-input-placeholder {
+    color: #fff;
+    opacity: 1;
+}
+#mid-search-box::placeholder {
+    color: #fff;
+    opacity: 1;
 }
 /* Quote */
 #mid-quote {
@@ -520,11 +539,11 @@ input.settings-toggle-round:checked + label:after {
     justify-content: flex-start;
     align-items: flex-end;
     font-family: 'Raleway', sans-serif;
-    transition: all 0.2s ease;  
+    transition: all 0.2s ease;
 }
 #right-weather:hover {
     transform: scale(1.05);
-    text-shadow: 1px 1px 1px black;       
+    text-shadow: 1px 1px 1px black;
 }
 #right-weather-temperature {
     font-size: 32px;
@@ -630,7 +649,7 @@ input.settings-toggle-round:checked + label:after {
 .todo-delete {
     height: 8px;
     width: 8px;
-    margin: 2px 0 1px 5px; 
+    margin: 2px 0 1px 5px;
     cursor: hand;
     opacity: 0;
     transition: opacity 0.2s linear;

@@ -256,7 +256,7 @@ quote = {
         }
         function drawQuote( quote, author ) {
             $( "#mid-quote-draw" ).html( `
-                <p id="mid-quote-draw-quote">${quote}</p>
+                <p id="mid-quote-draw-quote">" ${quote} "</p>
                 <span id="mid-quote-draw-author">- ${author}</span>` );
             $( "#mid-quote-draw" ).css( "bottom", "20px" );
         }
@@ -302,7 +302,7 @@ focus = {
                 $( "#mid-main-focus" ).html( `
                 <form id="mid-main-focus-form">
                     <label>What is your main focus today?</label>
-                <input type="text" name="focus" id="mid-main-focus-value" 
+                <input type="text" name="focus" id="mid-main-focus-value"
                     placeholder="Type focus here">
                 </form>` );
             } else if ( focusChecked ) {
