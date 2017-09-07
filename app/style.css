@@ -109,6 +109,7 @@ input[type=text]:focus:not([readonly])+label {
 }
 #left-setttings-wrapper {
     display: flex;
+    align-items: flex-end;
 }
 #left-settings-icon {
     margin: 0 3px 0 10px;
@@ -163,6 +164,8 @@ input[type=text]:focus:not([readonly])+label {
 #left-main-settings {
     z-index: 1;
     margin-left: 10px;
+    position: absolute;
+    bottom: 60px;
 }
 #main-settings-view {
     display: flex;
