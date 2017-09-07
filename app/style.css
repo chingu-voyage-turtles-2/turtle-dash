@@ -274,21 +274,19 @@ input.settings-toggle-round:checked + label:after {
     background: rgba(0, 0, 0, 0.88);
     opacity: 0.6;
     cursor: hand;
+    bottom: 318px;
 }
 #left-settings-tabs-toogle {
     height: 20px;
     width: 20px;
     padding: 12px 12px 10px 12px;
-    bottom: 320px;
     left: 30px;
     opacity: 1;
 }
 #left-settings-tabs-refresh {
-    bottom: 320px;
     left: 78px;
 }
 #left-settings-tabs-creators {
-    bottom: 320px;
     left: 126px;
 }
 #left-settings-creators {
