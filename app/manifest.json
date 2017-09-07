@@ -2,8 +2,8 @@
 	"manifest_version": 2,
 
   	"name": "Turtle Dash",
-	"description": "Chingu Voyage - Turtles #2's Momentum Dash Clone",
-	"version": "1.2",
+	"description": "Transform your empty chrome tabs into a gorgeous, productivity powerhouse.",
+	"version": "1.21",
 	"icons": {
 		"16": "img/logo/logo 16.png",
 		"24": "img/logo/logo 24.png",
