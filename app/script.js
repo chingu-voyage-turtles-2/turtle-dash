@@ -680,8 +680,8 @@ settings = {
         const names = [ "Dahra", "Dansteve", "Jneidel <span>(Project Manager)</span>", "Timh1203" ],
             githubs = [ "https://github.com/DaraAsaolu", "https://github.com/Dansteve", "https://github.com/jneidel", "https://github.com/timh1203" ];
         $( "#main-settings-view" ).html( `
-            <div id="left-settings-creators">
-                <p id="settings-creators-header">Brought to you by</p>
+            <div id="left-settings-creators" class="left-settings-tab-divs">
+                <p class="settings-tabs-header">Brought to you by</p>
             </div>`
         );
         for ( const i in names ) {
@@ -692,6 +692,14 @@ settings = {
                 </div>`
             );
         }
+        $( "#left-settings-creators" ).append( `
+            <div id="settings-attributions">
+                <p>Icons by <a href="https://www.flaticon.com/">Flaticon</a>. 
+                    Weather by <a href="https://darksky.net/">Darksky</a>. 
+                    Quotes by <a href="http://forismatic.com/en/">Forismatic</a>. 
+                    Background Images by <a href="https://unsplash.com/">Unsplash</a>.</p>
+            </div>`
+        );
     },
     drawRefresh() {
         const content = [
@@ -700,8 +708,9 @@ settings = {
             [ "Reset todos", "Reset", "todo" ],
         ];
         $( "#main-settings-view" ).html( `
-            <div id="left-settings-refresh">
-                <p id="settings-refresh-header">Refresh</p>`
+            <div id="left-settings-refresh" class="left-settings-tab-divs">
+                <p class="settings-tabs-header">Refresh</p>
+            </div>`
         );
         for ( const i of content ) {
             $( "#left-settings-refresh" ).append( `
