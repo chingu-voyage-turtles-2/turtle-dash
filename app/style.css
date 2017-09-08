@@ -44,7 +44,7 @@ body {
 
 /* Global */
 .outlined {
-    text-shadow: 0px 0px 3px black;
+    text-shadow: 0 0 3px #000;
 }
 .icons {
     height: 32px;
@@ -65,16 +65,15 @@ input[type=text] {
     outline: none;
     height: 2.1rem;
     width: 100%;
-    font-family: "Lato";
     color: #fff;
     text-align: center;
     text-shadow: 0px 0px 3px black;
     font-size: 2rem;
     box-shadow: none;
-    -webkit-box-sizing: content-box;
-    -moz-box-sizing: content-box;
-    box-sizing: content-box;
     transition: all .3s;
+    -webkit-box-sizing: content-box;
+       -moz-box-sizing: content-box;
+            box-sizing: content-box;
 }
 input[type=text]:focus:not([readonly]) {
     border-bottom: 1px solid #fff;
@@ -93,26 +92,26 @@ input[type=text]:focus:not([readonly])+label {
 
 /* Logo */
 #left-logo-spin {
-    margin: 10px 0 0 10px;
     width: 40px;
     height: 40px;
-    padding: 8px 8px 8px 8px;
+    margin: 10px 0 0 10px;
+    padding: 8px;
     cursor: hand;
 }
 
 /* Settings */
 #left-settings {
-    width: 15vw;
     align-self: flex-end;
     display: flex;
     flex-direction: column;
+    width: 15vw;
 }
 #left-setttings-wrapper {
     display: flex;
     align-items: flex-end;
 }
 #left-settings-icon {
-    margin: 0 3px 0 10px;
+    margin: 0 3px -3px 10px;
     display: inline;
 }
 .unhideSettingsDropup {
@@ -121,7 +120,7 @@ input[type=text]:focus:not([readonly])+label {
     width: 300px;
     background-color: rgba(0, 0, 0, 0.88);
     border-radius: 2px;
-    margin: 0 10px 0 0;
+    margin-right: 10px;
     z-index: 1;
     overflow: hidden;
     transition: height 0.25s linear;
@@ -132,7 +131,7 @@ input[type=text]:focus:not([readonly])+label {
 }
 #left-settings-info {
     transition: all 2s ease;
-    margin-top: 10px;
+    margin: 10px 0;
 }
 #left-settings-info:hover {
     transform: translate(0, -0.5em);
@@ -152,6 +151,7 @@ input[type=text]:focus:not([readonly])+label {
     display: block;
     animation-name: fadeIn;
     animation-duration: 3s;
+    margin-bottom: -13px;
 }
 #left-settings-owner {
     display: none;
@@ -203,19 +203,15 @@ input[type=text]:focus:not([readonly])+label {
     cursor: pointer;
     outline: none;
     -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
 }
 input.settings-toggle-round + label {
     padding: 2px;
     width: 40px;
     height: 20px;
-    background-color: #dddddd;
-    -webkit-border-radius: 60px;
-    -moz-border-radius: 60px;
-    -ms-border-radius: 60px;
-    -o-border-radius: 60px;
+    background-color: #ddd;
     border-radius: 60px;
 }
 input.settings-toggle-round + label:before, input.settings-toggle-round + label:after {
@@ -229,30 +225,14 @@ input.settings-toggle-round + label:before, input.settings-toggle-round + label:
 input.settings-toggle-round + label:before {
     right: 1px;
     background-color: #f1f1f1;
-    -webkit-border-radius: 60px;
-    -moz-border-radius: 60px;
-    -ms-border-radius: 60px;
-    -o-border-radius: 60px;
     border-radius: 60px;
-    -webkit-transition: background 0.4s;
-    -moz-transition: background 0.4s;
-    -o-transition: background 0.4s;
     transition: background 0.4s;
 }
 input.settings-toggle-round + label:after {
     width: 20px;
     background-color: #fff;
-    -webkit-border-radius: 100%;
-    -moz-border-radius: 100%;
-    -ms-border-radius: 100%;
-    -o-border-radius: 100%;
     border-radius: 100%;
-    -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    -moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    -webkit-transition: margin 0.4s;
-    -moz-transition: margin 0.4s;
-    -o-transition: margin 0.4s;
     transition: margin 0.4s;
 }
 input.settings-toggle-round:checked + label:before {
@@ -268,21 +248,21 @@ input.settings-toggle-round:checked + label:after {
     display: none;
 }
 .tabs {
+    position: absolute;
+    bottom: 325px;
     height: 16px;
     width: 16px;
-    padding: 14px 14px 12px 14px;
-    position: absolute;
+    padding: 14px 0 12px 0;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
     background: rgba(0, 0, 0, 0.88);
     opacity: 0.6;
     cursor: hand;
-    bottom: 325px;
 }
 #left-settings-tabs-toogle {
     height: 20px;
     width: 20px;
-    padding: 12px 12px 10px 12px;
+    padding: 12px 0 10px 0;
     left: 30px;
     opacity: 1;
 }
@@ -292,7 +272,7 @@ input.settings-toggle-round:checked + label:after {
 #left-settings-tabs-creators {
     left: 126px;
 }
-#left-settings-creators {
+.left-settings-tab-divs {
     display: flex;
     flex-direction: column;
     padding: 10px;
@@ -317,7 +297,7 @@ input.settings-toggle-round:checked + label:after {
     background: #fff;
     color: #000;
 }
-#settings-creators-header {
+.settings-tabs-header {
     text-align: center;
     font-size: 19px;
     margin: 9px 0 5px 0;
@@ -325,17 +305,7 @@ input.settings-toggle-round:checked + label:after {
 .settings-creators-pair {
     display: flex;
     align-items: center;
-    padding: 10px 5px;
-}
-#left-settings-refresh {
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-}
-#settings-refresh-header {
-    text-align: center;
-    font-size: 19px;
-    margin: 9px 0 5px 0;
+    padding: 5px;
 }
 .settings-refresh-text {
     font-size: 17px;
@@ -365,6 +335,15 @@ input.settings-toggle-round:checked + label:after {
     align-items: center;
     margin: 0 10px;
 }
+#settings-attributions p {
+    font-size: 12px;
+    padding-left: 8px;
+}
+#settings-attributions a {
+    text-decoration: none;
+    cursor: hand;
+    color: #fff;
+}
 
 
 /* Mid */
@@ -374,9 +353,12 @@ input.settings-toggle-round:checked + label:after {
     display: inline-flex;
     align-items: baseline;
     float: left;
-    user-select: none;
     margin-top: -20vh - 85px;
     margin-bottom: -20vh;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
 }
 #mid-main-time-draw {
     font-size: 18vh;
@@ -384,7 +366,7 @@ input.settings-toggle-round:checked + label:after {
 .mid-main-time-twelvehours {
     font-size: 3vh;
 }
-#mid-main-time-twelvehours-hidden {
+.mid-main-time-twelvehours.hidden {
     visibility: hidden;
 }
 
@@ -425,9 +407,9 @@ input.settings-toggle-round:checked + label:after {
 }
 #mid-search-box {
     display: none;
+    height: 18px;
     margin: 6px 0 0 10px;
     font-size: 12px;
-    height: 18px;
     text-align: left;
 }
 #mid-search-box::-webkit-input-placeholder {
@@ -446,6 +428,7 @@ input.settings-toggle-round:checked + label:after {
     color: #fff;
     opacity: 1;
 }
+
 /* Quote */
 #mid-quote {
     width: 50vw;
@@ -530,16 +513,16 @@ input.settings-toggle-round:checked + label:after {
 
 /* Weather */
 #right-weather{
-    margin: 10px 18px 0 0;
     align-self: flex-end;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-end;
+    margin: 10px 18px 0 0;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
     font-family: 'Raleway', sans-serif;
     transition: all 0.2s ease;
 }
@@ -558,12 +541,11 @@ input.settings-toggle-round:checked + label:after {
     align-self: center;
 }
 #right-weather-location {
-    margin-top: 0px;
+    margin-top: 0;
     font-size: 15px;
 }
 #weather-wrapper {
     display: flex;
-    flex-direction: row;
     align-items: flex-end;
     justify-content: flex-end;
     margin: -28px 0;
@@ -571,15 +553,15 @@ input.settings-toggle-round:checked + label:after {
 
 /* Todo */
 #right-todo {
-    height: 40vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     align-items: flex-end;
+    height: 40vh;
     width: 15vw;
 }
 #right-todo-icon {
-    margin: 0 10px 0 0;
+    margin-right: 10px;
     order: 2;
 }
 .hideDivs {
@@ -597,7 +579,7 @@ input.settings-toggle-round:checked + label:after {
     width: 300px;
     background-color: rgba(0, 0, 0, 0.88);
     border-radius: 2px;
-    margin: 0 10px 0 0;
+    margin-right: 10px;
     z-index: 1;
     overflow: hidden;
     transition: height 0.25s linear;
@@ -613,7 +595,7 @@ input.settings-toggle-round:checked + label:after {
     display: none;
 }
 .todo-wrappers {
-    margin: 0 0 0 8px;
+    margin-left: 8px;
 }
 .todo-checkboxes {
     display: inline;
@@ -624,7 +606,7 @@ input.settings-toggle-round:checked + label:after {
     display: inline-block;
     width: 247px;
     margin: 0;
-    padding: 0 0 3px 0;
+    padding-bottom: 3px;
 }
 #right-todo {
     max-height: 75vh;
@@ -637,7 +619,7 @@ input.settings-toggle-round:checked + label:after {
 }
 #right-todo-dropup-todo {
     max-width: 295px;
-    margin: 5px 0 5px 0;
+    margin: 5px 0;
     overflow: hidden;
 }
 #right-todo-dropup-input {
