@@ -1,6 +1,4 @@
-# Turtle Dash
-
-[Find On the Chrome Web Store](https://chrome.google.com/webstore/detail/turtle-dash/odijnkiclhddnfdgnbjghchkhagnooek)<br><br>
+# [Turtle Dash](https://chrome.google.com/webstore/detail/turtle-dash/odijnkiclhddnfdgnbjghchkhagnooek)
 
 <strong>Transform your empty chrome tabs into a gorgeous, productivity powerhouse.</strong><br>
 Bring life to your tabs with Turtle Dash. Experience beautiful landscape backgrounds and essential tools right in the window tab.
