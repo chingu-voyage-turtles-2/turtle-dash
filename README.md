@@ -1,4 +1,9 @@
-# [Turtle Dash](https://chrome.google.com/webstore/detail/turtle-dash/odijnkiclhddnfdgnbjghchkhagnooek)
+# Turtle Dash
+
+[![chrome web store](https://img.shields.io/chrome-web-store/v/odijnkiclhddnfdgnbjghchkhagnooek.svg)](https://chrome.google.com/webstore/detail/turtle-dash/odijnkiclhddnfdgnbjghchkhagnooek)
+[![GitHub license](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/chingu-voyage-turtles-2/urban-turtle/blob/master/LICENSE)
+
+
 
 <strong>Transform your empty chrome tabs into a gorgeous, productivity powerhouse.</strong><br>
 Bring life to your tabs with Turtle Dash. Experience beautiful landscape backgrounds and essential tools right in the window tab.
