@@ -3,9 +3,7 @@
 [![chrome web store](https://img.shields.io/chrome-web-store/v/odijnkiclhddnfdgnbjghchkhagnooek.svg)](https://chrome.google.com/webstore/detail/turtle-dash/odijnkiclhddnfdgnbjghchkhagnooek)
 [![GitHub license](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/chingu-voyage-turtles-2/urban-turtle/blob/master/LICENSE)
 
-
-
-<strong>Transform your empty chrome tabs into a gorgeous, productivity powerhouse.</strong><br>
+__Transform your empty chrome tabs into a gorgeous, productivity powerhouse.__<br>
 Bring life to your tabs with Turtle Dash. Experience beautiful landscape backgrounds and essential tools right in the window tab.
 
 Designed with productivity in mind, the experience gives users an elegant, yet simple interface to make the most out of their day.
@@ -30,7 +28,7 @@ The main focus section keeps you laser-focused on the most important task of the
 
 ➤ Open-Source - Freedom to code the app to appease your development desires
 
-Get the app now on the [Chrome Web Store](https://chrome.google.com/webstore/detail/turtle-dash/odijnkiclhddnfdgnbjghchkhagnooek).
+[![available in the chrome web store](chrome-web-store.png)](https://chrome.google.com/webstore/detail/turtle-dash/odijnkiclhddnfdgnbjghchkhagnooek).
 
 ★ Credits ★  
 Interested in free collaboration remotely with other developers-in-training? 
