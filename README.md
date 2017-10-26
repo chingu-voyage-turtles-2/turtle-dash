@@ -28,7 +28,7 @@ The main focus section keeps you laser-focused on the most important task of the
 
 ➤ Open-Source - Freedom to code the app to appease your development desires
 
-[![available in the chrome web store](chrome-web-store.png)](https://chrome.google.com/webstore/detail/turtle-dash/odijnkiclhddnfdgnbjghchkhagnooek).
+[![available in the chrome web store](chrome-web-store.png)](https://chrome.google.com/webstore/detail/turtle-dash/odijnkiclhddnfdgnbjghchkhagnooek)
 
 ★ Credits ★  
 Interested in free collaboration remotely with other developers-in-training? 
